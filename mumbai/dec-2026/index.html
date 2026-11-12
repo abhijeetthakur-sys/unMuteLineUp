@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>unMute Mumbai — Artium Academy</title>
+<meta name="description" content="The unMute Mumbai lineup, and how to start training with Artium.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --pink: #E00073; --gold: #EBE23F; --ink: #1C1410; --ivory: #F3E8D6; --card: #FBF5E9; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; font-family: 'Space Grotesk', sans-serif; background: var(--ivory); color: var(--ink); }
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; }
+  .cta-btn:active { transform: translate(2px, 2px); box-shadow: none !important; }
+  .wrap { width: 100%; min-height: 100vh; box-sizing: border-box; overflow-x: hidden; max-width: 480px; margin: 0 auto; background: var(--ivory); position: relative; }
+  .back-btn { position: absolute; top: 14px; left: 16px; z-index: 30; display: inline-flex; align-items: center; gap: 6px; background: var(--card); color: var(--ink); font-size: 12px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; padding: 8px 12px; border: 2px solid var(--ink); box-shadow: 3px 3px 0 var(--ink); }
+  .back-btn:active { transform: translate(2px, 2px); box-shadow: none; }
+
+  /* one row per performer */
+  .artist { display: flex; align-items: center; gap: 16px; padding: 20px 0; border-bottom: 1px dashed rgba(28,20,16,0.25); }
+  .artist img { width: 88px; height: 112px; flex-shrink: 0; object-fit: cover; border: 2px solid var(--ink); border-radius: 2px; box-shadow: 4px 4px 0 var(--pink); transform: rotate(-3deg); }
+  .artist:nth-child(even) img { box-shadow: 4px 4px 0 var(--gold); transform: rotate(3deg); }
+  .artist-num { font-weight: 700; font-size: 13px; color: var(--pink); margin-bottom: 5px; }
+  .artist-name { font-family: 'Anton', sans-serif; font-size: 21px; line-height: 1.12; text-transform: uppercase; }
+  .artist-note { font-size: 12px; color: rgba(28,20,16,0.55); margin-top: 5px; }
+</style>
+<style>
+/* "Done & Dusted" state — switched on automatically the day after a city's show
+   (by the status script on each page). Preview any time with ?demo=done */
+
+.dd-strip { position: absolute; left: -15%; right: -15%; top: 50%; z-index: 3; background: #E00073; color: #FBF5E9; border-top: 2px solid #1C1410; border-bottom: 2px solid #1C1410; padding: 7px 0; overflow: hidden; box-shadow: 0 5px 0 rgba(28,20,16,.45); transform: translateY(-50%) rotate(-7deg); animation: ddSlap .55s cubic-bezier(.3,1.5,.5,1) .5s both; pointer-events: none; }
+.dd-track { display: flex; width: max-content; animation: ddScroll 9s linear infinite; }
+.dd-group { display: flex; align-items: center; flex-shrink: 0; }
+.dd-group span { font-family: 'Anton', sans-serif; font-size: 22px; letter-spacing: 1px; text-transform: uppercase; white-space: nowrap; margin-right: 16px; }
+.dd-group b { color: #EBE23F; margin-right: 16px; font-size: 18px; }
+@keyframes ddScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes ddSlap { from { transform: translateY(-50%) rotate(-7deg) scaleX(0); opacity: 0; } to { transform: translateY(-50%) rotate(-7deg) scaleX(1); opacity: 1; } }
+
+/* the photo under the strip goes slightly muted, like an old ticket */
+.is-done-art img, .tile.done .tile-img img { filter: saturate(.55) brightness(.88); }
+
+@media (prefers-reduced-motion: reduce) {
+  .dd-strip, .dd-track { animation: none !important; }
+}
+</style>
+</head>
+<body data-date="2026-12-16">
+
+<div class="wrap">
+
+  <!-- BACK TO ALL CITIES -->
+  <a href="../index.html" class="back-btn">← All cities</a>
+
+  <!-- PERSISTENT CORNER TAB -->
+  <a href="https://register.artiumacademy.com/?utm_source=UNMUTE&utm_medium=MUMBAI&utm_campaign=LINEUPSHEET" class="cta-btn" style="position: fixed; bottom: 20px; right: 20px; z-index: 40; background: var(--pink); color: #FBF5E9; font-weight: 700; font-size: 13px; padding: 12px 18px; border: 2px solid var(--ink); box-shadow: 3px 3px 0 var(--ink); transform: rotate(-3deg);">Free Trial ↗</a>
+
+  <!-- HERO -->
+  <div style="background: radial-gradient(ellipse 120% 85% at 50% 0%, rgba(224,0,115,0.22) 0%, rgba(235,226,63,0.20) 40%, rgba(243,232,214,0) 72%); padding: 64px 24px 8px;">
+    <div id="hero-art" style="width: 100%; max-width: 400px; border: 2px solid var(--ink); box-shadow: 5px 5px 0 var(--pink);">
+      <img src="https://res.cloudinary.com/dd7s6bb58/image/upload/c_crop,x_44,y_42,w_1652,h_1150/c_scale,w_1000/q_auto,f_auto/v1794481164/unMute_Postcard_Mumbai_hl37xm.png" alt="artium unMute Mumbai, 16.12.2026" style="width: 100%; height: auto; display: block;">
+    </div>
+  </div>
+  <div style="padding: 18px 24px 26px; text-align: left;">
+    <div style="font-family: 'Caveat', cursive; font-size: 27px; font-weight: 600; transform: rotate(-1.5deg); margin: 0 0 22px 2px;" data-done="here's who took the stage">thank you for being here tonight</div>
+    <div style="font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(28,20,16,0.55); border-bottom: 1px dotted rgba(28,20,16,0.45); padding-bottom: 12px;">To: You &nbsp;·&nbsp; From: Team unMute</div>
+  </div>
+
+  <div style="border-top: 2px dashed rgba(28,20,16,0.25); margin: 8px 24px 0;"></div>
+
+  <!-- LINEUP -->
+  <div id="lineup" style="padding: 32px 24px 4px;">
+    <div style="font-family: 'Anton', sans-serif; font-size: 24px; margin-bottom: 4px;" data-done="Who Took the Stage">Tonight's Lineup</div>
+    <div style="font-size: 13px; color: rgba(28,20,16,0.6);" data-done="Eleven performers took the stage.">The lineup drops soon. Check back here.</div>
+  </div>
+  <div style="padding: 8px 24px 12px;">
+
+    <!--
+      Copy this block once per performer (number in order). Pink/gold tilt alternates automatically.
+
+    <div class="artist">
+      <img src="https://res.cloudinary.com/dd7s6bb58/image/upload/c_fill,g_face,w_440,h_560,q_auto,f_auto/vXXXX/NAME.png" alt="Full Name">
+      <div>
+        <div class="artist-num">01</div>
+        <div class="artist-name">Full Name</div>
+        <div class="artist-note">duet with Someone</div>   ← optional, delete if not needed
+      </div>
+    </div>
+    -->
+
+  </div>
+
+  <div style="border-top: 2px dashed rgba(28,20,16,0.25); margin: 8px 24px 0;"></div>
+
+  <!-- ABOUT -->
+  <div id="about" style="padding: 32px 24px 8px;">
+    <div style="font-family: 'Anton', sans-serif; font-size: 22px; line-height: 1.25; margin-bottom: 16px; max-width: 320px;">We think learning music should lead to a stage.</div>
+    <p style="font-size: 15px; line-height: 1.65; color: rgba(28,20,16,0.85); margin: 0 0 14px;">Most training stops at the lesson. Artium builds performance into it, because you don't really know how you're doing until you've done it in front of people.</p>
+    <p style="font-size: 15px; line-height: 1.65; color: rgba(28,20,16,0.85); margin: 0 0 32px;" data-done="Everyone on this lineup went through lessons, hours of practice, feedback, and more practice before that night. That night is what the process looks like, for now.">Everyone on tonight's lineup went through lessons, hours of practice, feedback, and more practice before this. Tonight is what that process looks like, for now.</p>
+  </div>
+
+  <!-- CLOSING CTA -->
+  <div id="trial" style="background: var(--ink); color: var(--ivory); padding: 44px 24px 52px; text-align: left;">
+    <div style="display: inline-block; background: var(--gold); color: var(--ink); padding: 10px 18px; border: 2px solid var(--pink); box-shadow: 4px 4px 0 var(--pink); transform: rotate(-2deg); margin-bottom: 22px;">
+      <div style="font-family: 'Anton', sans-serif; font-size: 22px; line-height: 1;">GRAB 15% OFF</div>
+      <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; margin-top: 3px;">enroll after your trial session</div>
+    </div>
+    <div style="font-family: 'Anton', sans-serif; font-size: 23px; line-height: 1.3; margin-bottom: 10px;">It starts with a class, not a stage.</div>
+    <div style="font-size: 14px; color: rgba(243,232,214,0.65); margin-bottom: 24px;">After your trial, buy the class and get 15% off.</div>
+    <a href="https://register.artiumacademy.com/?utm_source=UNMUTE&utm_medium=MUMBAI&utm_campaign=LINEUPSHEET" class="cta-btn" style="display: block; text-align: center; background: var(--pink); color: #FBF5E9; font-weight: 700; font-size: 16px; padding: 16px; border: 2px solid var(--gold); box-shadow: 4px 4px 0 var(--gold);">Book a Free Trial</a>
+    <div style="font-family: 'Caveat', cursive; font-size: 25px; color: rgba(243,232,214,0.85); text-align: center; margin-top: 36px; transform: rotate(-1.5deg);">See you on the stage soon?</div>
+  </div>
+
+  <!-- FOOTER -->
+  <div style="margin: 0 24px; border-top: 2px dashed rgba(28,20,16,0.25); padding: 20px 0 44px; font-size: 12px; color: rgba(28,20,16,0.5); display: flex; justify-content: space-between; gap: 12px;">
+    <span>Artium unMute · Mumbai · 16 December 2026</span>
+    <a href="../index.html" style="font-weight: 700; color: var(--pink); white-space: nowrap;">Other cities →</a>
+  </div>
+
+</div>
+
+<script>
+/* City pages: after the show date (from the next day, India time) reframe the page as
+   "who took the stage" and put a Done & Dusted strip over the artwork.
+   Set the date on <body data-date="YYYY-MM-DD">. Preview with ?demo=done */
+(function () {
+  var body = document.body, date = body.getAttribute('data-date');
+  var demo = /[?&]demo=done/.test(location.search);
+  var done = demo || Date.now() >= Date.parse(date + 'T00:00:00+05:30') + 864e5;
+  if (!done) return;
+  body.classList.add('is-done');
+
+  // swap any element that carries a data-done="..." text
+  [].forEach.call(document.querySelectorAll('[data-done]'), function (el) { el.textContent = el.getAttribute('data-done'); });
+
+  // strip over the hero artwork
+  var art = document.getElementById('hero-art');
+  if (art) {
+    var rep = '';
+    for (var i = 0; i < 4; i++) rep += '<span>Done &amp; Dusted</span><b>✦</b>';
+    art.style.position = 'relative'; art.style.overflow = 'hidden';
+    art.classList.add('is-done-art');
+    art.insertAdjacentHTML('beforeend', '<div class="dd-strip" aria-hidden="true"><div class="dd-track"><div class="dd-group">' + rep + '</div><div class="dd-group">' + rep + '</div></div></div>');
+  }
+
+  // keep demo mode when going back to the hub
+  if (demo) [].forEach.call(document.querySelectorAll('a[href="../index.html"]'), function (a) { a.href = '../index.html?demo=done'; });
+})();
+</script>
+</body>
+</html>
