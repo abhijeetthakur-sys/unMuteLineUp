@@ -8,8 +8,26 @@
 <meta name="theme-color" content="#1C1410">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="preload" as="image" href="assets/unmute-logo.png">
-<link rel="stylesheet" href="assets/done.css">
+<link rel="preload" as="image" href="https://res.cloudinary.com/dd7s6bb58/image/upload/v1794481162/Unmute_Logo_iwp7au.svg">
+<style>
+/* "Done & Dusted" state — switched on automatically the day after a city's show
+   (by the status script on each page). Preview any time with ?demo=done */
+
+.dd-strip { position: absolute; left: -15%; right: -15%; top: 50%; z-index: 3; background: #E00073; color: #FBF5E9; border-top: 2px solid #1C1410; border-bottom: 2px solid #1C1410; padding: 7px 0; overflow: hidden; box-shadow: 0 5px 0 rgba(28,20,16,.45); transform: translateY(-50%) rotate(-7deg); animation: ddSlap .55s cubic-bezier(.3,1.5,.5,1) .5s both; pointer-events: none; }
+.dd-track { display: flex; width: max-content; animation: ddScroll 9s linear infinite; }
+.dd-group { display: flex; align-items: center; flex-shrink: 0; }
+.dd-group span { font-family: 'Anton', sans-serif; font-size: 22px; letter-spacing: 1px; text-transform: uppercase; white-space: nowrap; margin-right: 16px; }
+.dd-group b { color: #EBE23F; margin-right: 16px; font-size: 18px; }
+@keyframes ddScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes ddSlap { from { transform: translateY(-50%) rotate(-7deg) scaleX(0); opacity: 0; } to { transform: translateY(-50%) rotate(-7deg) scaleX(1); opacity: 1; } }
+
+/* the photo under the strip goes slightly muted, like an old ticket */
+.is-done-art img, .tile.done .tile-img img { filter: saturate(.55) brightness(.88); }
+
+@media (prefers-reduced-motion: reduce) {
+  .dd-strip, .dd-track { animation: none !important; }
+}
+</style>
 <script>
   // Show the logo loader only on the first visit of a session (not when coming back from a city page).
   try { if (sessionStorage.getItem('um_seen')) document.documentElement.classList.add('skip-loader'); } catch (e) {}
@@ -134,7 +152,7 @@
 <!-- LOGO LOADER (~1s, first visit only) -->
 <div class="loader" id="loader" aria-hidden="true">
   <div class="loader-inner">
-    <img class="loader-logo" src="assets/unmute-logo.png" alt="">
+    <img class="loader-logo" src="https://res.cloudinary.com/dd7s6bb58/image/upload/v1794481162/Unmute_Logo_iwp7au.svg" alt="">
     <div class="eq"><span></span><span></span><span></span><span></span><span></span></div>
   </div>
 </div>
@@ -148,8 +166,8 @@
     <!-- big logo, scrolling forever (two identical groups = seamless loop) -->
     <div class="marquee logo-band" aria-hidden="true">
       <div class="track">
-        <div class="group"><img src="assets/unmute-logo.png" alt=""><i>✦</i><img src="assets/unmute-logo.png" alt=""><i>✦</i><img src="assets/unmute-logo.png" alt=""><i>✦</i></div>
-        <div class="group"><img src="assets/unmute-logo.png" alt=""><i>✦</i><img src="assets/unmute-logo.png" alt=""><i>✦</i><img src="assets/unmute-logo.png" alt=""><i>✦</i></div>
+        <div class="group"><img src="https://res.cloudinary.com/dd7s6bb58/image/upload/v1794481162/Unmute_Logo_iwp7au.svg" alt=""><i>✦</i><img src="https://res.cloudinary.com/dd7s6bb58/image/upload/v1794481162/Unmute_Logo_iwp7au.svg" alt=""><i>✦</i><img src="https://res.cloudinary.com/dd7s6bb58/image/upload/v1794481162/Unmute_Logo_iwp7au.svg" alt=""><i>✦</i></div>
+        <div class="group"><img src="https://res.cloudinary.com/dd7s6bb58/image/upload/v1794481162/Unmute_Logo_iwp7au.svg" alt=""><i>✦</i><img src="https://res.cloudinary.com/dd7s6bb58/image/upload/v1794481162/Unmute_Logo_iwp7au.svg" alt=""><i>✦</i><img src="https://res.cloudinary.com/dd7s6bb58/image/upload/v1794481162/Unmute_Logo_iwp7au.svg" alt=""><i>✦</i></div>
       </div>
     </div>
 
@@ -181,7 +199,7 @@
 
     <a class="tile" style="--i:0" href="mumbai/index.html" data-city="Mumbai" data-date="2026-12-16" data-count="11">
       <div class="tile-img">
-        <img src="assets/mumbai-tile.jpg" alt="unMute Mumbai, 16.12.2026">
+        <img src="https://res.cloudinary.com/dd7s6bb58/image/upload/c_crop,x_44,y_42,w_1652,h_1150/c_scale,w_1000/q_auto,f_auto/v1794481164/unMute_Postcard_Mumbai_hl37xm.png" alt="unMute Mumbai, 16.12.2026">
         <span class="tile-badge soon">Lineup soon<span class="dots"><i>.</i><i>.</i><i>.</i></span></span>
       </div>
       <div class="tile-body">
@@ -196,7 +214,7 @@
 
     <a class="tile" style="--i:1" href="kolkata/index.html" data-city="Kolkata" data-date="2027-01-22" data-count="10">
       <div class="tile-img">
-        <img src="assets/kolkata-tile.jpg" alt="unMute Kolkata, 22.01.2027">
+        <img src="https://res.cloudinary.com/dd7s6bb58/image/upload/c_crop,x_40,y_40,w_1666,h_1158/c_scale,w_1000/q_auto,f_auto/v1794481163/unMute_Postcard_Kolkata-2_llrej4.png" alt="unMute Kolkata, 22.01.2027">
         <span class="tile-badge out"><span class="dot"></span>Lineup out</span>
       </div>
       <div class="tile-body">
