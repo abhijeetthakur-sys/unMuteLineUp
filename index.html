@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>unMute Cities — Artium Academy</title>
+<meta name="description" content="Every unMute city, every lineup. Pick a city to see who took the stage.">
+<meta name="theme-color" content="#1C1410">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="assets/unmute-logo.png">
+<link rel="stylesheet" href="assets/done.css">
+<script>
+  // Show the logo loader only on the first visit of a session (not when coming back from a city page).
+  try { if (sessionStorage.getItem('um_seen')) document.documentElement.classList.add('skip-loader'); } catch (e) {}
+</script>
+<style>
+  :root { --pink: #E00073; --gold: #EBE23F; --ink: #1C1410; --ivory: #F3E8D6; --card: #FBF5E9; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; font-family: 'Space Grotesk', sans-serif; background: var(--ink); color: var(--ink); }
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; display: block; }
+  .wrap { width: 100%; min-height: 100vh; box-sizing: border-box; overflow-x: hidden; max-width: 480px; margin: 0 auto; background: var(--ivory); position: relative; }
+  .cta-btn:active { transform: translate(2px, 2px); box-shadow: none !important; }
+
+  /* ---------- LOADER ---------- */
+  .loader { position: fixed; inset: 0; z-index: 100; background: var(--ink); display: grid; place-items: center; transition: opacity .45s ease, visibility .45s ease; }
+  .loader.done { opacity: 0; visibility: hidden; }
+  .skip-loader .loader { display: none; }
+  .loader-inner { display: grid; justify-items: center; gap: 22px; }
+  .loader-logo { width: 190px; height: auto; opacity: 0; transform: scale(.92); animation: logoIn .6s cubic-bezier(.2,.8,.2,1) .05s forwards; }
+  .eq { display: flex; align-items: flex-end; gap: 5px; height: 26px; }
+  .eq span { width: 6px; height: 100%; border-radius: 3px; transform-origin: bottom; animation: eq .8s ease-in-out infinite; }
+  .eq span:nth-child(1) { background: #D57AD5; animation-delay: -.6s; }
+  .eq span:nth-child(2) { background: #C65BC3; animation-delay: -.2s; }
+  .eq span:nth-child(3) { background: #A93DB4; animation-delay: -.45s; }
+  .eq span:nth-child(4) { background: #7B32D6; animation-delay: -.1s; }
+  .eq span:nth-child(5) { background: #4B25E6; animation-delay: -.35s; }
+  @keyframes logoIn { to { opacity: 1; transform: scale(1); } }
+  @keyframes eq { 0%,100% { transform: scaleY(.25); } 50% { transform: scaleY(1); } }
+
+  /* ---------- HERO ---------- */
+  .hero { background: radial-gradient(ellipse 110% 80% at 15% 0%, rgba(224,0,115,0.45) 0%, rgba(224,0,115,0) 60%), radial-gradient(ellipse 90% 70% at 100% 100%, rgba(235,226,63,0.22) 0%, rgba(235,226,63,0) 65%), var(--ink); color: var(--ivory); padding: 40px 0 34px; overflow: hidden; }
+  .hero-text { padding: 0 24px; }
+  .hero-note { font-family: 'Caveat', cursive; font-size: clamp(19px, 6vw, 27px); line-height: 1.15; white-space: nowrap; transform: rotate(-1.5deg); margin: 26px 0 0 2px; }
+  .hero-meta { margin-top: 22px; font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(243,232,214,0.55); border-top: 1px dotted rgba(243,232,214,0.4); padding-top: 12px; }
+
+  /* continuous scroll: big logo band + date ticker */
+  .marquee { overflow: hidden; width: 100%; }
+  .track { display: flex; width: max-content; animation: scrollL 22s linear infinite; }
+  .group { display: flex; align-items: center; flex-shrink: 0; }
+  .logo-band .group img { height: 104px; width: auto; margin-right: 34px; }
+  .logo-band .group i { font-style: normal; color: var(--pink); font-size: 30px; margin-right: 34px; }
+  .ticker { margin-top: 22px; background: var(--gold); color: var(--ink); border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); transform: rotate(-2deg); width: 110%; margin-left: -5%; padding: 8px 0; }
+  .ticker .track { animation: scrollR 18s linear infinite; }
+  .ticker .group span { font-family: 'Anton', sans-serif; font-size: 18px; letter-spacing: 0.5px; text-transform: uppercase; white-space: nowrap; margin-right: 18px; }
+  .ticker .group b { color: var(--pink); margin-right: 18px; font-size: 16px; }
+  @keyframes scrollL { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @keyframes scrollR { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+
+  /* ---------- CITIES ---------- */
+  .section-head { padding: 30px 24px 4px; }
+  .section-title { font-family: 'Anton', sans-serif; font-size: 24px; margin-bottom: 4px; }
+  .section-sub { font-size: 13px; color: rgba(28,20,16,0.6); }
+  .cities { padding: 18px 24px 40px; display: grid; gap: 22px; }
+
+  .tile { display: block; position: relative; background: var(--card); border: 2px solid var(--ink); box-shadow: 5px 5px 0 var(--pink); opacity: 0; transform: translateY(18px); transition: transform .15s ease, box-shadow .15s ease; }
+  .tile:nth-child(even) { box-shadow: 5px 5px 0 var(--gold); }
+  .tile:active { transform: translate(3px, 3px) !important; box-shadow: 1px 1px 0 var(--ink); }
+  .ready .tile { animation: tileIn .55s cubic-bezier(.2,.8,.2,1) forwards; animation-delay: calc(var(--i, 0) * 110ms + 80ms); }
+  @keyframes tileIn { to { opacity: 1; transform: translateY(0); } }
+
+  .tile-img { position: relative; aspect-ratio: 2 / 1; overflow: hidden; border-bottom: 2px solid var(--ink); background: var(--ink); }
+  .tile-img img { width: 100%; height: 100%; object-fit: cover; object-position: center 35%; animation: drift 14s ease-in-out infinite alternate; }
+  .tile:nth-child(even) .tile-img img { animation-direction: alternate-reverse; }
+  @keyframes drift { from { transform: scale(1.02) translateX(-1.5%); } to { transform: scale(1.12) translateX(1.5%); } }
+
+  /* light sweep across the image */
+  .tile-img::after { content: ""; position: absolute; inset: 0; background: linear-gradient(105deg, transparent 35%, rgba(255,255,255,.35) 50%, transparent 65%); transform: translateX(-120%); animation: shine 5s ease-in-out infinite; animation-delay: calc(var(--i, 0) * 1.4s + 1.2s); pointer-events: none; }
+  @keyframes shine { 0% { transform: translateX(-120%); } 30%,100% { transform: translateX(120%); } }
+
+
+  /* status badges: stamp in, then keep wobbling for attention */
+  .tile-badge { position: absolute; top: 10px; left: 10px; z-index: 2; display: inline-flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; padding: 7px 12px; border: 2px solid var(--ink); box-shadow: 3px 3px 0 var(--ink); transform: rotate(-4deg); }
+  .ready .tile-badge { animation: stampIn .5s cubic-bezier(.3,1.6,.5,1) both, wobble 2.6s ease-in-out infinite; animation-delay: calc(var(--i, 0) * 110ms + 450ms), calc(var(--i, 0) * 110ms + 1s); }
+  @keyframes stampIn { from { opacity: 0; transform: rotate(-14deg) scale(1.8); } to { opacity: 1; transform: rotate(-4deg) scale(1); } }
+  @keyframes wobble { 0%,70%,100% { transform: rotate(-4deg) scale(1); } 76% { transform: rotate(-8deg) scale(1.1); } 84% { transform: rotate(1deg) scale(1.1); } 92% { transform: rotate(-6deg) scale(1.04); } }
+
+  .tile-badge.soon { background: var(--gold); color: var(--ink); }
+  .dots i { font-style: normal; animation: blink 1.2s infinite; }
+  .dots i:nth-child(2) { animation-delay: .2s; }
+  .dots i:nth-child(3) { animation-delay: .4s; }
+  @keyframes blink { 0%,100% { opacity: .15; } 40% { opacity: 1; } }
+
+  .tile-badge.out { background: var(--pink); color: var(--card); }
+  .tile-badge.wrapped { background: var(--ink); color: var(--gold); }
+  .tile-cta { font-size: 12px; font-weight: 700; color: var(--pink); margin-top: 4px; }
+  .dot { position: relative; width: 8px; height: 8px; border-radius: 50%; background: var(--gold); }
+  .dot::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: var(--gold); animation: ping 1.4s cubic-bezier(0,0,.2,1) infinite; }
+  @keyframes ping { 0% { transform: scale(1); opacity: .9; } 100% { transform: scale(2.8); opacity: 0; } }
+
+  .tile-body { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 14px 12px 16px; }
+  .tile-num { font-weight: 700; font-size: 11px; color: var(--pink); margin-bottom: 2px; }
+  .tile-name { font-family: 'Anton', sans-serif; font-size: 22px; line-height: 1.05; text-transform: uppercase; }
+  .tile-meta { font-size: 12px; color: rgba(28,20,16,0.6); margin-top: 3px; }
+  .tile-go { flex-shrink: 0; width: 40px; height: 40px; display: grid; place-items: center; background: var(--pink); color: var(--card); border: 2px solid var(--ink); font-size: 18px; font-weight: 700; }
+  .tile-go span { display: inline-block; animation: nudge 1.6s ease-in-out infinite; }
+  @keyframes nudge { 0%,60%,100% { transform: translateX(0); } 30% { transform: translateX(4px); } }
+
+  /* ---------- CTA ---------- */
+  .cta { background: var(--ink); color: var(--ivory); padding: 44px 24px 52px; }
+  .stamp { display: inline-block; background: var(--gold); color: var(--ink); padding: 10px 18px; border: 2px solid var(--pink); box-shadow: 4px 4px 0 var(--pink); transform: rotate(-2deg); margin-bottom: 22px; }
+  .stamp-big { font-family: 'Anton', sans-serif; font-size: 22px; line-height: 1; }
+  .stamp-small { font-size: 10px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; margin-top: 3px; }
+  .cta-title { font-family: 'Anton', sans-serif; font-size: 23px; line-height: 1.3; margin-bottom: 10px; }
+  .cta-sub { font-size: 14px; color: rgba(243,232,214,0.65); margin-bottom: 24px; }
+  .cta-main { display: block; text-align: center; background: var(--pink); color: var(--card); font-weight: 700; font-size: 16px; padding: 16px; border: 2px solid var(--gold); box-shadow: 4px 4px 0 var(--gold); }
+  .footer { padding: 24px 24px 44px; font-size: 12px; line-height: 1.6; color: rgba(243,232,214,0.55); background: var(--ink); border-top: 2px dashed rgba(243,232,214,0.15); }
+  .footer-site { display: inline-block; font-family: 'Anton', sans-serif; font-size: 18px; letter-spacing: .3px; color: var(--gold); margin-bottom: 14px; border-bottom: 2px solid var(--pink); padding-bottom: 2px; }
+  .footer-label { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(243,232,214,0.4); margin-bottom: 4px; }
+  .footer-addr { display: block; color: rgba(243,232,214,0.75); max-width: 340px; }
+  .footer-addr span { color: var(--pink); font-weight: 700; white-space: nowrap; }
+  .footer-copy { margin-top: 18px; color: rgba(243,232,214,0.4); }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .tile { opacity: 1; transform: none; }
+    .loader-logo { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- LOGO LOADER (~1s, first visit only) -->
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="loader-inner">
+    <img class="loader-logo" src="assets/unmute-logo.png" alt="">
+    <div class="eq"><span></span><span></span><span></span><span></span><span></span></div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <header class="hero">
+    <h1 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);">artium unMute</h1>
+
+    <!-- big logo, scrolling forever (two identical groups = seamless loop) -->
+    <div class="marquee logo-band" aria-hidden="true">
+      <div class="track">
+        <div class="group"><img src="assets/unmute-logo.png" alt=""><i>✦</i><img src="assets/unmute-logo.png" alt=""><i>✦</i><img src="assets/unmute-logo.png" alt=""><i>✦</i></div>
+        <div class="group"><img src="assets/unmute-logo.png" alt=""><i>✦</i><img src="assets/unmute-logo.png" alt=""><i>✦</i><img src="assets/unmute-logo.png" alt=""><i>✦</i></div>
+      </div>
+    </div>
+
+    <!-- date ticker, scrolling the other way -->
+    <!-- Filled automatically with the NEXT upcoming show (from the tiles' data-date). -->
+    <div class="marquee ticker" id="ticker" aria-hidden="true">
+      <div class="track">
+        <div class="group"><span>Mumbai · 16.12.2026</span><b>✦</b><span>Mumbai · 16.12.2026</span><b>✦</b><span>Mumbai · 16.12.2026</span><b>✦</b><span>Mumbai · 16.12.2026</span><b>✦</b></div>
+        <div class="group"><span>Mumbai · 16.12.2026</span><b>✦</b><span>Mumbai · 16.12.2026</span><b>✦</b><span>Mumbai · 16.12.2026</span><b>✦</b><span>Mumbai · 16.12.2026</span><b>✦</b></div>
+      </div>
+    </div>
+
+    <div class="hero-text">
+      <div class="hero-note">one stage, many cities. pick yours.</div>
+      <div class="hero-meta">The unMute Lineups</div>
+    </div>
+  </header>
+
+  <!-- CITIES -->
+  <div class="section-head">
+    <div class="section-title">The Cities</div>
+    <div class="section-sub">Tap a city to see who took the stage.</div>
+  </div>
+
+  <div class="cities">
+    <!-- To add a city: copy one <a class="tile"> block and change data-city, data-date (show day),
+         data-count, link, image, name, meta. Order, numbering, the date ticker and the
+         "Done & Dusted" strip (from the day after the show) are all handled automatically. -->
+
+    <a class="tile" style="--i:0" href="mumbai/index.html" data-city="Mumbai" data-date="2026-12-16" data-count="11">
+      <div class="tile-img">
+        <img src="assets/mumbai-tile.jpg" alt="unMute Mumbai, 16.12.2026">
+        <span class="tile-badge soon">Lineup soon<span class="dots"><i>.</i><i>.</i><i>.</i></span></span>
+      </div>
+      <div class="tile-body">
+        <div>
+          <div class="tile-num">01</div>
+          <div class="tile-name">Mumbai</div>
+          <div class="tile-meta">16 Dec 2026 &nbsp;·&nbsp; 11 performers</div>
+        </div>
+        <span class="tile-go" aria-hidden="true"><span>→</span></span>
+      </div>
+    </a>
+
+    <a class="tile" style="--i:1" href="kolkata/index.html" data-city="Kolkata" data-date="2027-01-22" data-count="10">
+      <div class="tile-img">
+        <img src="assets/kolkata-tile.jpg" alt="unMute Kolkata, 22.01.2027">
+        <span class="tile-badge out"><span class="dot"></span>Lineup out</span>
+      </div>
+      <div class="tile-body">
+        <div>
+          <div class="tile-num">02</div>
+          <div class="tile-name">Kolkata</div>
+          <div class="tile-meta">22 Jan 2027 &nbsp;·&nbsp; 10 performers</div>
+        </div>
+        <span class="tile-go" aria-hidden="true"><span>→</span></span>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- CTA -->
+  <section class="cta">
+    <div class="stamp">
+      <div class="stamp-big">GRAB 15% OFF</div>
+      <div class="stamp-small">enroll after your trial session</div>
+    </div>
+    <div class="cta-title">Your city's stage could have your name on it.</div>
+    <div class="cta-sub">Start with a free trial class. Enroll after it and get 15% off.</div>
+    <a class="cta-btn cta-main" href="https://register.artiumacademy.com/?utm_source=UNMUTE&utm_medium=HUB&utm_campaign=LINEUPSHEET">Book a Free Trial</a>
+  </section>
+
+  <footer class="footer">
+    <a class="footer-site" href="https://www.artiumacademy.com" target="_blank" rel="noopener">www.artiumacademy.com ↗</a>
+    <div class="footer-label">Find us</div>
+    <a class="footer-addr" href="https://www.google.com/maps/search/?api=1&query=Artium+Academy+Gundecha+Onclave+Khairani+Rd+Andheri+Mumbai+400072" target="_blank" rel="noopener">
+      Artium Academy, 5th Floor, D Wing, Gundecha Onclave, 5D2, Khairani Rd, Andheri, Ansa Industrial Estate, Chandivali, Saki Naka, Mumbai, Maharashtra 400072
+      <span>&nbsp;Open in Maps →</span>
+    </a>
+    <div class="footer-copy">Artium unMute &nbsp;·&nbsp; Artium Academy</div>
+  </footer>
+
+</div>
+
+<script>
+  // Show status: a city is "done" from the day after its show (India time). Preview with ?demo=done
+  (function () {
+    var demo = /[?&]demo=done/.test(location.search);
+    var MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    var box = document.querySelector('.cities');
+    var tiles = [].slice.call(box.querySelectorAll('.tile'));
+
+    tiles.forEach(function (t) {
+      var d = t.getAttribute('data-date'), p = d.split('-');
+      t._t = Date.parse(d + 'T00:00:00+05:30');
+      t._done = demo || Date.now() >= t._t + 864e5;
+      t._dots = p[2] + '.' + p[1] + '.' + p[0];
+      if (!t._done) return;
+
+      t.classList.add('done');
+      var badge = t.querySelector('.tile-badge');
+      badge.className = 'tile-badge wrapped';
+      badge.textContent = '✓ Show done';
+      t.querySelector('.tile-meta').innerHTML = (+p[2]) + ' ' + MONTHS[+p[1] - 1] + ' ' + p[0] + ' &nbsp;·&nbsp; ' + t.getAttribute('data-count') + ' performed';
+      var cta = document.createElement('div');
+      cta.className = 'tile-cta'; cta.textContent = 'See who took the stage';
+      t.querySelector('.tile-meta').parentNode.appendChild(cta);
+
+      var rep = '';
+      for (var i = 0; i < 4; i++) rep += '<span>Done &amp; Dusted</span><b>✦</b>';
+      t.querySelector('.tile-img').insertAdjacentHTML('beforeend', '<div class="dd-strip" aria-hidden="true"><div class="dd-track"><div class="dd-group">' + rep + '</div><div class="dd-group">' + rep + '</div></div></div>');
+      if (demo) t.href += '?demo=done';
+    });
+
+    // upcoming shows first (soonest on top), then finished ones (latest on top); renumber
+    tiles.sort(function (a, b) {
+      if (a._done !== b._done) return a._done ? 1 : -1;
+      return a._done ? b._t - a._t : a._t - b._t;
+    });
+    tiles.forEach(function (t, i) {
+      box.appendChild(t);
+      t.style.setProperty('--i', i);
+      t.querySelector('.tile-num').textContent = (i < 9 ? '0' : '') + (i + 1);
+    });
+
+    // date ticker shows only the next upcoming show
+    var next = tiles.filter(function (t) { return !t._done; })[0];
+    var label = next ? next.getAttribute('data-city') + ' · ' + next._dots : 'More cities soon';
+    var g = '';
+    for (var j = 0; j < 4; j++) g += '<span>' + label + '</span><b>✦</b>';
+    document.querySelector('#ticker .track').innerHTML = '<div class="group">' + g + '</div><div class="group">' + g + '</div>';
+  })();
+
+  (function () {
+    var root = document.documentElement, loader = document.getElementById('loader');
+    var skip = root.classList.contains('skip-loader');
+    var start = Date.now(), MIN = 900, MAX = 1800, finished = false;
+    function finish() {
+      if (finished) return; finished = true;
+      loader.classList.add('done');
+      document.body.classList.add('ready');
+      try { sessionStorage.setItem('um_seen', '1'); } catch (e) {}
+    }
+    if (skip) { document.body.classList.add('ready'); return; }
+    window.addEventListener('load', function () { setTimeout(finish, Math.max(0, MIN - (Date.now() - start))); });
+    setTimeout(finish, MAX); // never hold people longer than this
+  })();
+  // Coming back via the browser's back button: make sure tiles are visible.
+  window.addEventListener('pageshow', function (e) { if (e.persisted) document.body.classList.add('ready'); });
+</script>
+</body>
+</html>
