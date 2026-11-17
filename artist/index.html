@@ -22,10 +22,19 @@
   .ahero .name { position: absolute; z-index: 2; left: 0; right: 0; bottom: clamp(28px, 5vw, 64px); }
   .ahero h1 { font-size: clamp(34px, 6.2vw, 92px); max-width: 14ch; }
   .ahero .line { margin: 12px 0 0; font-size: clamp(16px, 1.6vw, 19px); color: rgba(255,255,255,.85); }
-  /* portrait photos: dark panel on the left, photo on the right */
-  .ahero.tall > img { left: auto; width: min(50%, 720px); right: 0; }
-  .ahero.tall::after { background: linear-gradient(90deg, var(--ink) 0%, var(--ink) 48%, rgba(22,18,15,0) 70%), linear-gradient(0deg, rgba(22,18,15,.6), rgba(22,18,15,0) 40%); }
-  @media (max-width: 760px) { .ahero.tall > img { width: 100%; } .ahero.tall::after { background: linear-gradient(180deg, rgba(22,18,15,0) 40%, rgba(22,18,15,.85) 100%); } }
+  /* portrait photos: the photo also glows behind itself as a blurred backdrop, and the sharp portrait sits
+     on the right at its own proportions, with the name running across its edge */
+  .ahero.tall { --pad: clamp(24px, 4vw, 44px); background: #14100D; }
+  .ahero.tall > img.amb { inset: -12%; width: 124%; height: 124%; filter: blur(56px) saturate(1.25) brightness(.5); animation: none; }
+  .ahero.tall > img.pic { inset: auto; top: var(--pad); height: calc(100% - 2 * var(--pad)); width: auto; aspect-ratio: 4 / 5; max-width: 46%;
+    right: max(var(--gutter), calc((100% - var(--max)) / 2 + var(--gutter))); border-radius: 3px; box-shadow: 0 32px 80px rgba(0,0,0,.5); }
+  .ahero.tall::after { background: linear-gradient(0deg, rgba(14,10,8,.6) 0%, rgba(14,10,8,0) 42%); }
+  @media (max-width: 760px) {
+    .ahero.tall { height: auto; min-height: 0; padding: 28px 0 34px; display: flex; flex-direction: column; align-items: center; gap: 24px; }
+    .ahero.tall > img.pic { position: relative; top: auto; right: auto; height: auto; width: min(70%, 340px); max-width: none; z-index: 1; }
+    .ahero.tall .name { position: relative; bottom: auto; z-index: 2; }
+    .ahero.tall::after { display: none; }
+  }
   .ahero.none .ghost { position: absolute; inset: 0; display: grid; place-items: center; font-weight: 800; font-stretch: 125%; text-transform: uppercase; font-size: 22vw; line-height: .8; color: rgba(255,255,255,.05); white-space: nowrap; overflow: hidden; }
 
   /* ---------- DATE + WATCH ---------- */
@@ -124,7 +133,9 @@
   document.querySelector('meta[name=description]').content = a.name + ', ' + line + '. ' + (past ? 'Performed' : 'Performing') + ' at unMute ' + e.city + ', ' + U.dateMed(e) + '.';
 
   var ph = a.photos || [];
-  var heroSrc = ph.length ? U.photo(ph[0], 2400, 0, true) : null;
+  // wide photo for the top of the page on desktop; on a phone a wide frame crops to a soft sliver, so it gets the portrait
+  var narrow = window.matchMedia && window.matchMedia('(max-width: 760px)').matches;
+  var heroSrc = a.heroPhoto && !narrow ? U.photo(a.heroPhoto, 2400, 0, true) : ph.length ? U.photo(ph[0], 2400, 0, true) : null;
   var aboutSrc = ph.length ? U.photo(ph[2] || ph[1] || ph[0], 1100, 1100) : null;
   var ext = '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1h8v8M11 1 1 11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>';
   var yt = a.video ? 'https://www.youtube.com/watch?v=' + a.video : '';
@@ -184,10 +195,16 @@
     (others.length ? '<section class="rail"><div class="wrap head"><h2 class="d">Also at unMute ' + esc(e.city) + '</h2><a class="ulink" href="' + U.editionURL(e) + '">See the full lineup</a></div><div class="track">' +
       others.map(function (x) { return U.card(x); }).join('') + '</div></section>' : '');
 
-  /* portrait photos get the split hero */
-  if (ph.length && /^yt:[^:]+:0/.test(ph[0])) page.querySelector('.ahero').classList.add('tall');
-  var hi = page.querySelector('.ahero > img');
-  if (hi) { var chk = function () { if (hi.naturalHeight > hi.naturalWidth) hi.parentNode.classList.add('tall'); }; hi.complete ? chk() : hi.addEventListener('load', chk); }
+  /* portrait photos get their own hero: sharp portrait on the right, the same photo blurred behind it */
+  var hero = page.querySelector('.ahero'), hi = page.querySelector('.ahero > img');
+  function makeTall() {
+    if (!hi || hero.classList.contains('tall')) return;
+    hero.classList.add('tall'); hi.classList.add('pic');
+    var amb = hi.cloneNode(); amb.className = 'amb'; amb.alt = ''; amb.setAttribute('aria-hidden', 'true'); amb.removeAttribute('fetchpriority');
+    hero.insertBefore(amb, hi);
+  }
+  if (hi && ph.length && /^yt:[^:]+:0/.test(ph[0])) makeTall();
+  if (hi) { var chk = function () { if (hi.naturalHeight > hi.naturalWidth) makeTall(); }; hi.complete ? chk() : hi.addEventListener('load', chk); }
 
   /* "More" only when the bio is actually cut off */
   var bioEl = document.getElementById('bio'), more = document.getElementById('more');
