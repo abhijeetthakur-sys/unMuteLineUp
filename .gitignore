@@ -1,0 +1,4 @@
+.DS_Store
+# raw photo originals: heavy, keep them in Google Drive. The web-ready copies in img/ are committed.
+photos/
+assets/

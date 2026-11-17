@@ -1,0 +1,139 @@
+<title>unMute Performer Form</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap" rel="stylesheet">
+<style>
+  /* Layout: one reading column; the form's pages run down it, a filter bar sticks above them. Same type and colours as the unMute site. */
+  :root {
+    --ink: #16120F; --paper: #F2F0EB; --card: #FBFAF8; --soft: #6B635C; --line: #DDD8CF;
+    --pink: #E00073; --yellow: #EBE23F; --on-yellow: #16120F;
+    --w: #2B5BD7; --n: #8A4B00; --i: #B0005A; --p: #5C5C5C;
+    --display: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+    --ink: #F2F0EB; --paper: #16120F; --card: #211C18; --soft: #A69D94; --line: #3A332D;
+    --pink: #FF4FA3; --w: #8FB0FF; --n: #F0B26A; --i: #FF7CBE; --p: #B5B5B5; color-scheme: dark } }
+  :root[data-theme="dark"] {
+    --ink: #F2F0EB; --paper: #16120F; --card: #211C18; --soft: #A69D94; --line: #3A332D;
+    --pink: #FF4FA3; --w: #8FB0FF; --n: #F0B26A; --i: #FF7CBE; --p: #B5B5B5; color-scheme: dark }
+
+  body { background: var(--paper); color: var(--ink); font: 400 16px/1.55 var(--display); font-stretch: 100%; }
+  body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--paper); }
+  .wrap { max-width: 760px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+
+  header { padding-block: clamp(40px, 8vw, 88px) 28px; }
+  h1 { font-weight: 800; font-stretch: 125%; text-transform: uppercase; font-size: clamp(34px, 7vw, 60px); line-height: .95; letter-spacing: -.01em; margin: 0 0 22px; text-wrap: balance; }
+  .desc p { margin: 0 0 .8em; max-width: 62ch; }
+  .stats { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 22px; color: var(--soft); font-size: 15px; }
+  .stats b { color: var(--ink); font-weight: 700; }
+
+  .bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--paper); border-bottom: 1px solid var(--line); }
+  .bar .wrap { display: grid; gap: 8px; padding-block: 12px; }
+  .bar .row { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; }
+  .bar .row + .row button { font-size: 14px; padding: 5px 12px; }
+  .bar button { flex: none; font: 500 15px var(--display); color: var(--ink); background: transparent; border: 1.5px solid var(--line); border-radius: 999px; padding: 7px 14px; cursor: pointer; }
+  .bar button[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .bar button:focus-visible { outline: 2px solid var(--pink); outline-offset: 2px; }
+  .bar small { opacity: .65; margin-left: 4px; }
+
+  main { padding-block: 10px 90px; }
+  section.pg { padding-top: 46px; }
+  .pg-h { display: grid; grid-template-columns: auto 1fr; gap: 0 14px; align-items: baseline; border-top: 2px solid var(--ink); padding-top: 14px; margin-bottom: 18px; }
+  .pg-h .no { font-weight: 800; font-stretch: 75%; font-size: 30px; line-height: 1; color: var(--pink); font-variant-numeric: tabular-nums; }
+  .pg-h h2 { margin: 0; font-weight: 800; font-stretch: 112%; text-transform: uppercase; font-size: clamp(22px, 4vw, 30px); line-height: 1.05; letter-spacing: .005em; }
+  .pg-h p { grid-column: 2; margin: 8px 0 0; color: var(--soft); max-width: 58ch; }
+
+  .q { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 18px 18px 16px; margin-top: 10px; }
+  .q-top { display: flex; justify-content: space-between; gap: 6px 16px; flex-wrap: wrap; align-items: baseline; }
+  .q h3 { margin: 0; font-size: 18px; font-weight: 600; line-height: 1.3; min-width: 0; flex: 1 1 22ch; }
+  .q h3 .req { color: var(--pink); margin-left: 3px; }
+  .kind { font-size: 13px; color: var(--soft); white-space: nowrap; }
+  .help { margin: 6px 0 0; color: var(--soft); font-size: 15px; white-space: pre-line; max-width: 60ch; }
+  .field { margin-top: 12px; height: 1px; background: var(--line); max-width: 52%; }
+  .field.para { height: 44px; background: none; border-bottom: 1px solid var(--line); max-width: none; }
+  .opts { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 6px; font-size: 15px; }
+  .opts li { display: flex; gap: 10px; align-items: baseline; }
+  .opts li::before { content: ""; flex: none; width: 13px; height: 13px; border: 1.5px solid var(--soft); border-radius: 50%; transform: translateY(1px); }
+  .opts.sq li::before { border-radius: 3px; }
+  .opts.dd { border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; max-width: 320px; }
+  .opts.dd li::before { display: none; }
+  .uses { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+  .use { font-size: 12px; font-weight: 600; letter-spacing: .02em; padding: 3px 8px; border-radius: 5px; border: 1px solid currentColor; }
+  .use.W { color: var(--w); } .use.N { color: var(--n); } .use.I { color: var(--i); } .use.P { color: var(--p); }
+  h2.part { font-weight: 800; font-stretch: 125%; text-transform: uppercase; font-size: clamp(15px, 2.4vw, 17px); letter-spacing: .06em; color: var(--soft); margin: 64px 0 -18px; }
+  .cond { margin: 10px 0 0; font-size: 14px; color: var(--soft); font-style: italic; }
+  .only { font-size: 12px; font-weight: 600; padding: 3px 8px; border-radius: 5px; background: var(--yellow); color: var(--on-yellow); }
+
+  footer { border-top: 1px solid var(--line); padding-block: 26px 40px; color: var(--soft); font-size: 15px; }
+  footer p { margin: 0 0 .6em; max-width: 62ch; }
+  footer code { font-size: 14px; }
+</style>
+
+<header class="wrap">
+  <h1>unMute performer form</h1>
+  <div class="desc" id="desc"></div>
+  <div class="stats" id="stats"></div>
+</header>
+
+<div class="bar">
+  <div class="wrap">
+    <div class="row" role="group" aria-label="Show the form for" id="who"></div>
+    <div class="row" role="group" aria-label="Show questions used for" id="filters"></div>
+  </div>
+</div>
+
+<main class="wrap" id="form"></main>
+
+<footer class="wrap">
+  <p>Each numbered page is one screen of the form. A pink star means required. Learners, teachers and Artium team members each see only the questions meant for them.</p>
+  <p>The tags show where each answer is used: the unMute website, the Artium newsletter, Instagram posts, or kept private for the team.</p>
+</footer>
+
+<script>
+(function () {
+  var F = __FORM__;
+  var USE = { W: 'Website', N: 'Newsletter', I: 'Instagram', P: 'Private' };
+  var WHO = { L: 'Learner', T: 'Teacher or mentor', M: 'Artium team' };
+  var KIND = { text: 'Short answer', email: 'Email', para: 'Paragraph', choice: 'Pick one', check: 'Tick all that apply', list: 'Dropdown', photos: 'Photo upload' };
+  var who = 'L', use = '';
+  var QT = {}; F.before.concat(F.after).forEach(function (s) { s.items.forEach(function (q) { QT[q.id] = q.q; }); });
+  function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+  document.getElementById('desc').innerHTML = F.intro.map(function (p) { return '<p>' + esc(p) + '</p>'; }).join('');
+
+  function chips(el, list, cur, attr) {
+    el.innerHTML = list.map(function (b) { return '<button type="button" ' + attr + '="' + b[0] + '" aria-pressed="' + (b[0] === cur) + '">' + esc(b[1]) + '</button>'; }).join('');
+  }
+  function part(title, pages, offset) {
+    return '<h2 class="part">' + esc(title) + '</h2>' + pages.map(function (s, n) {
+      var items = s.items.filter(function (q) { return q.who.indexOf(who) > -1 && (!use || q.use.indexOf(use) > -1); });
+      if (!items.length) return '';
+      return '<section class="pg"><div class="pg-h"><span class="no">' + (n + 1 + offset) + '</span><h2>' + esc(s.title) + '</h2>' + (s.help ? '<p>' + esc(s.help) + '</p>' : '') + '</div>' +
+        items.map(function (q) {
+          var opts = q.opts || [];
+          var body = q.t === 'text' || q.t === 'email' ? '<div class="field"></div>' : q.t === 'para' ? '<div class="field para"></div>' : q.t === 'photos' ? '<div class="field para"></div>' :
+            '<ul class="opts' + (q.t === 'check' ? ' sq' : q.t === 'list' ? ' dd' : '') + '">' + opts.map(function (o) { return '<li>' + esc(o) + '</li>'; }).join('') + '</ul>';
+          var cond = q.show ? '<p class="cond">Only shown if ' + (q.show[1][0] === '*' ? 'they add photos' : 'the answer to "' + esc(QT[q.show[0]]) + '" is ' + q.show[1].map(esc).join(' or ')) + '</p>' : '';
+          return '<div class="q"><div class="q-top"><h3>' + esc(q.q) + (q.req ? '<span class="req" aria-label="required">*</span>' : '') + '</h3><span class="kind">' + KIND[q.t] + '</span></div>' +
+            (q.help ? '<p class="help">' + esc(q.help) + '</p>' : '') + body + cond +
+            '<div class="uses">' + q.use.split('').map(function (k) { return '<span class="use ' + k + '">' + USE[k] + '</span>'; }).join('') +
+            (q.who !== 'LTM' ? '<span class="only">Only for ' + q.who.split('').map(function (k) { return WHO[k].toLowerCase(); }).join(', ') + 's</span>' : '') + '</div></div>';
+        }).join('') + '</section>';
+    }).join('');
+  }
+  function render() {
+    chips(document.getElementById('who'), [['L', 'Learners'], ['T', 'Teachers and mentors'], ['M', 'Artium team']], who, 'data-who');
+    chips(document.getElementById('filters'), [['', 'All uses']].concat(Object.keys(USE).map(function (k) { return [k, USE[k]]; })), use, 'data-use');
+    var n = 0, req = 0;
+    F.before.concat(F.after).forEach(function (s) { s.items.forEach(function (q) { if (q.who.indexOf(who) > -1) { n++; if (q.req) req++; } }); });
+    document.getElementById('stats').innerHTML = '<span>For ' + esc(WHO[who].toLowerCase()) + 's: <b>' + n + '</b> questions, <b>' + req + '</b> required</span><span>One form, sent the day after the show. About 20 minutes</span>';
+    document.getElementById('form').innerHTML = part('Sent the day after the show', F.before, 0);
+  }
+  document.querySelector('.bar').addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    if (b.hasAttribute('data-who')) who = b.getAttribute('data-who'); else use = b.getAttribute('data-use');
+    render();
+  });
+  render();
+})();
+</script>
