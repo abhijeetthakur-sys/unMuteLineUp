@@ -91,6 +91,7 @@ var ENDPOINT = 'https://script.google.com/macros/s/AKfycbxuoOuCJkiU6EgbmIwfTIs5e
   // short links: /form/kolkata-2027 and /form/kolkata-2027/after (a show's id from data.js)
   var path = location.pathname.match(/\/form\/([a-z0-9-]+?)(?:\/(after))?\/?$/i);
   var PART = params.get('part') === 'after' || (path && path[2]) ? 'after' : 'before';
+  if (!F[PART] || !F[PART].length) PART = 'before';   // one form now: old /after links open it too
   var PAGES = F[PART], KEY = 'um-form-' + PART;
   var app = document.getElementById('app'), nav = document.getElementById('nav');
   var A = {}, photos = [], step = -1;   // step -1 = intro, PAGES.length = review
@@ -158,7 +159,7 @@ var ENDPOINT = 'https://script.google.com/macros/s/AKfycbxuoOuCJkiU6EgbmIwfTIs5e
     step = -1;
     var started = Object.keys(A).some(function (k) { return k !== 'edition'; });
     var paras = PART === 'after' ? F.after_intro : F.intro;
-    app.innerHTML = '<div class="intro"><h1 class="d">' + (PART === 'after' ? 'After the show' : 'Your unMute') + '</h1>' +
+    app.innerHTML = '<div class="intro"><h1 class="d">' + 'Your unMute' + '</h1>' +
       paras.map(function (p) { return '<p>' + esc(p) + '</p>'; }).join('') +
       '<button type="button" class="btn" id="start">' + (started ? 'Continue where you left off' : 'Start') + '</button>' +
       (started ? '<a href="#" class="alt ulink" id="fresh">Start again with a blank form</a>' : '') + '</div>';

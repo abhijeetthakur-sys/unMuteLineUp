@@ -2,9 +2,9 @@
 window.UNMUTE_FORM = {
  "title": "unMute performer form",
  "intro": [
-  "You are on an unMute lineup. This form gives us what we need for your page on the unMute website, your Artium newsletter and our Instagram posts about you.",
+  "Thank you for performing at unMute. This form gives us what we need for your page on the unMute website, your Artium newsletter and our Instagram posts about you.",
   "Answer the way you would talk to us. Short and honest is better than polished. Anything without a star is optional. We write it up and send it to you to approve before anything is published.",
-  "It takes about 15 minutes. Your answers are saved on this device as you go, so you can stop and come back."
+  "It takes about 20 minutes. Your answers are saved on this device as you go, so you can stop and come back."
  ],
  "after_intro": [
   "Thank you for performing at unMute. A few questions about the night, while it is fresh. About 5 minutes."
@@ -18,7 +18,7 @@ window.UNMUTE_FORM = {
     {
      "id": "role",
      "t": "choice",
-     "q": "You are performing as",
+     "q": "You performed as",
      "help": "",
      "req": true,
      "opts": [
@@ -125,7 +125,7 @@ window.UNMUTE_FORM = {
     {
      "id": "format",
      "t": "choice",
-     "q": "How are you performing?",
+     "q": "How did you perform?",
      "help": "",
      "req": true,
      "opts": [
@@ -140,7 +140,7 @@ window.UNMUTE_FORM = {
     {
      "id": "partners",
      "t": "text",
-     "q": "If it is a duet or group, who with?",
+     "q": "If it was a duet or group, who with?",
      "help": "Full names.",
      "req": false,
      "opts": null,
@@ -425,7 +425,7 @@ window.UNMUTE_FORM = {
     {
      "id": "songs",
      "t": "para",
-     "q": "The songs you are performing",
+     "q": "The songs you performed",
      "help": "One per line, with the film or album. For example: Tum Ho, Rockstar.",
      "req": true,
      "opts": null,
@@ -437,7 +437,7 @@ window.UNMUTE_FORM = {
      "id": "song_meaning",
      "t": "para",
      "q": "What does your song mean to you?",
-     "help": "If you are singing more than one, pick the one closest to you.",
+     "help": "If you sang more than one, pick the one closest to you.",
      "req": true,
      "opts": null,
      "use": "NI",
@@ -457,7 +457,7 @@ window.UNMUTE_FORM = {
      "help": "",
      "req": true,
      "opts": [
-      "Never, this is my first time",
+      "Never, this was my first time",
       "A few times",
       "Many times"
      ],
@@ -468,7 +468,7 @@ window.UNMUTE_FORM = {
     {
      "id": "prep_time",
      "t": "text",
-     "q": "How long are you preparing for?",
+     "q": "How long did you prepare?",
      "help": "For example: three weeks, an hour a day.",
      "req": false,
      "opts": null,
@@ -479,7 +479,7 @@ window.UNMUTE_FORM = {
     {
      "id": "practice_day",
      "t": "para",
-     "q": "What does a practice day look like?",
+     "q": "What did a practice day look like?",
      "help": "",
      "req": false,
      "opts": null,
@@ -490,7 +490,7 @@ window.UNMUTE_FORM = {
     {
      "id": "hardest",
      "t": "para",
-     "q": "What is the hardest part?",
+     "q": "What was the hardest part?",
      "help": "",
      "req": false,
      "opts": null,
@@ -501,7 +501,7 @@ window.UNMUTE_FORM = {
     {
      "id": "teacher_advice",
      "t": "para",
-     "q": "The best advice your teacher has given you for this",
+     "q": "The best advice your teacher gave you for this",
      "help": "",
      "req": false,
      "opts": null,
@@ -512,7 +512,7 @@ window.UNMUTE_FORM = {
     {
      "id": "alongside",
      "t": "para",
-     "q": "What is it like preparing alongside your learners?",
+     "q": "What was it like preparing alongside your learners?",
      "help": "",
      "req": false,
      "opts": null,
@@ -523,12 +523,84 @@ window.UNMUTE_FORM = {
     {
      "id": "audience_feel",
      "t": "para",
-     "q": "What do you want the audience to feel?",
+     "q": "What did you want the audience to feel?",
      "help": "",
      "req": false,
      "opts": null,
      "use": "NI",
      "who": "T",
+     "show": null
+    }
+   ]
+  },
+  {
+   "title": "The night",
+   "help": "Your words here become quotes on your page, in your newsletter and in your testimonial clip.",
+   "items": [
+    {
+     "id": "before_walking_on",
+     "t": "para",
+     "q": "What did you feel just before you walked on?",
+     "help": "",
+     "req": true,
+     "opts": null,
+     "use": "WNI",
+     "who": "LTM",
+     "show": null
+    },
+    {
+     "id": "moment",
+     "t": "para",
+     "q": "One moment from the night you will keep",
+     "help": "",
+     "req": true,
+     "opts": null,
+     "use": "WNI",
+     "who": "LTM",
+     "show": null
+    },
+    {
+     "id": "watching_learners",
+     "t": "para",
+     "q": "Watching your learners on stage, what stayed with you?",
+     "help": "",
+     "req": false,
+     "opts": null,
+     "use": "NI",
+     "who": "T",
+     "show": null
+    },
+    {
+     "id": "who_came",
+     "t": "text",
+     "q": "Who came to watch you?",
+     "help": "",
+     "req": false,
+     "opts": null,
+     "use": "N",
+     "who": "LM",
+     "show": null
+    },
+    {
+     "id": "what_they_said",
+     "t": "para",
+     "q": "What did they say to you afterwards?",
+     "help": "",
+     "req": false,
+     "opts": null,
+     "use": "N",
+     "who": "LM",
+     "show": null
+    },
+    {
+     "id": "advice",
+     "t": "para",
+     "q": "What would you tell someone about to perform for the first time?",
+     "help": "",
+     "req": false,
+     "opts": null,
+     "use": "NI",
+     "who": "LTM",
      "show": null
     }
    ]
@@ -768,124 +840,5 @@ window.UNMUTE_FORM = {
    ]
   }
  ],
- "after": [
-  {
-   "title": "After the show",
-   "help": "Your words here become the quotes on your page, in your newsletter and in your testimonial clip.",
-   "items": [
-    {
-     "id": "role",
-     "t": "choice",
-     "q": "You performed as",
-     "help": "",
-     "req": true,
-     "opts": [
-      "An Artium learner",
-      "An Artium teacher or mentor",
-      "Part of the Artium team"
-     ],
-     "use": "W",
-     "who": "LTM",
-     "show": null
-    },
-    {
-     "id": "name",
-     "t": "text",
-     "q": "Your full name",
-     "help": "",
-     "req": true,
-     "opts": null,
-     "use": "P",
-     "who": "LTM",
-     "show": null
-    },
-    {
-     "id": "edition",
-     "t": "list",
-     "q": "Your unMute",
-     "help": "",
-     "req": true,
-     "opts": [
-      "Mumbai, December 2026",
-      "Kolkata, January 2027",
-      "London, July 2026",
-      "Hyderabad, May 2026",
-      "Chennai, February 2026",
-      "Mumbai, December 2025",
-      "Bangalore, October 2025",
-      "Other"
-     ],
-     "use": "P",
-     "who": "LTM",
-     "show": null
-    },
-    {
-     "id": "before_walking_on",
-     "t": "para",
-     "q": "What did you feel just before you walked on?",
-     "help": "",
-     "req": true,
-     "opts": null,
-     "use": "WNI",
-     "who": "LTM",
-     "show": null
-    },
-    {
-     "id": "moment",
-     "t": "para",
-     "q": "One moment from the night you will keep",
-     "help": "",
-     "req": true,
-     "opts": null,
-     "use": "WNI",
-     "who": "LTM",
-     "show": null
-    },
-    {
-     "id": "watching_learners",
-     "t": "para",
-     "q": "Watching your learners on stage, what stayed with you?",
-     "help": "",
-     "req": false,
-     "opts": null,
-     "use": "NI",
-     "who": "T",
-     "show": null
-    },
-    {
-     "id": "who_came",
-     "t": "text",
-     "q": "Who came to watch you?",
-     "help": "",
-     "req": false,
-     "opts": null,
-     "use": "N",
-     "who": "LM",
-     "show": null
-    },
-    {
-     "id": "what_they_said",
-     "t": "para",
-     "q": "What did they say to you afterwards?",
-     "help": "",
-     "req": false,
-     "opts": null,
-     "use": "N",
-     "who": "LM",
-     "show": null
-    },
-    {
-     "id": "advice",
-     "t": "para",
-     "q": "What would you tell someone about to perform for the first time?",
-     "help": "",
-     "req": false,
-     "opts": null,
-     "use": "NI",
-     "who": "LTM",
-     "show": null
-    }
-   ]
-  }
- ]
+ "after": []
 };
