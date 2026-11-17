@@ -1,0 +1,8 @@
+# in the repo, but not on the live site
+*.md
+tools/
+photos/
+assets/
+hub-old.html
+demo.html
+home.html
