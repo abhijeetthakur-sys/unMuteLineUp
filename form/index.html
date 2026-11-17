@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../site.css">
+<link rel="stylesheet" href="/site.css">
 <style>
   body { background: var(--paper); }
   .fbar { position: sticky; top: 0; z-index: 10; background: var(--paper); border-bottom: 1px solid var(--line); }
@@ -73,14 +73,14 @@
   .done h1 { color: var(--ink); }
 </style>
 </head>
-<body data-root="../">
+<body data-root="/">
 <div class="fbar"><div class="in"><span id="logo"></span><span class="count" id="count"></span></div><div class="prog"><i id="prog"></i></div></div>
 <main class="fwrap" id="app" aria-live="polite"></main>
 <nav class="fnav" id="nav" hidden><div class="in"><button type="button" class="back" id="back">Back</button><button type="button" class="btn" id="next">Next</button></div></nav>
 
-<script src="../data.js"></script>
-<script src="../site.js"></script>
-<script src="spec.js"></script>
+<script src="/data.js"></script>
+<script src="/site.js"></script>
+<script src="/form/spec.js"></script>
 <script>
 /* Where answers are sent: the web app URL from tools/form-backend.gs (Deploy > New deployment > Web app). */
 var ENDPOINT = 'https://script.google.com/macros/s/AKfycbxuoOuCJkiU6EgbmIwfTIs5eWXAPTZrx0aD_bJ2J8vI59YtjWuv_JwZ39s1NtVFpexVIw/exec';
@@ -88,7 +88,9 @@ var ENDPOINT = 'https://script.google.com/macros/s/AKfycbxuoOuCJkiU6EgbmIwfTIs5e
 (function () {
   var F = window.UNMUTE_FORM, U = window.UM, esc = U.esc;
   var params = new URLSearchParams(location.search);
-  var PART = params.get('part') === 'after' ? 'after' : 'before';
+  // short links: /form/kolkata-2027 and /form/kolkata-2027/after (a show's id from data.js)
+  var path = location.pathname.match(/\/form\/([a-z0-9-]+?)(?:\/(after))?\/?$/i);
+  var PART = params.get('part') === 'after' || (path && path[2]) ? 'after' : 'before';
   var PAGES = F[PART], KEY = 'um-form-' + PART;
   var app = document.getElementById('app'), nav = document.getElementById('nav');
   var A = {}, photos = [], step = -1;   // step -1 = intro, PAGES.length = review
@@ -98,6 +100,12 @@ var ENDPOINT = 'https://script.google.com/macros/s/AKfycbxuoOuCJkiU6EgbmIwfTIs5e
   try { A = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { A = {}; }
   // ?e=kolkata-2027 fills in the edition
   var eParam = params.get('e'), ed = eParam && U.ed(eParam);
+  if (!ed && path) ed = U.ed(path[1].toLowerCase());
+  if (!ed && path && path[1] !== 'index') {   // a city name: its next show, or its latest one if none is coming
+    var c = path[1].toLowerCase(), mine = U.D.editions.filter(function (x) { return x.city.toLowerCase() === c && !x.tba; });
+    ed = mine.filter(function (x) { return !U.isPast(x); }).sort(function (x, y) { return Date.parse(x.date) - Date.parse(y.date); })[0] ||
+         mine.sort(function (x, y) { return Date.parse(y.date) - Date.parse(x.date); })[0];
+  }
   if (ed && !A.edition) A.edition = ed.city + ', ' + U.MONTHS[U.parts(ed).m - 1] + ' ' + U.year(ed);
   function save() { try { localStorage.setItem(KEY, JSON.stringify(A)); } catch (e) {} }
 
@@ -208,10 +216,10 @@ var ENDPOINT = 'https://script.google.com/macros/s/AKfycbxuoOuCJkiU6EgbmIwfTIs5e
     [].slice.call(files).filter(function (f) { return /^image\//.test(f.type); }).slice(0, 5 - photos.length).forEach(function (f) {
       var img = new Image(), url = URL.createObjectURL(f);
       img.onload = function () {
-        var s = Math.min(1, 2000 / Math.max(img.width, img.height)), c = document.createElement('canvas');
+        var s = Math.min(1, 2800 / Math.max(img.width, img.height)), c = document.createElement('canvas');
         c.width = Math.round(img.width * s); c.height = Math.round(img.height * s);
         c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
-        photos.push({ name: f.name.replace(/\.[^.]+$/, '') + '.jpg', data: c.toDataURL('image/jpeg', 0.86) });
+        photos.push({ name: f.name.replace(/\.[^.]+$/, '') + '.jpg', data: c.toDataURL('image/jpeg', 0.9) });
         URL.revokeObjectURL(url); drawThumbs(); refresh();
       };
       img.src = url;
@@ -300,7 +308,7 @@ var ENDPOINT = 'https://script.google.com/macros/s/AKfycbxuoOuCJkiU6EgbmIwfTIs5e
     try { localStorage.removeItem(KEY); } catch (e) {}
     step = 'done';
     app.innerHTML = '<div class="intro done"><h1 class="d">Thank you' + (A.caption_name || A.name ? ', ' + esc((A.caption_name || A.name).split(' ')[0]) : '') + '</h1><p>' + esc(F.thanks) + '</p>' +
-      '<a class="btn" href="../index.html">Go to the unMute site</a></div>';
+      '<a class="btn" href="/">Go to the unMute site</a></div>';
     document.getElementById('prog').style.width = '100%'; document.getElementById('count').textContent = 'Sent';
     nav.hidden = true; window.scrollTo(0, 0);
   }

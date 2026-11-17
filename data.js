@@ -24,6 +24,9 @@
    and every page shows a small "New from unMute <city>" card when it opens.
    Check it on any date by adding ?preview=2027-01-02 to a page's address.
 
+   Edition ids are city-year, e.g. 'kolkata-2027'. They make the form links (unmutelineup.vercel.app/form/kolkata-2027).
+   If a city has two shows in one year, add the month to the newer one: 'mumbai-2027-oct'.
+
    Photos:
      'cl:<version/path>'    an image in Artium's Cloudinary, cropped to the face automatically
      'clw:<version/path>'   an image in Cloudinary, cropped to the most interesting area (groups, duos)

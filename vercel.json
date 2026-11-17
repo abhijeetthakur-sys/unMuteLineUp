@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/form/:city", "destination": "/form/index.html" },
+    { "source": "/form/:city/after", "destination": "/form/index.html" }
+  ]
+}

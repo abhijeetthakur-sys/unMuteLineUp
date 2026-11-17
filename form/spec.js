@@ -601,14 +601,25 @@ window.UNMUTE_FORM = {
    ]
   },
   {
-   "title": "Photos and links",
-   "help": "We take the stage photos and videos. These are optional extras.",
+   "title": "Photos, videos and links",
+   "help": "We take the stage photos and videos. These are optional extras of your own.",
    "items": [
     {
      "id": "photos",
      "t": "photos",
-     "q": "Personal photos",
-     "help": "Up to 5. A childhood photo, you practising, you with your teacher or family. Clear, unfiltered, not screenshots.",
+     "q": "Add a few photos",
+     "help": "Up to 5, straight from your phone. A childhood photo, you practising, you with your teacher or family. Clear and unfiltered, no screenshots.",
+     "req": false,
+     "opts": null,
+     "use": "WNI",
+     "who": "LTM",
+     "show": null
+    },
+    {
+     "id": "media_link",
+     "t": "text",
+     "q": "A link to more photos or videos in full quality",
+     "help": "For videos, or original photo files. Put them in a Google Drive folder, then click Share, set General access to \"Anyone with the link\", copy the link and paste it here. iCloud or WeTransfer links work too.",
      "req": false,
      "opts": null,
      "use": "WNI",
@@ -618,18 +629,13 @@ window.UNMUTE_FORM = {
     {
      "id": "photo_credit",
      "t": "text",
-     "q": "Who took these photos?",
-     "help": "So we can credit them.",
+     "q": "Who took your photos or videos?",
+     "help": "So we can credit them. Leave blank if it was you or family.",
      "req": false,
      "opts": null,
      "use": "W",
      "who": "LTM",
-     "show": [
-      "photos",
-      [
-       "*"
-      ]
-     ]
+     "show": null
     },
     {
      "id": "instagram",
