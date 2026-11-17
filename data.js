@@ -165,6 +165,16 @@ window.UNMUTE = {
       photos: ['yt:6mXIgY4jVTg:2 @50%', 'yt:6mXIgY4jVTg:1 @42%'], vids: [{ id: '6mXIgY4jVTg', song: 'Chahun Main Ya Naa' }] },
     { slug: 'rajat-nigam', name: 'Rajat Nigam', ed: 'london-2026', line: 'Artium learner' },
 
+    // Mumbai, December 2026 (7 of 11 so far)
+    { slug: 'ian-daniel', name: 'Ian Daniel', ed: 'mumbai-2026' },
+    { slug: 'anay-pratapwar', name: 'Anay Pratapwar', ed: 'mumbai-2026' },
+    { slug: 'apeksha-panchal', name: 'Apeksha Panchal', ed: 'mumbai-2026' },
+    { slug: 'aadya-mohanty', name: 'Aadya Mohanty', ed: 'mumbai-2026' },
+    { slug: 'sarah-shinde', name: 'Sarah Shinde', ed: 'mumbai-2026' },
+    { slug: 'anvita-mohod', name: 'Anvita Mohod', ed: 'mumbai-2026' },
+    { slug: 'kaustubh-bagchi', name: 'Kaustubh Bagchi', ed: 'mumbai-2026' },
+
+
     /* ---- Kolkata, 22 Jan 2027 (source: Kolkata lineup page) ---- */
     { slug: 'subhankar-banerjee', name: 'Subhankar Banerjee', ed: 'kolkata-2027', photos: ['https://res.cloudinary.com/dd7s6bb58/image/upload/c_fill,g_face,w_600,h_750,q_auto,f_auto/v1789729065/Subhankar_qjyrba.png'] },
     { slug: 'drohan-chakroborty', name: 'Drohan Chakroborty', ed: 'kolkata-2027', photos: ['https://res.cloudinary.com/dd7s6bb58/image/upload/c_fill,g_face,w_600,h_750,q_auto,f_auto/v1789729059/Drohan_eutehn.png'] },
@@ -186,9 +196,91 @@ window.UNMUTE.artists.forEach(function (a) {
 /* LOCAL PHOTOS: written by tools/photos.py, do not edit */
 (function (L) {
   window.UNMUTE.editions.forEach(function (e) { if (L.groups[e.id]) e.group = L.groups[e.id]; });
-  window.UNMUTE.artists.forEach(function (a) { if (L.artists[a.slug]) a.photos = L.artists[a.slug]; });
+  window.UNMUTE.artists.forEach(function (a) {
+    if (L.artists[a.slug]) a.photos = L.artists[a.slug];
+    if (L.lineup[a.slug]) a.lineupPhoto = L.lineup[a.slug];
+    if (L.hero[a.slug]) a.heroPhoto = L.hero[a.slug];
+  });
 })({
- "artists": {},
- "groups": {}
+ "artists": {
+  "hridaya-dande": [
+   "img/mumbai-2025/hridaya-dande-1.jpg",
+   "img/mumbai-2025/hridaya-dande-2.jpg"
+  ],
+  "prissha-cholera": [
+   "img/mumbai-2025/prissha-cholera-1.jpg",
+   "img/mumbai-2025/prissha-cholera-2.jpg"
+  ],
+  "neev-kanani": [
+   "img/mumbai-2025/neev-kanani-1.jpg",
+   "img/mumbai-2025/neev-kanani-2.jpg"
+  ],
+  "abhishek-marotkar": [
+   "img/mumbai-2025/abhishek-marotkar-1.jpg",
+   "img/mumbai-2025/abhishek-marotkar-2.jpg"
+  ],
+  "jaydeep": [
+   "img/mumbai-2025/jaydeep-1.jpg",
+   "img/mumbai-2025/jaydeep-2.jpg"
+  ],
+  "sudhanshu-shome": [
+   "img/mumbai-2025/sudhanshu-shome-1.jpg",
+   "img/mumbai-2025/sudhanshu-shome-2.jpg"
+  ],
+  "shalini-bairagi": [
+   "img/mumbai-2025/shalini-bairagi-1.jpg",
+   "img/mumbai-2025/shalini-bairagi-2.jpg"
+  ],
+  "lekhashree-rajashekhar": [
+   "img/mumbai-2025/lekhashree-rajashekhar-1.jpg",
+   "img/mumbai-2025/lekhashree-rajashekhar-2.jpg"
+  ],
+  "prashanthine-saravanan": [
+   "img/chennai-2026/prashanthine-saravanan-1.jpg",
+   "img/chennai-2026/prashanthine-saravanan-2.jpg"
+  ],
+  "ahana-balaji": [
+   "img/chennai-2026/ahana-balaji-1.jpg",
+   "img/chennai-2026/ahana-balaji-2.jpg"
+  ],
+  "aairah-singh": [
+   "img/chennai-2026/aairah-singh-1.jpg",
+   "img/chennai-2026/aairah-singh-2.jpg"
+  ],
+  "ridhudev": [
+   "img/chennai-2026/ridhudev-1.jpg",
+   "img/chennai-2026/ridhudev-2.jpg"
+  ],
+  "emilin": [
+   "img/chennai-2026/emilin-1.jpg",
+   "img/chennai-2026/emilin-2.jpg"
+  ],
+  "thanika-varunkumar": [
+   "img/london-2026/thanika-varunkumar-1.jpg",
+   "img/london-2026/thanika-varunkumar-2.jpg"
+  ],
+  "sudheesh-kakkunath": [
+   "img/london-2026/sudheesh-kakkunath-1.jpg",
+   "img/london-2026/sudheesh-kakkunath-2.jpg"
+  ]
+ },
+ "groups": {},
+ "lineup": {},
+ "hero": {
+  "hridaya-dande": "img/mumbai-2025/hridaya-dande-hero.jpg",
+  "prissha-cholera": "img/mumbai-2025/prissha-cholera-hero.jpg",
+  "neev-kanani": "img/mumbai-2025/neev-kanani-hero.jpg",
+  "abhishek-marotkar": "img/mumbai-2025/abhishek-marotkar-hero.jpg",
+  "sudhanshu-shome": "img/mumbai-2025/sudhanshu-shome-hero.jpg",
+  "shalini-bairagi": "img/mumbai-2025/shalini-bairagi-hero.jpg",
+  "lekhashree-rajashekhar": "img/mumbai-2025/lekhashree-rajashekhar-hero.jpg",
+  "prashanthine-saravanan": "img/chennai-2026/prashanthine-saravanan-hero.jpg",
+  "ahana-balaji": "img/chennai-2026/ahana-balaji-hero.jpg",
+  "aairah-singh": "img/chennai-2026/aairah-singh-hero.jpg",
+  "ridhudev": "img/chennai-2026/ridhudev-hero.jpg",
+  "emilin": "img/chennai-2026/emilin-hero.jpg",
+  "thanika-varunkumar": "img/london-2026/thanika-varunkumar-hero.jpg",
+  "sudheesh-kakkunath": "img/london-2026/sudheesh-kakkunath-hero.jpg"
+ }
 });
 /* END LOCAL PHOTOS */
