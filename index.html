@@ -2,321 +2,347 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>unMute Cities — Artium Academy</title>
-<meta name="description" content="Every unMute city, every lineup. Pick a city to see who took the stage.">
-<meta name="theme-color" content="#1C1410">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>unMute by Artium Academy</title>
+<meta name="description" content="unMute is Artium Academy's live performance series. Upcoming shows, the artists, and every performance on YouTube.">
+<meta name="theme-color" content="#16120F">
+<meta property="og:title" content="unMute by Artium Academy">
+<meta property="og:description" content="Live performances by the learners and teachers of Artium Academy.">
+<meta property="og:image" content="https://res.cloudinary.com/dd7s6bb58/image/upload/c_fill,w_1200,h_630,g_center,q_auto,f_jpg/v1791348629/Screenshot_2026-10-07_at_10.10.00_AM_r21uxz.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="preload" as="image" href="https://res.cloudinary.com/dd7s6bb58/image/upload/v1794481162/Unmute_Logo_iwp7au.svg">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
 <style>
-/* "Done & Dusted" state — switched on automatically the day after a city's show
-   (by the status script on each page). Preview any time with ?demo=done */
-
-.dd-strip { position: absolute; left: -15%; right: -15%; top: 50%; z-index: 3; background: #E00073; color: #FBF5E9; border-top: 2px solid #1C1410; border-bottom: 2px solid #1C1410; padding: 7px 0; overflow: hidden; box-shadow: 0 5px 0 rgba(28,20,16,.45); transform: translateY(-50%) rotate(-7deg); animation: ddSlap .55s cubic-bezier(.3,1.5,.5,1) .5s both; pointer-events: none; }
-.dd-track { display: flex; width: max-content; animation: ddScroll 9s linear infinite; }
-.dd-group { display: flex; align-items: center; flex-shrink: 0; }
-.dd-group span { font-family: 'Anton', sans-serif; font-size: 22px; letter-spacing: 1px; text-transform: uppercase; white-space: nowrap; margin-right: 16px; }
-.dd-group b { color: #EBE23F; margin-right: 16px; font-size: 18px; }
-@keyframes ddScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-@keyframes ddSlap { from { transform: translateY(-50%) rotate(-7deg) scaleX(0); opacity: 0; } to { transform: translateY(-50%) rotate(-7deg) scaleX(1); opacity: 1; } }
-
-/* the photo under the strip goes slightly muted, like an old ticket */
-.is-done-art img, .tile.done .tile-img img { filter: saturate(.55) brightness(.88); }
-
-@media (prefers-reduced-motion: reduce) {
-  .dd-strip, .dd-track { animation: none !important; }
-}
-</style>
-<script>
-  // Show the logo loader only on the first visit of a session (not when coming back from a city page).
-  try { if (sessionStorage.getItem('um_seen')) document.documentElement.classList.add('skip-loader'); } catch (e) {}
-</script>
-<style>
-  :root { --pink: #E00073; --gold: #EBE23F; --ink: #1C1410; --ivory: #F3E8D6; --card: #FBF5E9; }
-  html { scroll-behavior: smooth; }
-  body { margin: 0; font-family: 'Space Grotesk', sans-serif; background: var(--ink); color: var(--ink); }
-  a { color: inherit; text-decoration: none; }
-  img { max-width: 100%; display: block; }
-  .wrap { width: 100%; min-height: 100vh; box-sizing: border-box; overflow-x: hidden; max-width: 480px; margin: 0 auto; background: var(--ivory); position: relative; }
-  .cta-btn:active { transform: translate(2px, 2px); box-shadow: none !important; }
-
-  /* ---------- LOADER ---------- */
-  .loader { position: fixed; inset: 0; z-index: 100; background: var(--ink); display: grid; place-items: center; transition: opacity .45s ease, visibility .45s ease; }
-  .loader.done { opacity: 0; visibility: hidden; }
-  .skip-loader .loader { display: none; }
-  .loader-inner { display: grid; justify-items: center; gap: 22px; }
-  .loader-logo { width: 190px; height: auto; opacity: 0; transform: scale(.92); animation: logoIn .6s cubic-bezier(.2,.8,.2,1) .05s forwards; }
-  .eq { display: flex; align-items: flex-end; gap: 5px; height: 26px; }
-  .eq span { width: 6px; height: 100%; border-radius: 3px; transform-origin: bottom; animation: eq .8s ease-in-out infinite; }
-  .eq span:nth-child(1) { background: #D57AD5; animation-delay: -.6s; }
-  .eq span:nth-child(2) { background: #C65BC3; animation-delay: -.2s; }
-  .eq span:nth-child(3) { background: #A93DB4; animation-delay: -.45s; }
-  .eq span:nth-child(4) { background: #7B32D6; animation-delay: -.1s; }
-  .eq span:nth-child(5) { background: #4B25E6; animation-delay: -.35s; }
-  @keyframes logoIn { to { opacity: 1; transform: scale(1); } }
-  @keyframes eq { 0%,100% { transform: scaleY(.25); } 50% { transform: scaleY(1); } }
-
   /* ---------- HERO ---------- */
-  .hero { background: radial-gradient(ellipse 110% 80% at 15% 0%, rgba(224,0,115,0.45) 0%, rgba(224,0,115,0) 60%), radial-gradient(ellipse 90% 70% at 100% 100%, rgba(235,226,63,0.22) 0%, rgba(235,226,63,0) 65%), var(--ink); color: var(--ivory); padding: 40px 0 34px; overflow: hidden; }
-  .hero-text { padding: 0 24px; }
-  .hero-note { font-family: 'Caveat', cursive; font-size: clamp(19px, 6vw, 27px); line-height: 1.15; white-space: nowrap; transform: rotate(-1.5deg); margin: 26px 0 0 2px; }
-  .hero-meta { margin-top: 22px; font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(243,232,214,0.55); border-top: 1px dotted rgba(243,232,214,0.4); padding-top: 12px; }
+  .hero { position: relative; min-height: 100svh; background: var(--ink); color: #fff; overflow: hidden; display: flex; align-items: center; }
+  .strips { position: absolute; inset: -12% -6%; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; opacity: 0; transform: rotate(-4deg); animation: fade 1.8s ease .2s forwards; }
+  @media (min-width: 900px) { .strips { grid-template-columns: repeat(5, 1fr); } }
+  .strip { overflow: hidden; }
+  .strip .track { display: grid; gap: 10px; animation: up 80s linear infinite; }
+  .strip:nth-child(even) .track { animation-direction: reverse; animation-duration: 95s; }
+  .strip img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 3px; filter: grayscale(1) contrast(1.1) brightness(.8); }
+  @keyframes up { to { transform: translateY(-50%); } }
+  @keyframes fade { to { opacity: 1; } }
+  .hero::before { content: ""; position: absolute; inset: 0; z-index: 1; background: radial-gradient(ellipse 72% 58% at 50% 50%, rgba(22,18,15,.93) 0%, rgba(22,18,15,.76) 55%, rgba(22,18,15,.5) 100%); }
+  .hero-in { position: relative; z-index: 2; width: 100%; padding-top: 120px; padding-bottom: 80px; display: grid; justify-items: center; text-align: center; }
+  .hero h1 { margin: 0; width: min(90vw, 860px); }
+  .hero h1 .unmute-logo { visibility: hidden; } /* placeholder: the visible logo is the one that flies to the header */
+  .hero-line { margin: clamp(26px, 4vw, 44px) 0 0; font-size: clamp(18px, 2.1vw, 24px); color: rgba(255,255,255,.86); max-width: 34ch; opacity: 0; animation: fade 1s ease .6s forwards; }
 
-  /* continuous scroll: big logo band + date ticker */
-  .marquee { overflow: hidden; width: 100%; }
-  .track { display: flex; width: max-content; animation: scrollL 22s linear infinite; }
-  .group { display: flex; align-items: center; flex-shrink: 0; }
-  .logo-band .group img { height: 104px; width: auto; margin-right: 34px; }
-  .logo-band .group i { font-style: normal; color: var(--pink); font-size: 30px; margin-right: 34px; }
-  .ticker { margin-top: 22px; background: var(--gold); color: var(--ink); border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); transform: rotate(-2deg); width: 110%; margin-left: -5%; padding: 8px 0; }
-  .ticker .track { animation: scrollR 18s linear infinite; }
-  .ticker .group span { font-family: 'Anton', sans-serif; font-size: 18px; letter-spacing: 0.5px; text-transform: uppercase; white-space: nowrap; margin-right: 18px; }
-  .ticker .group b { color: var(--pink); margin-right: 18px; font-size: 16px; }
-  @keyframes scrollL { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-  @keyframes scrollR { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+  .ticket { margin-top: clamp(34px, 5vw, 52px); display: grid; grid-template-columns: 1fr auto; text-decoration: none; color: var(--ink); text-align: left;
+    width: min(100%, 520px); filter: drop-shadow(0 18px 30px rgba(0,0,0,.45)); transform: rotate(-2deg);
+    opacity: 0; animation: ticketIn .7s cubic-bezier(.3,1.4,.5,1) 1.1s forwards; transition: transform .25s var(--ease); }
+  .ticket:hover { transform: rotate(0deg) scale(1.02); }
+  @keyframes ticketIn { from { opacity: 0; transform: translateY(40px) rotate(-8deg); } to { opacity: 1; transform: rotate(-2deg); } }
+  .ticket .main, .ticket .stub { background: var(--yellow); padding: 18px 20px; }
+  .ticket .main { border-radius: 14px 0 0 14px;
+    -webkit-mask: radial-gradient(circle 10px at 100% 0, transparent 98%, #000) top right / 100% 51% no-repeat, radial-gradient(circle 10px at 100% 100%, transparent 98%, #000) bottom right / 100% 51% no-repeat;
+            mask: radial-gradient(circle 10px at 100% 0, transparent 98%, #000) top right / 100% 51% no-repeat, radial-gradient(circle 10px at 100% 100%, transparent 98%, #000) bottom right / 100% 51% no-repeat; }
+  .ticket .stub { border-radius: 0 14px 14px 0; border-left: 1.5px dashed rgba(22,18,15,.4); display: grid; place-content: center; text-align: center; min-width: 120px;
+    -webkit-mask: radial-gradient(circle 10px at 0 0, transparent 98%, #000) top left / 100% 51% no-repeat, radial-gradient(circle 10px at 0 100%, transparent 98%, #000) bottom left / 100% 51% no-repeat;
+            mask: radial-gradient(circle 10px at 0 0, transparent 98%, #000) top left / 100% 51% no-repeat, radial-gradient(circle 10px at 0 100%, transparent 98%, #000) bottom left / 100% 51% no-repeat; }
+  .ticket .tk { display: block; font-weight: 700; font-size: 15px; }
+  .ticket .city { display: block; font-weight: 800; font-stretch: 75%; font-size: clamp(48px, 11vw, 66px); line-height: .9; letter-spacing: -.015em; margin: 4px 0 8px; }
+  .ticket .when { font-size: 15px; font-weight: 600; }
+  .ticket .num { display: block; font-weight: 800; font-stretch: 75%; font-size: 56px; line-height: .85; }
+  .ticket .stub small { display: block; font-size: 14px; font-weight: 600; }
+  .ticket .go { margin-top: 8px; font-weight: 700; font-size: 14px; text-decoration: underline; text-underline-offset: 4px; }
 
-  /* ---------- CITIES ---------- */
-  .section-head { padding: 30px 24px 4px; }
-  .section-title { font-family: 'Anton', sans-serif; font-size: 24px; margin-bottom: 4px; }
-  .section-sub { font-size: 13px; color: rgba(28,20,16,0.6); }
-  .cities { padding: 18px 24px 40px; display: grid; gap: 22px; }
+  section.s { padding: clamp(84px, 11vw, 150px) 0; }
+  .head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 14px 30px; margin-bottom: clamp(32px, 5vw, 60px); }
+  .head p { margin: 0; color: var(--soft); max-width: 38ch; }
 
-  .tile { display: block; position: relative; background: var(--card); border: 2px solid var(--ink); box-shadow: 5px 5px 0 var(--pink); opacity: 0; transform: translateY(18px); transition: transform .15s ease, box-shadow .15s ease; }
-  .tile:nth-child(even) { box-shadow: 5px 5px 0 var(--gold); }
-  .tile:active { transform: translate(3px, 3px) !important; box-shadow: 1px 1px 0 var(--ink); }
-  .ready .tile { animation: tileIn .55s cubic-bezier(.2,.8,.2,1) forwards; animation-delay: calc(var(--i, 0) * 110ms + 80ms); }
-  @keyframes tileIn { to { opacity: 1; transform: translateY(0); } }
-
-  .tile-img { position: relative; aspect-ratio: 2 / 1; overflow: hidden; border-bottom: 2px solid var(--ink); background: var(--ink); }
-  .tile-img img { width: 100%; height: 100%; object-fit: cover; object-position: center 35%; animation: drift 14s ease-in-out infinite alternate; }
-  .tile:nth-child(even) .tile-img img { animation-direction: alternate-reverse; }
-  @keyframes drift { from { transform: scale(1.02) translateX(-1.5%); } to { transform: scale(1.12) translateX(1.5%); } }
-
-  /* light sweep across the image */
-  .tile-img::after { content: ""; position: absolute; inset: 0; background: linear-gradient(105deg, transparent 35%, rgba(255,255,255,.35) 50%, transparent 65%); transform: translateX(-120%); animation: shine 5s ease-in-out infinite; animation-delay: calc(var(--i, 0) * 1.4s + 1.2s); pointer-events: none; }
-  @keyframes shine { 0% { transform: translateX(-120%); } 30%,100% { transform: translateX(120%); } }
-
-
-  /* status badges: stamp in, then keep wobbling for attention */
-  .tile-badge { position: absolute; top: 10px; left: 10px; z-index: 2; display: inline-flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; padding: 7px 12px; border: 2px solid var(--ink); box-shadow: 3px 3px 0 var(--ink); transform: rotate(-4deg); }
-  .ready .tile-badge { animation: stampIn .5s cubic-bezier(.3,1.6,.5,1) both, wobble 2.6s ease-in-out infinite; animation-delay: calc(var(--i, 0) * 110ms + 450ms), calc(var(--i, 0) * 110ms + 1s); }
-  @keyframes stampIn { from { opacity: 0; transform: rotate(-14deg) scale(1.8); } to { opacity: 1; transform: rotate(-4deg) scale(1); } }
-  @keyframes wobble { 0%,70%,100% { transform: rotate(-4deg) scale(1); } 76% { transform: rotate(-8deg) scale(1.1); } 84% { transform: rotate(1deg) scale(1.1); } 92% { transform: rotate(-6deg) scale(1.04); } }
-
-  .tile-badge.soon { background: var(--gold); color: var(--ink); }
-  .dots i { font-style: normal; animation: blink 1.2s infinite; }
-  .dots i:nth-child(2) { animation-delay: .2s; }
-  .dots i:nth-child(3) { animation-delay: .4s; }
-  @keyframes blink { 0%,100% { opacity: .15; } 40% { opacity: 1; } }
-
-  .tile-badge.out { background: var(--pink); color: var(--card); }
-  .tile-badge.wrapped { background: var(--ink); color: var(--gold); }
-  .tile-cta { font-size: 12px; font-weight: 700; color: var(--pink); margin-top: 4px; }
-  .dot { position: relative; width: 8px; height: 8px; border-radius: 50%; background: var(--gold); }
-  .dot::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: var(--gold); animation: ping 1.4s cubic-bezier(0,0,.2,1) infinite; }
-  @keyframes ping { 0% { transform: scale(1); opacity: .9; } 100% { transform: scale(2.8); opacity: 0; } }
-
-  .tile-body { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 14px 12px 16px; }
-  .tile-num { font-weight: 700; font-size: 11px; color: var(--pink); margin-bottom: 2px; }
-  .tile-name { font-family: 'Anton', sans-serif; font-size: 22px; line-height: 1.05; text-transform: uppercase; }
-  .tile-meta { font-size: 12px; color: rgba(28,20,16,0.6); margin-top: 3px; }
-  .tile-go { flex-shrink: 0; width: 40px; height: 40px; display: grid; place-items: center; background: var(--pink); color: var(--card); border: 2px solid var(--ink); font-size: 18px; font-weight: 700; }
-  .tile-go span { display: inline-block; animation: nudge 1.6s ease-in-out infinite; }
-  @keyframes nudge { 0%,60%,100% { transform: translateX(0); } 30% { transform: translateX(4px); } }
-
-  /* ---------- CTA ---------- */
-  .cta { background: var(--ink); color: var(--ivory); padding: 44px 24px 52px; }
-  .stamp { display: inline-block; background: var(--gold); color: var(--ink); padding: 10px 18px; border: 2px solid var(--pink); box-shadow: 4px 4px 0 var(--pink); transform: rotate(-2deg); margin-bottom: 22px; }
-  .stamp-big { font-family: 'Anton', sans-serif; font-size: 22px; line-height: 1; }
-  .stamp-small { font-size: 10px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; margin-top: 3px; }
-  .cta-title { font-family: 'Anton', sans-serif; font-size: 23px; line-height: 1.3; margin-bottom: 10px; }
-  .cta-sub { font-size: 14px; color: rgba(243,232,214,0.65); margin-bottom: 24px; }
-  .cta-main { display: block; text-align: center; background: var(--pink); color: var(--card); font-weight: 700; font-size: 16px; padding: 16px; border: 2px solid var(--gold); box-shadow: 4px 4px 0 var(--gold); }
-  .footer { padding: 24px 24px 44px; font-size: 12px; line-height: 1.6; color: rgba(243,232,214,0.55); background: var(--ink); border-top: 2px dashed rgba(243,232,214,0.15); }
-  .footer-site { display: inline-block; font-family: 'Anton', sans-serif; font-size: 18px; letter-spacing: .3px; color: var(--gold); margin-bottom: 14px; border-bottom: 2px solid var(--pink); padding-bottom: 2px; }
-  .footer-label { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(243,232,214,0.4); margin-bottom: 4px; }
-  .footer-addr { display: block; color: rgba(243,232,214,0.75); max-width: 340px; }
-  .footer-addr span { color: var(--pink); font-weight: 700; white-space: nowrap; }
-  .footer-copy { margin-top: 18px; color: rgba(243,232,214,0.4); }
-
-  @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after { animation: none !important; transition: none !important; }
-    .tile { opacity: 1; transform: none; }
-    .loader-logo { opacity: 1; transform: none; }
+  /* ---------- UPCOMING ---------- */
+  .show-list { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--ink); }
+  .show { border-bottom: 1px solid var(--line); }
+  .show > a, .show > div { display: grid; grid-template-columns: 1fr auto; gap: 8px 20px; align-items: center; padding: 28px 0; text-decoration: none; }
+  .show-date { grid-column: 1 / -1; }
+  .show-city { font-size: clamp(36px, 7.4vw, 92px); transition: color .2s; }
+  .show-note { grid-column: 1 / -1; color: var(--soft); max-width: 48ch; }
+  .show.tba .show-city + .soon { grid-column: 1 / -1; color: var(--soft); }
+  .show-card { width: clamp(96px, 18vw, 210px); border-radius: 4px; box-shadow: 0 14px 28px -16px rgba(22,18,15,.55); transition: transform .4s var(--ease); }
+  .show a:hover .show-card { transform: scale(1.04) rotate(-1deg); }
+  .show a:hover .show-city { color: var(--pink); }
+  .show-go { grid-column: 1 / -1; justify-self: start; }
+  .show.tba .show-city { color: rgba(22,18,15,.3); }
+  @media (min-width: 900px) {
+    .show > a, .show > div { grid-template-columns: 240px 1fr auto; gap: 6px 40px; padding: 34px 0; }
+    .show-date { grid-column: 1; align-self: start; padding-top: 10px; }
+    .show-city { grid-column: 2; } .show-card { grid-column: 3; grid-row: 1 / span 3; }
+    .show-note, .show-go { grid-column: 2; }
   }
+
+  /* ---------- PHOTO BAND ---------- */
+  .band { position: relative; margin: 0; }
+  .band img { width: 100%; height: clamp(320px, 62vw, 760px); object-fit: cover; }
+  .band figcaption { max-width: var(--max); margin: 0 auto; padding: 14px var(--gutter) 0; font-size: 14px; color: var(--soft); }
+
+  /* ---------- HOW IT WORKS ---------- */
+  .steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 40px; counter-reset: st; }
+  @media (min-width: 860px) { .steps { grid-template-columns: repeat(3, 1fr); gap: 48px; } }
+  .steps li { counter-increment: st; border-top: 2px solid var(--ink); padding-top: 22px; }
+  .steps li::before { content: "0" counter(st); display: block; font-weight: 700; font-size: 14px; color: var(--pink); margin-bottom: 18px; }
+  .steps h3 { font-size: clamp(22px, 2.4vw, 30px); margin-bottom: 12px; }
+  .steps p { margin: 0; color: var(--soft); max-width: 34ch; }
+
+  /* ---------- WATCH ---------- */
+  .watch-s { background: var(--ink); color: var(--white); }
+  .watch-s .head p { color: rgba(251,250,248,.6); }
+  .watch-s .ulink:hover { color: var(--yellow); }
+  .videos { display: grid; gap: 48px 28px; }
+  @media (min-width: 760px) { .videos { grid-template-columns: 1fr 1fr; } .video.big { grid-column: 1 / -1; } }
+  @media (min-width: 1080px) { .videos { grid-template-columns: repeat(4, 1fr); } .video.big { grid-column: 1 / -1; } }
+  .player { position: relative; aspect-ratio: 16 / 9; background: #000; overflow: hidden; border-radius: 6px; }
+  .player button { all: unset; cursor: pointer; position: absolute; inset: 0; display: block; }
+  .player img { width: 100%; height: 100%; object-fit: cover; transition: transform .7s var(--ease), filter .4s; filter: brightness(.88); }
+  .player button:hover img { transform: scale(1.03); filter: none; }
+  .player button:focus-visible { outline: 2px solid var(--yellow); outline-offset: -2px; }
+  .play { position: absolute; left: 14px; bottom: 14px; width: 52px; height: 52px; border-radius: 50%; background: var(--white); display: grid; place-items: center; transition: background .15s; }
+  .play::before { content: ""; margin-left: 4px; border-left: 15px solid var(--ink); border-top: 9px solid transparent; border-bottom: 9px solid transparent; }
+  .video.big .play { width: 72px; height: 72px; left: 24px; bottom: 24px; }
+  .player button:hover .play { background: var(--yellow); }
+  .player iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .video h3 { font-size: clamp(16px, 1.6vw, 19px); margin: 16px 0 4px; }
+  .video.big h3 { font-size: clamp(26px, 3.4vw, 44px); margin-top: 22px; }
+  .video .who { margin: 0; font-size: 15px; color: rgba(251,250,248,.7); }
+  .video .who a { color: var(--white); text-decoration: none; font-weight: 600; } .video .who a:hover { color: var(--yellow); }
+  .video blockquote { margin: 14px 0 0; font-size: clamp(18px, 1.8vw, 22px); line-height: 1.4; max-width: 46ch; color: rgba(251,250,248,.9); }
+
+  /* ---------- ROLL CALL ---------- */
+  .roll { background: var(--ink); color: var(--white); overflow: hidden; padding-top: 0 !important; }
+  .roll .head p { color: rgba(251,250,248,.6); }
+  .names { display: grid; gap: 4px; border-top: 1px solid rgba(255,255,255,.12); padding-top: clamp(28px, 4vw, 48px); }
+  .names .row { display: flex; width: max-content; animation: slide 110s linear infinite; }
+  .names .row.b { animation-duration: 130s; animation-direction: reverse; }
+  .names:hover .row, .names:focus-within .row { animation-play-state: paused; }
+  @keyframes slide { to { transform: translateX(-50%); } }
+  .names .set { display: flex; }
+  .names a { font-weight: 800; font-stretch: 125%; text-transform: uppercase; font-size: clamp(34px, 6vw, 84px); line-height: 1.08; white-space: nowrap; text-decoration: none; transition: color .2s, -webkit-text-stroke-color .2s; padding-right: .6em; }
+  .names a::after { content: "✶"; color: var(--pink); font-size: .45em; vertical-align: .6em; padding-left: .6em; -webkit-text-stroke: 0; }
+  .names .row.b a { color: transparent; -webkit-text-stroke: 1.2px rgba(251,250,248,.55); }
+  .names .row.b a::after { color: var(--yellow); }
+  .names a:hover, .names a:focus-visible { color: var(--yellow) !important; -webkit-text-stroke-color: transparent !important; }
+  @media (prefers-reduced-motion: reduce) { .names .row { width: auto; } .names .set + .set { display: none; } .names .set { flex-wrap: wrap; } }
+
+  /* ---------- EDITIONS ---------- */
+  .eds { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--ink); }
+  .ed a { display: grid; grid-template-columns: 44px 1fr auto; gap: 6px 16px; align-items: baseline; padding: 22px 0; border-bottom: 1px solid var(--line); text-decoration: none; transition: background .25s, padding .35s var(--ease); }
+  .ed a:hover { background: var(--white); padding-left: 14px; padding-right: 14px; }
+  .ed .n { font-weight: 600; font-size: 14px; color: var(--soft); }
+  .ed h3 { font-size: clamp(24px, 3.4vw, 42px); }
+  .ed .meta { grid-column: 2 / -1; color: var(--soft); font-size: 16px; }
+  .ed .tag { font-size: 12px; padding: 5px 9px; border-radius: 5px; background: var(--paper-2); white-space: nowrap; }
+  .ed .tag.up { background: var(--yellow); }
+  .live .head h2 { font-size: clamp(36px, 7vw, 92px); max-width: 12ch; }
+  .live .posts { grid-auto-flow: column; grid-template-columns: none; grid-auto-columns: min(62%, 250px); overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding-bottom: 4px; }
+  .live .post { scroll-snap-align: start; }
+  .video .new { display: inline-block; margin-top: 16px; font-size: 12px; padding: 4px 8px; border-radius: 5px; background: var(--yellow); color: var(--ink); }
+  @media (min-width: 900px) { .ed a { grid-template-columns: 60px 340px 1fr auto; } .ed .meta { grid-column: 3; } }
+
+  /* ---------- JOIN ---------- */
+  .join { background: var(--pink); color: var(--white); }
+  .join h2 { font-size: clamp(34px, 6vw, 80px); max-width: 15ch; }
+  .join p { font-size: clamp(18px, 2.2vw, 22px); max-width: 36ch; margin: 24px 0 32px; }
+  .join .tape { transform: rotate(-3deg); margin-bottom: 28px; }
+  .join .btn:hover { background: var(--yellow); color: var(--ink); }
+
+  @media (prefers-reduced-motion: reduce) { .strips, .hero-line, .ticket { opacity: 1 !important; } }
 </style>
 </head>
-<body>
+<body data-root="">
 
-<!-- LOGO LOADER (~1s, first visit only) -->
-<div class="loader" id="loader" aria-hidden="true">
-  <div class="loader-inner">
-    <img class="loader-logo" src="https://res.cloudinary.com/dd7s6bb58/image/upload/v1794481162/Unmute_Logo_iwp7au.svg" alt="">
-    <div class="eq"><span></span><span></span><span></span><span></span><span></span></div>
-  </div>
-</div>
+<div id="site-header"></div>
 
-<div class="wrap">
-
-  <!-- HERO -->
-  <header class="hero">
-    <h1 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);">artium unMute</h1>
-
-    <!-- big logo, scrolling forever (two identical groups = seamless loop) -->
-    <div class="marquee logo-band" aria-hidden="true">
-      <div class="track">
-        <div class="group"><img src="https://res.cloudinary.com/dd7s6bb58/image/upload/v1794481162/Unmute_Logo_iwp7au.svg" alt=""><i>✦</i><img src="https://res.cloudinary.com/dd7s6bb58/image/upload/v1794481162/Unmute_Logo_iwp7au.svg" alt=""><i>✦</i><img src="https://res.cloudinary.com/dd7s6bb58/image/upload/v1794481162/Unmute_Logo_iwp7au.svg" alt=""><i>✦</i></div>
-        <div class="group"><img src="https://res.cloudinary.com/dd7s6bb58/image/upload/v1794481162/Unmute_Logo_iwp7au.svg" alt=""><i>✦</i><img src="https://res.cloudinary.com/dd7s6bb58/image/upload/v1794481162/Unmute_Logo_iwp7au.svg" alt=""><i>✦</i><img src="https://res.cloudinary.com/dd7s6bb58/image/upload/v1794481162/Unmute_Logo_iwp7au.svg" alt=""><i>✦</i></div>
-      </div>
+<main>
+  <section class="hero" aria-label="unMute">
+    <div class="strips" id="strips" aria-hidden="true"></div>
+    <div class="hero-in wrap">
+      <h1 id="hero-logo"><span class="sr">unMute by Artium Academy</span></h1>
+      <p class="hero-line">Live performances by the learners and teachers of Artium Academy.</p>
+      <div id="ticket"></div>
     </div>
-
-    <!-- date ticker, scrolling the other way -->
-    <!-- Filled automatically with the NEXT upcoming show (from the tiles' data-date). -->
-    <div class="marquee ticker" id="ticker" aria-hidden="true">
-      <div class="track">
-        <div class="group"><span>Mumbai · 16.12.2026</span><b>✦</b><span>Mumbai · 16.12.2026</span><b>✦</b><span>Mumbai · 16.12.2026</span><b>✦</b><span>Mumbai · 16.12.2026</span><b>✦</b></div>
-        <div class="group"><span>Mumbai · 16.12.2026</span><b>✦</b><span>Mumbai · 16.12.2026</span><b>✦</b><span>Mumbai · 16.12.2026</span><b>✦</b><span>Mumbai · 16.12.2026</span><b>✦</b></div>
-      </div>
-    </div>
-
-    <div class="hero-text">
-      <div class="hero-note">one stage, many cities. pick yours.</div>
-      <div class="hero-meta">The unMute Lineups</div>
-    </div>
-  </header>
-
-  <!-- CITIES -->
-  <div class="section-head">
-    <div class="section-title">The Cities</div>
-    <div class="section-sub">Tap a city to see who took the stage.</div>
-  </div>
-
-  <div class="cities">
-    <!-- To add a city: copy one <a class="tile"> block and change data-city, data-date (show day),
-         data-count, link, image, name, meta. Order, numbering, the date ticker and the
-         "Done & Dusted" strip (from the day after the show) are all handled automatically. -->
-
-    <a class="tile" style="--i:0" href="mumbai/dec-2026/" data-city="Mumbai" data-date="2026-12-16" data-count="11">
-      <div class="tile-img">
-        <img src="https://res.cloudinary.com/dd7s6bb58/image/upload/c_crop,x_44,y_42,w_1652,h_1150/c_scale,w_1000/q_auto,f_auto/v1794481164/unMute_Postcard_Mumbai_hl37xm.png" alt="unMute Mumbai, 16.12.2026">
-        <span class="tile-badge soon">Lineup soon<span class="dots"><i>.</i><i>.</i><i>.</i></span></span>
-      </div>
-      <div class="tile-body">
-        <div>
-          <div class="tile-num">01</div>
-          <div class="tile-name">Mumbai</div>
-          <div class="tile-meta">16 Dec 2026 &nbsp;·&nbsp; 11 performers</div>
-        </div>
-        <span class="tile-go" aria-hidden="true"><span>→</span></span>
-      </div>
-    </a>
-
-    <a class="tile" style="--i:1" href="kolkata/jan-2027/" data-city="Kolkata" data-date="2027-01-22" data-count="10">
-      <div class="tile-img">
-        <img src="https://res.cloudinary.com/dd7s6bb58/image/upload/c_crop,x_40,y_40,w_1666,h_1158/c_scale,w_1000/q_auto,f_auto/v1794481163/unMute_Postcard_Kolkata-2_llrej4.png" alt="unMute Kolkata, 22.01.2027">
-        <span class="tile-badge out"><span class="dot"></span>Lineup out</span>
-      </div>
-      <div class="tile-body">
-        <div>
-          <div class="tile-num">02</div>
-          <div class="tile-name">Kolkata</div>
-          <div class="tile-meta">22 Jan 2027 &nbsp;·&nbsp; 10 performers</div>
-        </div>
-        <span class="tile-go" aria-hidden="true"><span>→</span></span>
-      </div>
-    </a>
-
-  </div>
-
-  <!-- CTA -->
-  <section class="cta">
-    <div class="stamp">
-      <div class="stamp-big">GRAB 15% OFF</div>
-      <div class="stamp-small">enroll after your trial session</div>
-    </div>
-    <div class="cta-title">Your city's stage could have your name on it.</div>
-    <div class="cta-sub">Start with a free trial class. Enroll after it and get 15% off.</div>
-    <a class="cta-btn cta-main" href="https://register.artiumacademy.com/?utm_source=UNMUTE&utm_medium=HUB&utm_campaign=LINEUPSHEET">Book a Free Trial</a>
   </section>
 
-  <footer class="footer">
-    <a class="footer-site" href="https://www.artiumacademy.com" target="_blank" rel="noopener">www.artiumacademy.com ↗</a>
-    <div class="footer-label">Find us</div>
-    <a class="footer-addr" href="https://www.google.com/maps/search/?api=1&query=Artium+Academy+Gundecha+Onclave+Khairani+Rd+Andheri+Mumbai+400072" target="_blank" rel="noopener">
-      Artium Academy, 5th Floor, D Wing, Gundecha Onclave, 5D2, Khairani Rd, Andheri, Ansa Industrial Estate, Chandivali, Saki Naka, Mumbai, Maharashtra 400072
-      <span>&nbsp;Open in Maps →</span>
-    </a>
-    <div class="footer-copy">Artium unMute &nbsp;·&nbsp; Artium Academy</div>
-  </footer>
+  <section class="s live" id="live" hidden></section>
 
-</div>
+  <section class="s" id="shows">
+    <div class="wrap">
+      <div class="head">
+        <h2 class="d">Upcoming</h2>
+        <p>Each edition is recorded, and the performances go up on YouTube in the weeks after.</p>
+      </div>
+      <ol class="show-list" id="show-list"></ol>
+    </div>
+  </section>
 
+  <figure class="band">
+    <img src="https://res.cloudinary.com/dd7s6bb58/image/upload/c_fill,g_auto,w_2400,h_1100,q_auto,f_auto/v1791348629/Screenshot_2026-10-07_at_10.10.00_AM_r21uxz.png" alt="Bhavya Tumuluru singing at unMute Hyderabad, with Kolipaka Veeraswamy on mridangam and Koundinya Pannala on violin" loading="lazy">
+    <figcaption>Bhavya Tumuluru with Kolipaka Veeraswamy and Koundinya Pannala, unMute Hyderabad, May 2026</figcaption>
+  </figure>
+
+  <section class="s" aria-labelledby="how-h">
+    <div class="wrap">
+      <div class="head"><h2 class="d" id="how-h">How unMute works</h2><p>New month, new city.</p></div>
+      <ol class="steps">
+        <li><h3 class="d">Audition</h3><p>Artium learners audition for a place on the lineup.</p></li>
+        <li><h3 class="d">Perform</h3><p>Each edition is one evening in one city, in front of a live audience. Learners and their teachers perform side by side.</p></li>
+        <li><h3 class="d">Release</h3><p>Every set is professionally recorded and produced, then published on Artium’s YouTube channel.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="s" id="artists" style="padding-top:0">
+    <div class="wrap">
+      <div class="head"><h2 class="d">Artists</h2><p id="artists-lede"></p></div>
+      <div class="agrid" id="artist-teaser"></div>
+      <p style="margin:clamp(36px,5vw,56px) 0 0"><a class="btn" id="all-artists" href="artists/index.html">All artists</a></p>
+    </div>
+  </section>
+
+  <section class="s watch-s" id="watch">
+    <div class="wrap">
+      <div class="head"><h2 class="d">Watch</h2><a class="ulink" href="https://www.youtube.com/channel/UCb4wuyVXjQ_a3_jVXi9hgPg" target="_blank" rel="noopener">All performances on YouTube</a></div>
+      <div class="videos" id="videos"></div>
+    </div>
+  </section>
+
+  <section class="s roll" aria-labelledby="roll-h">
+    <div class="wrap"><div class="head"><h2 class="d" id="roll-h">Everyone on the lineup so far</h2><p>Select a name to open their page.</p></div></div>
+    <div class="names" id="names"></div>
+  </section>
+
+  <section class="s" id="editions">
+    <div class="wrap">
+      <div class="head"><h2 class="d">Editions</h2><p>Every unMute, in order.</p></div>
+      <ol class="eds" id="eds"></ol>
+    </div>
+  </section>
+
+  <section class="s join">
+    <div class="wrap">
+      <span class="tape">15% off after your trial</span>
+      <h2 class="d">Every name up there started with one class.</h2>
+      <p>Book a free trial class at Artium Academy. If you enrol after it, the course is 15% off.</p>
+      <a class="btn" id="join-cta" href="#">Book a free trial class</a>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+
+<script src="data.js"></script>
+<script src="site.js"></script>
 <script>
-  // Show status: a city is "done" from the day after its show (India time). Preview with ?demo=done
-  (function () {
-    var demo = /[?&]demo=done/.test(location.search);
-    var MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-    var box = document.querySelector('.cities');
-    var tiles = [].slice.call(box.querySelectorAll('.tile'));
+(function () {
+  var U = UM, D = U.D, esc = U.esc;
+  U.mount('', 'home');
 
-    tiles.forEach(function (t) {
-      var d = t.getAttribute('data-date'), p = d.split('-');
-      t._t = Date.parse(d + 'T00:00:00+05:30');
-      t._done = demo || Date.now() >= t._t + 864e5;
-      t._dots = p[2] + '.' + p[1] + '.' + p[0];
-      if (!t._done) return;
+  /* the big logo flies up into the header and stays there; tapping it goes back to the top */
+  var anchor = document.getElementById('hero-logo');
+  anchor.insertAdjacentHTML('beforeend', U.logo(''));
+  var fly = document.createElement('a');
+  fly.className = 'flylogo'; fly.href = '#'; fly.setAttribute('aria-label', 'unMute, back to the top');
+  fly.innerHTML = U.logo('', 'artium unMute');
+  document.body.appendChild(fly);
+  fly.addEventListener('click', function (ev) { ev.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+  U.meter(fly.querySelector('svg'));
+  var head = document.querySelector('.top.home'), slot = head.querySelector('.mark-slot'), hero = document.querySelector('.hero'), g = {};
+  function measure() {
+    var a = anchor.querySelector('svg').getBoundingClientRect(), s = slot.getBoundingClientRect();
+    g = { top: a.top + window.scrollY, left: a.left, w: a.width, eTop: s.top, eLeft: s.left, eW: s.width };
+    fly.style.width = g.w + 'px';
+    place();
+  }
+  function place() {
+    var y = window.scrollY, dist = Math.max(1, g.top - g.eTop), p = Math.min(1, Math.max(0, y / dist));
+    var x = g.left + (g.eLeft - g.left) * p, top = Math.max(g.eTop, g.top - y), k = 1 + (g.eW / g.w - 1) * p;
+    fly.style.transform = 'translate(' + x.toFixed(1) + 'px,' + top.toFixed(1) + 'px) scale(' + k.toFixed(4) + ')';
+    var solid = y > hero.offsetHeight - 90;
+    head.classList.toggle('solid', solid); fly.classList.toggle('docked', solid);
+  }
+  measure();
+  window.addEventListener('scroll', place, { passive: true });
+  window.addEventListener('resize', measure);
+  window.addEventListener('load', measure);
+  if (document.fonts) document.fonts.ready.then(measure);
 
-      t.classList.add('done');
-      var badge = t.querySelector('.tile-badge');
-      badge.className = 'tile-badge wrapped';
-      badge.textContent = '✓ Show done';
-      t.querySelector('.tile-meta').innerHTML = (+p[2]) + ' ' + MONTHS[+p[1] - 1] + ' ' + p[0] + ' &nbsp;·&nbsp; ' + t.getAttribute('data-count') + ' performed';
-      var cta = document.createElement('div');
-      cta.className = 'tile-cta'; cta.textContent = 'See who took the stage';
-      t.querySelector('.tile-meta').parentNode.appendChild(cta);
+  /* photo strips behind the logo */
+  var pics = [];
+  D.artists.forEach(function (a) { (a.photos || []).forEach(function (p) { pics.push(U.photo(p, 360, 450)); }); });
+  var seen = {}; pics = pics.filter(function (p) { if (seen[p.src]) return false; seen[p.src] = 1; return true; });
+  var strips = document.getElementById('strips');
+  for (var c = 0; c < 5; c++) {
+    var mine = pics.filter(function (_, i) { return i % 5 === c; });
+    var imgs = mine.map(function (p) { return '<img src="' + p.src + '" style="object-position:' + p.pos + ' 30%" alt="" loading="lazy">'; }).join('');
+    strips.insertAdjacentHTML('beforeend', '<div class="strip"><div class="track">' + imgs + imgs + '</div></div>');
+  }
 
-      var rep = '';
-      for (var i = 0; i < 4; i++) rep += '<span>Done &amp; Dusted</span><b>✦</b>';
-      t.querySelector('.tile-img').insertAdjacentHTML('beforeend', '<div class="dd-strip" aria-hidden="true"><div class="dd-track"><div class="dd-group">' + rep + '</div><div class="dd-group">' + rep + '</div></div></div>');
-      if (demo) t.href += '?demo=done';
-    });
+  /* ticket for the next show */
+  var n = U.nextShow();
+  if (n) {
+    var d = U.daysTo(n);
+    document.getElementById('ticket').outerHTML =
+      '<a class="ticket" href="' + U.editionURL(n) + '"><span class="main"><span class="tk">next show</span><span class="city">' + esc(n.city) + '</span><span class="when">' + U.dateLong(n) + '</span></span>' +
+      '<span class="stub"><span class="num">' + Math.max(0, d) + '</span><small>' + (d <= 0 ? 'today' : d === 1 ? 'day to go' : 'days to go') + '</small><span class="go">See the show</span></span></a>';
+  }
 
-    // upcoming shows first (soonest on top), then finished ones (latest on top); renumber
-    tiles.sort(function (a, b) {
-      if (a._done !== b._done) return a._done ? 1 : -1;
-      return a._done ? b._t - a._t : a._t - b._t;
-    });
-    tiles.forEach(function (t, i) {
-      box.appendChild(t);
-      t.style.setProperty('--i', i);
-      t.querySelector('.tile-num').textContent = (i < 9 ? '0' : '') + (i + 1);
-    });
+  /* upcoming */
+  document.getElementById('show-list').innerHTML = U.upcoming().map(function (e) {
+    var inner = '<span class="show-date label">' + U.dateLong(e) + '</span><span class="show-city d">' + esc(e.city) + '</span>' +
+      (e.postcard ? '<img class="show-card" src="' + U.postcard(e, 460) + '" alt="" loading="lazy">' : '');
+    if (e.tba) return '<li class="show tba"><div>' + inner + '<span class="soon">Date to be announced</span></div></li>';
+    return '<li class="show"><a href="' + U.editionURL(e) + '">' + inner + '<span class="show-go ulink">' + (U.artistsOf(e.id).length ? 'See the lineup' : 'Details') + '</span></a></li>';
+  }).join('');
 
-    // date ticker shows only the next upcoming show
-    var next = tiles.filter(function (t) { return !t._done; })[0];
-    var label = next ? next.getAttribute('data-city') + ' · ' + next._dots : 'More cities soon';
-    var g = '';
-    for (var j = 0; j < 4; j++) g += '<span>' + label + '</span><b>✦</b>';
-    document.querySelector('#ticker .track').innerHTML = '<div class="group">' + g + '</div><div class="group">' + g + '</div>';
-  })();
+  /* artists: eight, people with two photos first */
+  var withPh = D.artists.filter(function (a) { return a.photos && a.photos.length; }).sort(function (a, b) { return (b.photos.length > 1) - (a.photos.length > 1); });
+  document.getElementById('artist-teaser').innerHTML = withPh.slice(0, 8).map(function (a) { return U.card(a); }).join('');
+  var cities = {}; D.editions.forEach(function (e) { if (U.artistsOf(e.id).length) cities[e.city] = 1; });
+  document.getElementById('artists-lede').textContent = D.artists.length + ' learners and teachers from ' + Object.keys(cities).length + ' cities, including the lineups still to come.';
+  document.getElementById('all-artists').textContent = 'All ' + D.artists.length + ' artists';
 
-  (function () {
-    var root = document.documentElement, loader = document.getElementById('loader');
-    var skip = root.classList.contains('skip-loader');
-    var start = Date.now(), MIN = 900, MAX = 1800, finished = false;
-    function finish() {
-      if (finished) return; finished = true;
-      loader.classList.add('done');
-      document.body.classList.add('ready');
-      try { sessionStorage.setItem('um_seen', '1'); } catch (e) {}
-    }
-    if (skip) { document.body.classList.add('ready'); return; }
-    window.addEventListener('load', function () { setTimeout(finish, Math.max(0, MIN - (Date.now() - start))); });
-    setTimeout(finish, MAX); // never hold people longer than this
-  })();
-  // Coming back via the browser's back button: make sure tiles are visible.
-  window.addEventListener('pageshow', function (e) { if (e.persisted) document.body.classList.add('ready'); });
+  /* a city whose posts are going out right now leads the page */
+  var live = U.liveCities().sort(function (x, y) { return Date.parse(U.feed(y.id)[0].p.date) - Date.parse(U.feed(x.id)[0].p.date); })[0];
+  if (live) {
+    var lv = document.getElementById('live');
+    lv.innerHTML = '<div class="wrap"><div class="head"><h2 class="d">unMute ' + esc(live.city) + ' is out</h2>' +
+      '<p>New videos from the ' + esc(live.city) + ' lineup go up on Instagram and YouTube every few days. <a class="ulink" href="' + U.editionURL(live) + '#posts">See everything from ' + esc(live.city) + '</a></p></div>' +
+      '<div class="posts">' + U.feed(live.id).slice(0, 8).map(function (x) { return U.postCard(x, true); }).join('') + '</div></div>';
+    lv.hidden = false;
+  }
+
+  /* watch */
+  var order = ['bhavya-tumuluru', 'chinmayee-madha', 'akshita-pola', 'inaya-sharma', 'pt-gayathri'];
+  // full performances out in the last three weeks lead, newest first
+  var fresh = U.feed().filter(function (x) { return x.p.type === 'performance' && U.now() - Date.parse(x.p.date) < 21 * 864e5; }).map(function (x) { return x.a; });
+  var vids = fresh.concat(order.map(U.artist).filter(function (a) { return a && a.video && fresh.indexOf(a) < 0; })).slice(0, 5);
+  document.getElementById('videos').innerHTML = vids.map(function (a, i) {
+    var e = U.ed(a.ed);
+    return '<article class="video' + (i === 0 ? ' big' : '') + '"><div class="player"><button type="button" data-yt="' + a.video + '" aria-label="Play ' + esc(a.songs[0]) + ' by ' + esc(a.name) + '"><img src="https://i.ytimg.com/vi/' + a.video + '/maxresdefault.jpg" alt="" loading="lazy"><span class="play"></span></button></div>' +
+      (fresh.indexOf(a) > -1 ? '<span class="new label">New</span>' : '') + '<h3 class="d">' + esc(a.songs[0]) + '</h3><p class="who"><a href="' + U.artistURL(a.slug) + '">' + esc(a.name) + '</a>, unMute ' + esc(e.city) + '</p>' +
+      (i === 0 && a.quote ? '<blockquote>“' + esc(a.quote) + '”</blockquote>' : '') + '</article>';
+  }).join('');
+
+  /* roll call */
+  var all = D.artists.slice(), half = Math.ceil(all.length / 2);
+  document.getElementById('names').innerHTML = [all.slice(0, half), all.slice(half)].map(function (list, r) {
+    var set = list.map(function (a) { return '<a href="' + U.artistURL(a.slug) + '">' + esc(a.name) + '</a>'; }).join('');
+    return '<div class="row ' + (r ? 'b' : 'a') + '"><div class="set">' + set + '</div><div class="set" aria-hidden="true">' + set.replace(/<a /g, '<a tabindex="-1" ') + '</div></div>';
+  }).join('');
+  document.getElementById('join-cta').href = U.trial('HOME');
+
+  /* editions */
+  document.getElementById('eds').innerHTML = D.editions.slice().sort(function (a, b) { return a.n - b.n; }).map(function (e) {
+    var people = U.artistsOf(e.id).length || e.count || 0, past = U.isPast(e), rel = U.isLive(e);
+    var meta = U.dateMed(e) + (e.venue ? ', ' + esc(e.venue) : '') + (people ? '. ' + people + ' performers' : '');
+    return '<li class="ed"><a href="' + U.editionURL(e) + '"><span class="n">' + (e.n < 10 ? '0' : '') + e.n + '</span><h3 class="d">' + esc(e.city) + '</h3><span class="meta">' + meta + '</span><span class="tag label' + (past && !rel ? '' : ' up') + '">' + (rel ? 'Out now' : past ? 'Past' : 'Upcoming') + '</span></a></li>';
+  }).join('');
+
+  U.wire(document);
+  U.nextbar(window.innerHeight * 0.9);
+  U.announce();
+})();
 </script>
 </body>
 </html>

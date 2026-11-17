@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>unMute artist</title>
+<meta name="description" content="An artist of unMute, Artium Academy's live performance series.">
+<meta name="theme-color" content="#16120F">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../site.css">
+<style>
+  body { background: var(--white); }
+
+  /* ---------- HERO: big photo, not the full screen, name bottom-left ---------- */
+  .ahero { position: relative; height: min(76svh, 860px); min-height: 440px; background: var(--ink); color: #fff; overflow: hidden; }
+  .ahero > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  @media (prefers-reduced-motion: no-preference) { .ahero > img { animation: settle 2.2s var(--ease) both; } }
+  @keyframes settle { from { transform: scale(1.05); opacity: 0; } to { transform: none; opacity: 1; } }
+  .ahero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(22,18,15,.35) 0%, rgba(22,18,15,0) 25%, rgba(22,18,15,0) 55%, rgba(22,18,15,.78) 100%); }
+  .ahero .name { position: absolute; z-index: 2; left: 0; right: 0; bottom: clamp(28px, 5vw, 64px); }
+  .ahero h1 { font-size: clamp(34px, 6.2vw, 92px); max-width: 14ch; }
+  .ahero .line { margin: 12px 0 0; font-size: clamp(16px, 1.6vw, 19px); color: rgba(255,255,255,.85); }
+  /* portrait photos: dark panel on the left, photo on the right */
+  .ahero.tall > img { left: auto; width: min(50%, 720px); right: 0; }
+  .ahero.tall::after { background: linear-gradient(90deg, var(--ink) 0%, var(--ink) 48%, rgba(22,18,15,0) 70%), linear-gradient(0deg, rgba(22,18,15,.6), rgba(22,18,15,0) 40%); }
+  @media (max-width: 760px) { .ahero.tall > img { width: 100%; } .ahero.tall::after { background: linear-gradient(180deg, rgba(22,18,15,0) 40%, rgba(22,18,15,.85) 100%); } }
+  .ahero.none .ghost { position: absolute; inset: 0; display: grid; place-items: center; font-weight: 800; font-stretch: 125%; text-transform: uppercase; font-size: 22vw; line-height: .8; color: rgba(255,255,255,.05); white-space: nowrap; overflow: hidden; }
+
+  /* ---------- DATE + WATCH ---------- */
+  .event { padding: clamp(44px, 6vw, 72px) 0; }
+  .event .wrap { display: grid; gap: 40px; align-items: start; }
+  @media (min-width: 960px) { .event .wrap { grid-template-columns: 1fr 1.15fr; } }
+  .when { font-size: clamp(30px, 3.6vw, 46px); }
+  .where { margin: 14px 0 0; font-size: 18px; }
+  .where a { text-underline-offset: 4px; text-decoration-thickness: 1.5px; } .where a:hover { color: var(--pink); }
+  .pill { display: inline-block; margin-top: 22px; background: var(--paper-2); border-radius: 6px; padding: 8px 12px; }
+  .pill.up { background: var(--yellow); }
+  .apost { padding: clamp(64px, 9vw, 110px) 0 0; }
+  .apost h2 { font-size: clamp(26px, 3.4vw, 42px); margin-bottom: clamp(24px, 3.4vw, 40px); }
+  .watch { display: grid; grid-template-columns: 1fr; background: var(--paper); border-radius: 14px; overflow: hidden; }
+  @media (min-width: 560px) { .watch { grid-template-columns: 240px 1fr; } }
+  .watch .l { padding: 18px; display: grid; gap: 14px; align-content: start; }
+  .watch .yt { font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 8px; }
+  .watch .yt i { width: 22px; height: 15px; border-radius: 4px; background: #FF0033; position: relative; }
+  .watch .yt i::after { content: ""; position: absolute; left: 8px; top: 4px; border-left: 7px solid #fff; border-top: 3.5px solid transparent; border-bottom: 3.5px solid transparent; }
+  .watch .th { aspect-ratio: 16 / 9; border-radius: 6px; overflow: hidden; background: var(--ink); }
+  .watch .th img { width: 100%; height: 100%; object-fit: cover; }
+  .watch .btn { justify-content: center; }
+  .watch .r { background: var(--paper-2); padding: 18px 22px; display: grid; align-content: space-between; gap: 18px; }
+  .watch ol { list-style: none; margin: 0; padding: 0; counter-reset: s; }
+  .watch li { counter-increment: s; display: grid; grid-template-columns: 26px 1fr; padding: 12px 0; border-bottom: 1px solid var(--line); }
+  .watch li::before { content: counter(s); color: var(--soft); }
+  .watch li .song { text-decoration: none; font-weight: 500; } .watch li .song:hover { color: var(--pink); }
+  .watch li small { grid-column: 2; display: block; font-size: 13px; color: var(--soft); }
+  .watch .ext { font-weight: 600; font-size: 15px; text-decoration: none; display: inline-flex; gap: 6px; align-items: center; }
+  .watch .ext:hover { color: var(--pink); }
+  .watch .ext svg { width: 12px; height: 12px; }
+  .watch.empty .r { display: none; }
+  .watch.empty { grid-template-columns: 1fr; }
+  .watch.empty .l { padding: 26px; }
+
+  /* ---------- ABOUT: dark panel + black-and-white portrait ---------- */
+  .about { padding: 0 clamp(0px, 2vw, 32px); }
+  .about .panel { max-width: 1440px; margin: 0 auto; display: grid; background: var(--ink); color: var(--white); }
+  @media (min-width: 900px) { .about .panel { grid-template-columns: 46% 1fr; min-height: 560px; } }
+  .about .txt { padding: clamp(36px, 6vw, 84px); align-self: center; }
+  .about h2 { font-size: clamp(30px, 3.6vw, 48px); }
+  .about .sub { margin: 10px 0 30px; font-size: 19px; color: rgba(251,250,248,.85); }
+  .about .bio { font-size: 17px; line-height: 1.6; max-width: 48ch; color: rgba(251,250,248,.9); }
+  .about .bio p { margin: 0 0 1em; }
+  .about .bio.clamp { display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden; }
+  .about .more { all: unset; cursor: pointer; font-size: 15px; text-decoration: underline; text-underline-offset: 5px; }
+  .about .more:focus-visible { outline: 2px solid var(--yellow); outline-offset: 3px; }
+  .about .story { display: inline-block; margin-top: 18px; font-size: 15px; text-underline-offset: 5px; }
+  .about .story:hover { color: var(--yellow); }
+  .about .pic { position: relative; min-height: 420px; background: #2a2420; }
+  .about .pic .credit { position: absolute; right: 14px; bottom: 12px; z-index: 1; font-size: 12px; color: rgba(251,250,248,.75); }
+  .about .pic img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) contrast(1.06); }
+
+  /* ---------- QUOTE ---------- */
+  .quote { padding: clamp(80px, 11vw, 150px) 0; }
+  .quote blockquote { margin: 0; max-width: 26ch; font-weight: 400; font-stretch: 100%; font-size: clamp(28px, 3.8vw, 50px); line-height: 1.18; letter-spacing: -.015em; text-wrap: balance; }
+  .quote cite { display: block; margin-top: 24px; font-style: normal; color: var(--soft); }
+
+  /* ---------- EVENT INFORMATION ---------- */
+  .info { padding: 0 0 clamp(80px, 10vw, 130px); }
+  .info .wrap { display: grid; gap: 40px; }
+  @media (min-width: 960px) { .info .wrap { grid-template-columns: 1fr 1.15fr; gap: 80px; } }
+  .info h2 { margin-bottom: 22px; }
+  .info p.lede { margin: 0 0 20px; }
+  .info .faq { border-top: 1px solid var(--line); }
+
+  /* ---------- ALSO ON STAGE ---------- */
+  .rail { padding: clamp(72px, 9vw, 120px) 0; background: var(--paper); }
+  .rail .head { display: flex; justify-content: space-between; align-items: end; gap: 20px; flex-wrap: wrap; margin-bottom: 32px; }
+  .rail .track { display: grid; grid-auto-flow: column; grid-auto-columns: clamp(170px, 22vw, 250px); gap: 18px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0 var(--gutter) 12px; scrollbar-width: thin; }
+  .rail .track > * { scroll-snap-align: start; }
+  @media (min-width: 1320px) { .rail .track { padding-left: calc((100vw - var(--max)) / 2 + var(--gutter)); } }
+  .missing { padding: 100px 0 160px; }
+</style>
+</head>
+<body data-root="../">
+<div id="site-header"></div>
+<main id="page"></main>
+<div id="site-footer"></div>
+
+<script src="../data.js"></script>
+<script src="../site.js"></script>
+<script>
+(function () {
+  var U = UM, esc = U.esc;
+  U.mount('artists', 'dark');
+  var slug = new URLSearchParams(location.search).get('a') || location.hash.slice(1);
+  var a = U.artist(slug), page = document.getElementById('page');
+  if (!a) {
+    page.innerHTML = '<div class="wrap missing"><h1 class="d" style="font-size:clamp(34px,5vw,64px)">Artist not found</h1><p class="lede soft">Check the link, or browse every artist instead.</p><a class="btn" href="../artists/index.html">All artists</a></div>';
+    return;
+  }
+  var e = U.ed(a.ed), past = U.isPast(e), first = a.name.split(' ')[0], song = a.songs && a.songs[0];
+  var line = a.line || U.desig(a);
+  document.title = a.name + ' | unMute ' + e.city;
+  document.querySelector('meta[name=description]').content = a.name + ', ' + line + '. ' + (past ? 'Performed' : 'Performing') + ' at unMute ' + e.city + ', ' + U.dateMed(e) + '.';
+
+  var ph = a.photos || [];
+  var heroSrc = ph.length ? U.photo(ph[0], 2400, 0, true) : null;
+  var aboutSrc = ph.length ? U.photo(ph[2] || ph[1] || ph[0], 1100, 1100) : null;
+  var ext = '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1h8v8M11 1 1 11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>';
+  var yt = a.video ? 'https://www.youtube.com/watch?v=' + a.video : '';
+
+  /* event row: date + watch card */
+  var watch = a.video
+    ? '<div class="watch"><div class="l"><span class="yt"><i></i>YouTube</span><a class="th" href="' + yt + '" target="_blank" rel="noopener" aria-label="Watch ' + esc(song) + ' on YouTube"><img src="https://i.ytimg.com/vi/' + a.video + '/maxresdefault.jpg" alt=""></a><a class="btn" href="' + yt + '" target="_blank" rel="noopener"><span class="tri"></span>Play</a></div>' +
+      '<div class="r"><ol>' + (a.vids || [{ id: a.video, song: song }]).map(function (v) {
+        return '<li><a class="song" href="https://www.youtube.com/watch?v=' + v.id + '" target="_blank" rel="noopener">' + esc(v.song) + '</a>' + (v.with ? '<small>with ' + esc(v.with) + '</small>' : '') + '</li>';
+      }).join('') + '</ol><a class="ext" href="' + yt + '" target="_blank" rel="noopener">Watch on YouTube ' + ext + '</a></div></div>'
+    : '<div class="watch empty"><div class="l"><span class="label">' + (a.songs && a.songs.length ? (past ? 'Performed' : 'On the setlist') : 'Setlist') + '</span>' +
+      (a.songs && a.songs.length ? '<p style="margin:0;font-size:20px">' + a.songs.map(esc).join(', ') + '</p>' : '<p class="soft" style="margin:0">To be announced.</p>') +
+      '<p class="soft" style="margin:0;font-size:15px">' + (a.pending ? 'The full performance is out on YouTube on ' + U.dayLabel(a.out) + '.' : past ? 'The video for this set will be on Artium’s YouTube channel.' : 'The performance will be recorded and released after the show.') + '</p>' + '</div></div>';
+
+  /* about panel copy */
+  var bio = a.bio || (first + (past ? ' performed at ' : ' performs at ') + 'unMute ' + e.city + ' on ' + U.dateMed(e) + (e.venue ? ', at ' + e.venue : '') + '.' + (a.with ? (/^duet/.test(a.with) ? ' Singing a ' + a.with + '.' : ' On stage ' + (/^with /.test(a.with) ? a.with : 'with ' + a.with) + '.') : ''));
+  var duets = (a.vids || []).filter(function (v) { return v.with; }).map(function (v) { return v.song + ' with ' + v.with; });
+  var bioMore = [a.teacher ? 'Learns with ' + a.teacher + '.' : '', a.with && a.bio ? 'On stage: ' + a.with + '.' : '', duets.length && !a.bio ? 'Also sang ' + duets.join(', and ') + '.' : ''].filter(Boolean).join(' ');
+
+  // their posts, minus the full performance (that's already in the Watch card above)
+  var myPosts = U.feed(null, a.slug).filter(function (x) { return x.p.type !== 'performance'; });
+
+  var others = U.artistsOf(a.ed).filter(function (x) { return x.slug !== a.slug; })
+    .sort(function (x, y) { return ((y.photos || []).length) - ((x.photos || []).length); });
+
+  page.innerHTML =
+    '<section class="ahero' + (heroSrc ? '' : ' none') + '">' +
+      (heroSrc ? '<img src="' + heroSrc.src + '" style="object-position:' + heroSrc.pos + ' 30%" alt="' + esc(a.name) + ' at unMute ' + esc(e.city) + '" fetchpriority="high">' : '<div class="ghost" aria-hidden="true">' + esc(first) + '</div>') +
+      '<div class="name"><div class="wrap"><h1 class="d">' + esc(a.name) + '</h1><p class="line">' + esc(line) + '</p></div></div></section>' +
+
+    '<section class="event"><div class="wrap"><div>' +
+      '<p class="d when">' + U.dateMed(e) + '</p>' +
+      '<p class="where"><a href="' + U.editionURL(e) + '">unMute ' + esc(e.city) + '</a>' + (e.venue ? ', ' + esc(e.venue) : '') + '</p>' +
+      '<span class="pill label' + (!past || (a.out && !a.pending && U.isLive(e)) ? ' up' : '') + '">' + (a.out && !a.pending && U.isLive(e) ? 'Out now on YouTube' : a.pending ? 'Performance out ' + U.dayLabel(a.out) : past ? 'Edition ' + e.n + ', performed' : 'Edition ' + e.n + ', coming up') + '</span>' +
+    '</div>' + watch + '</div></section>' +
+
+    '<section class="about"><div class="panel"><div class="txt"><h2 class="d">' + esc(a.name) + '</h2><p class="sub">' + esc(line) + '</p>' +
+      '<div class="bio clamp" id="bio"><p>' + esc(bio) + '</p>' + (bioMore ? '<p>' + esc(bioMore) + '</p>' : '') + '</div>' +
+      '<button class="more" type="button" id="more" hidden>More</button>' +
+      (a.ep ? '<br><a class="story" href="https://artium-newsletters.vercel.app/' + a.ep.replace('&', '%26') + '.html" target="_blank" rel="noopener">Read the full story</a>' : '') +
+    '</div>' + (aboutSrc ? '<div class="pic"><img src="' + aboutSrc.src + '" style="object-position:' + aboutSrc.pos + ' 30%" alt="" loading="lazy">' + (a.credit ? '<small class="credit">Photo: ' + U.esc(a.credit) + '</small>' : '') + '</div>' : '') + '</div></section>' +
+
+    (myPosts.length ? '<section class="apost" id="posts"><div class="wrap"><h2 class="d">More from ' + esc(first) + '</h2><div class="posts">' +
+      myPosts.map(function (x) { return U.postCard(x, false); }).join('') + '</div></div></section>' : '') +
+
+    (a.quote ? '<section class="quote"><div class="wrap"><blockquote>“' + esc(a.quote) + '”</blockquote><cite>' + esc(a.name) + '</cite></div></section>' : '<div style="height:clamp(72px,9vw,120px)"></div>') +
+
+    '<section class="info"><div class="wrap"><div><h2 class="d">Event information</h2><p class="lede">' + esc(e.note) + '</p>' +
+      (e.venue ? '<a class="ulink" href="https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(e.venue + ' ' + e.city) + '" target="_blank" rel="noopener">Open in Maps</a>' : '') + '</div>' +
+      '<div class="faq">' +
+        '<details><summary>What is unMute?</summary><p>unMute is Artium Academy’s live performance series. Each edition takes place in a different city, with a lineup of Artium learners and teachers.</p></details>' +
+        '<details><summary>How are performers chosen?</summary><p>By audition. Every Artium learner can try out for a place on the lineup.</p></details>' +
+        '<details><summary>Will the performance be recorded?</summary><p>Yes. Every set is professionally recorded and produced, then released on Artium’s YouTube channel in the weeks after the edition.</p></details>' +
+        '<details><summary>How can I learn with Artium?</summary><p>Book a free trial class with an Artium teacher. If you enrol after it, your first course is 15% off. <a class="ulink" href="' + U.trial('ARTIST', a.slug) + '">Book a free class</a></p></details>' +
+      '</div></div></section>' +
+
+    (others.length ? '<section class="rail"><div class="wrap head"><h2 class="d">Also at unMute ' + esc(e.city) + '</h2><a class="ulink" href="' + U.editionURL(e) + '">See the full lineup</a></div><div class="track">' +
+      others.map(function (x) { return U.card(x); }).join('') + '</div></section>' : '');
+
+  /* portrait photos get the split hero */
+  if (ph.length && /^yt:[^:]+:0/.test(ph[0])) page.querySelector('.ahero').classList.add('tall');
+  var hi = page.querySelector('.ahero > img');
+  if (hi) { var chk = function () { if (hi.naturalHeight > hi.naturalWidth) hi.parentNode.classList.add('tall'); }; hi.complete ? chk() : hi.addEventListener('load', chk); }
+
+  /* "More" only when the bio is actually cut off */
+  var bioEl = document.getElementById('bio'), more = document.getElementById('more');
+  requestAnimationFrame(function () {
+    if (bioEl.scrollHeight > bioEl.clientHeight + 4) {
+      more.hidden = false;
+      more.addEventListener('click', function () { var open = bioEl.classList.toggle('clamp'); more.textContent = open ? 'More' : 'Less'; });
+    } else bioEl.classList.remove('clamp');
+  });
+
+  U.wire(page);
+  U.nextbar(700);
+  U.announce(a);
+  if (location.hash === '#posts' && document.getElementById('posts')) document.getElementById('posts').scrollIntoView();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The artists of unMute</title>
+<meta name="description" content="Every learner and teacher who has performed at unMute, Artium Academy's travelling stage.">
+<meta name="theme-color" content="#E9E6DF">
+<meta property="og:title" content="The artists of unMute">
+<meta property="og:description" content="Every learner and teacher who has stood on the unMute stage.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../site.css">
+<style>
+  .intro { padding: clamp(36px, 7vw, 90px) 0 clamp(28px, 4vw, 44px); }
+  .intro h1 { font-size: clamp(44px, 9vw, 120px); }
+  .intro .row { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 16px 40px; margin-top: 18px; }
+  .intro .lede { margin: 0; color: var(--soft); }
+    .filters { display: flex; padding-top: 12px !important; gap: 8px; overflow-x: auto; padding: 4px 0 18px; margin-bottom: clamp(18px, 3vw, 30px); scrollbar-width: none; position: sticky; top: var(--hh, 0px); z-index: 5; background: var(--paper); }
+  .filters button { flex: none; font: inherit; font-weight: 500; font-size: 15px; border: 1.5px solid var(--line); background: transparent; color: var(--ink); border-radius: 999px; padding: 8px 15px; cursor: pointer; }
+  .filters button[aria-pressed="true"] { background: var(--ink); color: var(--paper-hi); }
+  .filters button:hover:not([aria-pressed="true"]) { background: var(--yellow); }
+  .group { margin-bottom: clamp(56px, 8vw, 96px); }
+  .group h2 { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; font-size: clamp(24px, 3.4vw, 40px); margin-bottom: 24px; padding-top: 18px; border-top: 2px solid var(--ink); }
+  .group h2 a { text-decoration: none; } .group h2 a:hover { color: var(--pink); }
+  .group h2 small { font-weight: 400; font-size: 15px; font-stretch: 100%; text-transform: none; letter-spacing: 0; color: var(--soft); }
+  .cta { background: var(--ink); color: var(--paper-hi); padding: clamp(64px, 10vw, 120px) 0; }
+  .cta h2 { font-size: clamp(34px, 6vw, 80px); max-width: 14ch; }
+  .cta p { max-width: 38ch; margin: 22px 0 30px; font-size: clamp(18px, 2vw, 21px); color: rgba(243,241,236,.8); }
+</style>
+</head>
+<body data-root="../">
+<div id="site-header"></div>
+<main>
+  <div class="wrap intro">
+    <h1 class="d">The artists</h1>
+    <div class="row">
+      <p class="lede" id="lede"></p>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="filters" role="group" aria-label="Show artists from" id="filters"></div>
+    <div id="groups"></div>
+  </div>
+  <section class="cta">
+    <div class="wrap">
+      <h2 class="d">Start with a free class</h2>
+      <p>Book a trial class with an Artium teacher. If you enrol afterwards, your first course is 15% off.</p>
+      <a class="btn light" id="cta" href="#">Book a free class</a>
+    </div>
+  </section>
+</main>
+<div id="site-footer"></div>
+
+<script src="../data.js"></script>
+<script src="../site.js"></script>
+<script>
+(function () {
+  var U = UM, D = U.D;
+  U.mount('artists');
+  document.getElementById('cta').href = U.trial('ARTISTS');
+
+  // newest edition first; within an edition, people with photos first
+  var eds = D.editions.filter(function (e) { return U.artistsOf(e.id).length; })
+    .sort(function (a, b) { return Date.parse(b.date) - Date.parse(a.date); });
+  var cities = {}; eds.forEach(function (e) { cities[e.city] = 1; });
+  document.getElementById('lede').textContent = D.artists.length + ' learners and teachers from ' + Object.keys(cities).length + ' cities, including the lineups still to come.';
+
+  function render(filter) {
+    document.getElementById('groups').innerHTML = eds.filter(function (e) { return !filter || e.id === filter; }).map(function (e) {
+      var people = U.artistsOf(e.id).sort(function (a, b) { return ((b.photos || []).length) - ((a.photos || []).length); });
+      var label = U.isPast(e) ? 'performed ' + U.dateMed(e) : 'performing ' + U.dateMed(e);
+      return '<section class="group"><h2 class="d"><a href="' + U.editionURL(e) + '">' + U.esc(e.city) + ' ' + U.year(e) + '</a><small>' + label + '</small></h2>' +
+        '<div class="agrid">' + people.map(function (a) { return U.card(a); }).join('') + '</div></section>';
+    }).join('');
+    U.wire(document.getElementById('groups'));
+  }
+
+  var f = document.getElementById('filters');
+  f.innerHTML = '<button type="button" aria-pressed="true" data-f="">All</button>' +
+    eds.map(function (e) { return '<button type="button" aria-pressed="false" data-f="' + e.id + '">' + U.esc(e.city) + ' ' + U.year(e) + '</button>'; }).join('');
+  f.addEventListener('click', function (ev) {
+    var b = ev.target.closest('button'); if (!b) return;
+    f.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+    render(b.getAttribute('data-f'));
+  });
+
+  render('');
+  U.nextbar(400);
+  U.announce();
+})();
+</script>
+</body>
+</html>
