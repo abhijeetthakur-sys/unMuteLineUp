@@ -72,7 +72,7 @@
   var withPh = people.filter(function (a) { return a.photos && a.photos.length; });
   var seenPh = {}; withPh = withPh.filter(function (a) { var k = a.photos[0]; if (seenPh[k]) return false; seenPh[k] = 1; return true; });
   if (e.group) box.insertAdjacentHTML('afterbegin', '<img class="bg" src="' + U.photo(e.group, 1800, 1000).src + '" alt="">');
-  else if (withPh.length >= 3) box.insertAdjacentHTML('afterbegin', '<div class="mosaic" aria-hidden="true">' + withPh.slice(0, 6).map(function (a) { var p = U.photo(a.photos[0], 500, 700); return '<img src="' + p.src + '" style="object-position:' + p.pos + ' 30%" alt="">'; }).join('') + '</div>');
+  else if (withPh.length >= 3) box.insertAdjacentHTML('afterbegin', '<div class="mosaic" aria-hidden="true">' + withPh.slice(0, 6).map(function (a) { var p = U.photo(a.photos[0], 500, 700); return '<img src="' + p.src + '" style="object-position:' + (p.op || p.pos + ' 30%') + '" alt="">'; }).join('') + '</div>');
   else box.insertAdjacentHTML('afterbegin', '<div class="bignum" aria-hidden="true">' + (e.n < 10 ? '0' : '') + e.n + '</div>');
   hero.innerHTML = '<div><span class="eno label">Edition ' + e.n + (U.isLive(e) ? ', out now' : past ? '' : ', upcoming') + '</span><h1 class="d">' + esc(e.city) + '</h1>' +
     '<p class="when">' + U.dateLong(e) + (e.venue ? ', ' + esc(e.venue) : '') + '</p><p class="note">' + esc(e.note) + '</p>' +
