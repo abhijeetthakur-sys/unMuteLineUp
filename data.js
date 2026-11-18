@@ -15,6 +15,7 @@
          { type: 'cut',         date: '2026-12-29', url: '...' },   the performance cut
          { type: 'photos',      date: '2027-01-03', url: '...' },   photo carousel from the night
          { type: 'testimonial', date: '2027-01-05', url: '...' }
+         { type: 'story',       date: '2026-11-18', url: 'https://artium-newsletters.vercel.app/...' }   their newsletter on The Stage
        ]                   url can be an Instagram link, a YouTube link or a YouTube id.
                            Add img: '<photo>' to a post to choose its picture (Instagram gives none to
                            fetch, so otherwise the artist's own photo is used).
@@ -154,11 +155,13 @@ window.UNMUTE = {
 
     /* ---- London, 25 Jul 2026 (from Abhijeet; newsletters to follow) ---- */
     { slug: 'thanika-varunkumar', name: 'Thanika Varunkumar', ed: 'london-2026', does: 'Carnatic classical', line: 'Carnatic vocalist and Artium learner',
-      photos: ['yt:cHwaOTW3W_s:2 @46%', 'yt:cHwaOTW3W_s:0 @36%'], vids: [{ id: 'cHwaOTW3W_s', song: 'Mooladhara Moorthy' }],
+      photos: ['yt:cHwaOTW3W_s:2 @46%', 'yt:cHwaOTW3W_s:0 @36%'], vids: [{ id: 'cHwaOTW3W_s', song: 'Mooladhara Moorthy' }], ep: 'unmute-london-tv',
       quote: 'In rehearsal I was stuck worrying about the audience and voice glitches. On stage I remembered, the goal isn’t perfection.',
-      bio: 'Thanika sang Mooladhara Moorthy, a kriti to Lord Ganesha. On stage, she said, the mridangam felt like a heartbeat.' },
+      bio: 'Thanika sang Mooladhara Moorthy, a kriti to Lord Ganesha. On stage, she said, the mridangam felt like a heartbeat.',
+      posts: [{ type: 'story', date: '2026-11-18', url: 'https://artium-newsletters.vercel.app/unmute-london-tv' }] },
     { slug: 'preksha-mathur', name: 'Preksha Mathur', ed: 'london-2026', line: 'Vocalist and Artium learner',
-      photos: ['yt:Bg0IC9r5qiE:2 @65%', 'yt:Bg0IC9r5qiE:1 @72%'], vids: [{ id: 'Bg0IC9r5qiE', song: 'Aage Bhi Jaane Na Tu' }] },
+      photos: ['yt:Bg0IC9r5qiE:2 @65%', 'yt:Bg0IC9r5qiE:1 @72%'], vids: [{ id: 'Bg0IC9r5qiE', song: 'Aage Bhi Jaane Na Tu' }], ep: 'unmute-london-pm',
+      posts: [{ type: 'story', date: '2026-11-18', url: 'https://artium-newsletters.vercel.app/unmute-london-pm' }] },
     { slug: 'sudheesh-kakkunath', name: 'Sudheesh Kakkunath', ed: 'london-2026', line: 'Vocalist and Artium learner',
       photos: ['yt:rv0HpfKsSoE:2 @60%', 'yt:rv0HpfKsSoE:0 @32%'], vids: [{ id: 'rv0HpfKsSoE', song: 'Tu Jo Mila' }] },
     { slug: 'minnu-elsa-varghese', name: 'Minnu Elsa Varghese', ed: 'london-2026', line: 'Vocalist and Artium learner',

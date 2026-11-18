@@ -274,7 +274,7 @@
   var strips = document.getElementById('strips');
   for (var c = 0; c < 5; c++) {
     var mine = pics.filter(function (_, i) { return i % 5 === c; });
-    var imgs = mine.map(function (p) { return '<img src="' + p.src + '" style="object-position:' + p.pos + ' 30%" alt="" loading="lazy">'; }).join('');
+    var imgs = mine.map(function (p) { return '<img src="' + p.src + '" style="object-position:' + (p.op || p.pos + ' 30%') + '" alt="" loading="lazy">'; }).join('');
     strips.insertAdjacentHTML('beforeend', '<div class="strip"><div class="track">' + imgs + imgs + '</div></div>');
   }
 

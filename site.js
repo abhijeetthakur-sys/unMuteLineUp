@@ -36,16 +36,17 @@
   // how a post is described. On an artist's own page it gets a title; elsewhere the artist's name leads
   // and this short line sits under it. Any post can set its own `title` instead.
   var KIND = { practice: 'In rehearsal', intro: 'Profile', cut: 'On stage', photos: 'Photos', testimonial: 'After the show',
-               performance: 'Full performance', teaser: 'Teaser', reveal: 'The lineup', closing: 'Closing film' };
+               performance: 'Full performance', story: 'The story', teaser: 'Teaser', reveal: 'The lineup', closing: 'Closing film' };
   function postTitle(x) {
     if (x.p.title) return x.p.title;
-    var a = x.a, song = a && a.songs && a.songs[0], first = a && a.name.split(' ')[0], c = x.e.city;
+    var a = x.a, song = a && ((a.songs && a.songs[0]) || (a.vids && a.vids[0] && a.vids[0].song)), first = a && a.name.split(' ')[0], c = x.e.city;
     switch (x.p.type) {
       case 'practice': return song ? 'Rehearsing ' + song : 'In rehearsal';
       case 'intro': return first + '’s story';
       case 'cut': return song ? song + ', on stage' : 'On stage in ' + c;
       case 'photos': return 'Photos from ' + c;
       case 'testimonial': return 'After the show';
+      case 'story': return song ? 'The story behind ' + song : first + '’s story';
       case 'performance': return song ? song + ', full performance' : 'Full performance';
       case 'teaser': return 'unMute ' + c + ', the teaser';
       case 'reveal': return 'The ' + c + ' lineup';
@@ -78,7 +79,7 @@
     }
     return x.e.postcard ? postcard(x.e, 640) : '';
   }
-  function platform(x) { return /instagram\.com/.test(x.p.url) ? 'Instagram' : 'YouTube'; }
+  function platform(x) { return x.p.type === 'story' ? 'The Stage' : /instagram\.com/.test(x.p.url) ? 'Instagram' : 'YouTube'; }
   function shortDay(s) { var p = s.split('-'); return (+p[2]) + ' ' + MONTHS[p[1] - 1].slice(0, 3); }
   // one post as a card; opens on Instagram or YouTube
   function postCard(x, withName) {
@@ -102,7 +103,7 @@
     el.innerHTML = (t ? '<img src="' + esc(t) + '" alt="">' : '') +
       '<div><small>New from unMute ' + esc(pick.e.city) + '</small><b>' + esc(pick.a ? pick.a.name : postTitle(pick)) + '</b>' +
       '<span>' + esc(pick.a ? postTitle(pick) : 'Out now on ' + platform(pick)) + '</span></div>' +
-      '<a class="btn" href="' + esc(href) + '"' + (own || !pick.a ? ' target="_blank" rel="noopener"' : '') + '>' + (own || !pick.a ? 'Watch' : 'See it') + '</a>' +
+      '<a class="btn" href="' + esc(href) + '"' + (own || !pick.a ? ' target="_blank" rel="noopener"' : '') + '>' + (own || !pick.a ? (pick.p.type === 'story' ? 'Read' : 'Watch') : 'See it') + '</a>' +
       '<button type="button" class="x" aria-label="Close">×</button>';
     function close() { el.classList.remove('on'); document.body.classList.remove('announcing'); try { sessionStorage.setItem(key, 1); } catch (err) {} }
     el.querySelector('.x').addEventListener('click', close);
@@ -124,6 +125,8 @@
   /* ---- links ---- */
   function artistURL(slug) { return ROOT + 'artist/index.html?a=' + slug; }
   function editionURL(e) { return e.page && !isPast(e) ? ROOT + e.page : ROOT + 'edition/index.html?e=' + e.id; }
+  // The Stage: Artium's home for performance stories (newsletters)
+  var STAGE = 'https://artium-stage.vercel.app';
   function trial(campaign, content) { return 'https://register.artiumacademy.com/?utm_source=UNMUTE&utm_medium=SITE&utm_campaign=' + campaign + (content ? '&utm_content=' + content : ''); }
 
   /* ---- photos ---- */
@@ -136,7 +139,10 @@
     else if (p.indexOf('cl:') === 0) src = 'https://res.cloudinary.com/dd7s6bb58/image/upload/c_thumb,g_face,z_0.7,w_' + (w || 600) + ',h_' + (h || 750) + ',q_auto,f_auto/' + p.slice(3);
     else if (p.indexOf('yt:') === 0) { var q = p.split(':'); src = 'https://i.ytimg.com/vi/' + q[1] + '/' + (q[2] === '0' ? 'maxresdefault' : 'maxres' + (q[2] || 1)) + '.jpg'; }
     else if (p.indexOf('img/') === 0) src = ROOT + p;   // local photo published by tools/photos.py
-    return { src: src, pos: pos };
+    // where the face is (found by tools/photos.py): crops keep it in view. Cloudinary face crops already do.
+    var f = D.focus && D.focus[p], op = null;
+    if (f && p.indexOf('cl:') !== 0 && !(p.indexOf('clw:') === 0 && !full)) op = Math.round(f[0] * 100) + '% ' + Math.round(f[1] * 100) + '%';
+    return { src: src, pos: pos, op: op };
   }
   function postcard(e, w) { return 'https://res.cloudinary.com/dd7s6bb58/image/upload/' + e.postcardCrop + '/c_scale,w_' + (w || 600) + '/q_auto,f_auto/' + e.postcard.slice(3); }
 
@@ -156,8 +162,8 @@
     var e = ed(a.ed), ph = a.photos || [], inner;
     if (ph.length) {
       var A = photo(ph[0]), B = ph[1] ? photo(ph[1]) : null;
-      inner = '<img class="a" src="' + A.src + '" style="object-position:' + A.pos + ' 30%" alt="" loading="lazy">' +
-              (B ? '<img class="b" src="' + B.src + '" style="object-position:' + B.pos + ' 30%" alt="" loading="lazy">' : '');
+      inner = '<img class="a" src="' + A.src + '" style="object-position:' + (A.op || A.pos + ' 30%') + '" alt="" loading="lazy">' +
+              (B ? '<img class="b" src="' + B.src + '" style="object-position:' + (B.op || B.pos + ' 30%') + '" alt="" loading="lazy">' : '');
     } else {
       var ini = a.name.split(' ').map(function (w) { return w[0]; }).join('').slice(0, 2);
       inner = '<div class="noph">' + esc(ini) + '<small>Photo to come</small></div>';
@@ -169,8 +175,8 @@
   /* ---- header / footer ---- */
   function header(active, mode) {
     var home = mode === 'home';
-    var links = [['Shows', ROOT + 'index.html#shows', 'shows'], ['Artists', ROOT + 'artists/index.html', 'artists'], ['Watch', ROOT + 'index.html#watch', 'watch'], ['Editions', ROOT + 'index.html#editions', 'editions']];
-    var nav = links.map(function (l) { return '<a href="' + l[1] + '"' + (l[2] === active ? ' aria-current="page"' : '') + '>' + l[0] + '</a>'; }).join('');
+    var links = [['Shows', ROOT + 'index.html#shows', 'shows'], ['Artists', ROOT + 'artists/index.html', 'artists'], ['Watch', ROOT + 'index.html#watch', 'watch'], ['Editions', ROOT + 'index.html#editions', 'editions'], ['The Stage', STAGE, 'stage']];
+    var nav = links.map(function (l) { return '<a href="' + l[1] + '"' + (l[2] === 'stage' ? ' target="_blank" rel="noopener"' : '') + (l[2] === active ? ' aria-current="page"' : '') + '>' + l[0] + '</a>'; }).join('');
     return '<header class="top' + (home ? ' home' : mode === 'dark' ? ' dark' : '') + '"><div class="wrap">' +
       (home ? '<span class="mark mark-slot" aria-hidden="true"></span>' : '<a class="mark" href="' + ROOT + 'index.html" aria-label="unMute home">' + logo('', 'artium unMute') + '</a>') +
       '<nav aria-label="Main"><span class="navlinks">' + nav + '</span><a class="btn light" href="' + trial('NAV') + '">Book a free class</a></nav>' +
@@ -180,7 +186,7 @@
     return '<footer class="foot"><div class="wrap">' +
       '<div><a class="mark" href="' + ROOT + 'index.html" aria-label="unMute home">' + logo('', 'artium unMute') + '</a></div>' +
       '<div><h4>unMute</h4><ul><li><a href="' + ROOT + 'index.html#shows">Upcoming shows</a></li><li><a href="' + ROOT + 'artists/index.html">The artists</a></li><li><a href="' + ROOT + 'index.html#watch">Watch</a></li><li><a href="' + ROOT + 'index.html#editions">Every edition</a></li></ul></div>' +
-      '<div><h4>Artium Academy</h4><ul><li><a href="https://www.artiumacademy.com" target="_blank" rel="noopener">artiumacademy.com</a></li><li><a href="https://www.youtube.com/channel/UCb4wuyVXjQ_a3_jVXi9hgPg" target="_blank" rel="noopener">YouTube</a></li><li><a href="' + trial('FOOTER') + '">Book a free class</a></li></ul></div>' +
+      '<div><h4>Artium Academy</h4><ul><li><a href="https://www.artiumacademy.com" target="_blank" rel="noopener">artiumacademy.com</a></li><li><a href="https://www.youtube.com/channel/UCb4wuyVXjQ_a3_jVXi9hgPg" target="_blank" rel="noopener">YouTube</a></li><li><a href="' + STAGE + '" target="_blank" rel="noopener">The Stage</a></li><li><a href="' + trial('FOOTER') + '">Book a free class</a></li></ul></div>' +
       '<div><h4>Find us</h4><address><a href="https://www.google.com/maps/search/?api=1&query=Artium+Academy+Gundecha+Onclave+Khairani+Rd+Andheri+Mumbai+400072" target="_blank" rel="noopener">Artium Academy, 5th Floor, D Wing, Gundecha Onclave, 5D2, Khairani Rd, Andheri, Ansa Industrial Estate, Chandivali, Saki Naka, Mumbai, Maharashtra 400072</a></address></div>' +
       '<p class="fine">unMute is a live performance series by Artium Academy.</p>' +
       '</div></footer>';
