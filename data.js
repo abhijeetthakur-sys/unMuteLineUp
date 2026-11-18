@@ -195,6 +195,7 @@ window.UNMUTE.artists.forEach(function (a) {
 });
 /* LOCAL PHOTOS: written by tools/photos.py, do not edit */
 (function (L) {
+  window.UNMUTE.focus = L.focus;   // where the face is in each photo (0..1), so crops keep it in view
   window.UNMUTE.editions.forEach(function (e) { if (L.groups[e.id]) e.group = L.groups[e.id]; });
   window.UNMUTE.artists.forEach(function (a) {
     if (L.artists[a.slug]) a.photos = L.artists[a.slug];
@@ -265,7 +266,10 @@ window.UNMUTE.artists.forEach(function (a) {
   ]
  },
  "groups": {},
- "lineup": {},
+ "lineup": {
+  "apeksha-panchal": "img/mumbai-2026/apeksha-panchal-lineup.jpg",
+  "aadya-mohanty": "img/mumbai-2026/aadya-mohanty-lineup.jpg"
+ },
  "hero": {
   "hridaya-dande": "img/mumbai-2025/hridaya-dande-hero.jpg",
   "prissha-cholera": "img/mumbai-2025/prissha-cholera-hero.jpg",
@@ -280,7 +284,427 @@ window.UNMUTE.artists.forEach(function (a) {
   "ridhudev": "img/chennai-2026/ridhudev-hero.jpg",
   "emilin": "img/chennai-2026/emilin-hero.jpg",
   "thanika-varunkumar": "img/london-2026/thanika-varunkumar-hero.jpg",
-  "sudheesh-kakkunath": "img/london-2026/sudheesh-kakkunath-hero.jpg"
+  "preksha-mathur": "img/london-2026/preksha-mathur-hero.jpg",
+  "sudheesh-kakkunath": "img/london-2026/sudheesh-kakkunath-hero.jpg",
+  "minnu-elsa-varghese": "img/london-2026/minnu-elsa-varghese-hero.jpg"
+ },
+ "focus": {
+  "clw:v1778843633/AT_SJ_tzpz1n.jpg": [
+   0.285,
+   0.198
+  ],
+  "clw:v1780150465/WhatsApp_Image_2026-05-29_at_3.48.13_PM_dlcpas.jpg": [
+   0.454,
+   0.418
+  ],
+  "clw:v1791348629/Screenshot_2026-10-07_at_10.10.00_AM_r21uxz.png": [
+   0.508,
+   0.334
+  ],
+  "https://res.cloudinary.com/dd7s6bb58/image/upload/c_crop,x_0.033,y_0.0923,w_0.785,h_0.562,fl_relative/c_fill,w_600,h_750,q_auto,f_auto/v1789729068/Anik_eviii6.jpg": [
+   0.527,
+   0.358
+  ],
+  "https://res.cloudinary.com/dd7s6bb58/image/upload/c_crop,x_0.2879,y_0.0720,w_0.4046,h_0.4115,fl_relative/c_fill,w_600,h_750,q_auto,f_auto/v1789729059/Sreshtha_chczii.png": [
+   0.544,
+   0.363
+  ],
+  "https://res.cloudinary.com/dd7s6bb58/image/upload/c_fill,g_face,w_600,h_750,q_auto,f_auto/v1789729059/Drohan_eutehn.png": [
+   0.464,
+   0.255
+  ],
+  "https://res.cloudinary.com/dd7s6bb58/image/upload/c_fill,g_face,w_600,h_750,q_auto,f_auto/v1789729059/Rahul_a9groy.png": [
+   0.463,
+   0.323
+  ],
+  "https://res.cloudinary.com/dd7s6bb58/image/upload/c_fill,g_face,w_600,h_750,q_auto,f_auto/v1789729059/Tanula_ychd8d.png": [
+   0.514,
+   0.255
+  ],
+  "https://res.cloudinary.com/dd7s6bb58/image/upload/c_fill,g_face,w_600,h_750,q_auto,f_auto/v1789729062/Romi_upqh0a.png": [
+   0.402,
+   0.289
+  ],
+  "https://res.cloudinary.com/dd7s6bb58/image/upload/c_fill,g_face,w_600,h_750,q_auto,f_auto/v1789729062/Suparno_lke83v.jpg": [
+   0.501,
+   0.301
+  ],
+  "https://res.cloudinary.com/dd7s6bb58/image/upload/c_fill,g_face,w_600,h_750,q_auto,f_auto/v1789729063/Aindrila_pdfa7r.jpg": [
+   0.53,
+   0.308
+  ],
+  "https://res.cloudinary.com/dd7s6bb58/image/upload/c_fill,g_face,w_600,h_750,q_auto,f_auto/v1789729065/Subhankar_qjyrba.png": [
+   0.505,
+   0.329
+  ],
+  "https://res.cloudinary.com/dd7s6bb58/image/upload/c_fill,g_face,w_600,h_750,q_auto,f_auto/v1789747254/Sohini_edmlco.png": [
+   0.506,
+   0.276
+  ],
+  "img/chennai-2026/aairah-singh-1.jpg": [
+   0.45,
+   0.197
+  ],
+  "img/chennai-2026/aairah-singh-2.jpg": [
+   0.534,
+   0.281
+  ],
+  "img/chennai-2026/aairah-singh-hero.jpg": [
+   0.452,
+   0.195
+  ],
+  "img/chennai-2026/ahana-balaji-1.jpg": [
+   0.516,
+   0.239
+  ],
+  "img/chennai-2026/ahana-balaji-2.jpg": [
+   0.485,
+   0.403
+  ],
+  "img/chennai-2026/ahana-balaji-hero.jpg": [
+   0.544,
+   0.241
+  ],
+  "img/chennai-2026/emilin-1.jpg": [
+   0.537,
+   0.311
+  ],
+  "img/chennai-2026/emilin-2.jpg": [
+   0.455,
+   0.305
+  ],
+  "img/chennai-2026/emilin-hero.jpg": [
+   0.494,
+   0.314
+  ],
+  "img/chennai-2026/prashanthine-saravanan-1.jpg": [
+   0.871,
+   0.47
+  ],
+  "img/chennai-2026/prashanthine-saravanan-2.jpg": [
+   0.484,
+   0.375
+  ],
+  "img/chennai-2026/prashanthine-saravanan-hero.jpg": [
+   0.512,
+   0.453
+  ],
+  "img/chennai-2026/ridhudev-1.jpg": [
+   0.456,
+   0.351
+  ],
+  "img/chennai-2026/ridhudev-2.jpg": [
+   0.556,
+   0.262
+  ],
+  "img/chennai-2026/ridhudev-hero.jpg": [
+   0.463,
+   0.348
+  ],
+  "img/london-2026/minnu-elsa-varghese-hero.jpg": [
+   0.531,
+   0.319
+  ],
+  "img/london-2026/preksha-mathur-hero.jpg": [
+   0.544,
+   0.203
+  ],
+  "img/london-2026/sudheesh-kakkunath-1.jpg": [
+   0.419,
+   0.402
+  ],
+  "img/london-2026/sudheesh-kakkunath-2.jpg": [
+   0.276,
+   0.419
+  ],
+  "img/london-2026/sudheesh-kakkunath-hero.jpg": [
+   0.517,
+   0.232
+  ],
+  "img/london-2026/thanika-varunkumar-1.jpg": [
+   0.869,
+   0.365
+  ],
+  "img/london-2026/thanika-varunkumar-2.jpg": [
+   0.911,
+   0.347
+  ],
+  "img/london-2026/thanika-varunkumar-hero.jpg": [
+   0.587,
+   0.366
+  ],
+  "img/mumbai-2025/abhishek-marotkar-1.jpg": [
+   0.464,
+   0.207
+  ],
+  "img/mumbai-2025/abhishek-marotkar-2.jpg": [
+   0.355,
+   0.277
+  ],
+  "img/mumbai-2025/abhishek-marotkar-hero.jpg": [
+   0.445,
+   0.203
+  ],
+  "img/mumbai-2025/hridaya-dande-1.jpg": [
+   0.609,
+   0.271
+  ],
+  "img/mumbai-2025/hridaya-dande-2.jpg": [
+   0.605,
+   0.28
+  ],
+  "img/mumbai-2025/hridaya-dande-hero.jpg": [
+   0.543,
+   0.268
+  ],
+  "img/mumbai-2025/jaydeep-1.jpg": [
+   0.345,
+   0.45
+  ],
+  "img/mumbai-2025/jaydeep-2.jpg": [
+   0.305,
+   0.219
+  ],
+  "img/mumbai-2025/lekhashree-rajashekhar-1.jpg": [
+   0.411,
+   0.355
+  ],
+  "img/mumbai-2025/lekhashree-rajashekhar-2.jpg": [
+   0.633,
+   0.343
+  ],
+  "img/mumbai-2025/lekhashree-rajashekhar-hero.jpg": [
+   0.415,
+   0.355
+  ],
+  "img/mumbai-2025/neev-kanani-1.jpg": [
+   0.416,
+   0.2
+  ],
+  "img/mumbai-2025/neev-kanani-2.jpg": [
+   0.472,
+   0.191
+  ],
+  "img/mumbai-2025/neev-kanani-hero.jpg": [
+   0.564,
+   0.204
+  ],
+  "img/mumbai-2025/prissha-cholera-1.jpg": [
+   0.795,
+   0.267
+  ],
+  "img/mumbai-2025/prissha-cholera-2.jpg": [
+   0.471,
+   0.334
+  ],
+  "img/mumbai-2025/prissha-cholera-hero.jpg": [
+   0.615,
+   0.27
+  ],
+  "img/mumbai-2025/shalini-bairagi-1.jpg": [
+   0.651,
+   0.327
+  ],
+  "img/mumbai-2025/shalini-bairagi-2.jpg": [
+   0.678,
+   0.342
+  ],
+  "img/mumbai-2025/shalini-bairagi-hero.jpg": [
+   0.579,
+   0.326
+  ],
+  "img/mumbai-2025/sudhanshu-shome-1.jpg": [
+   0.649,
+   0.268
+  ],
+  "img/mumbai-2025/sudhanshu-shome-2.jpg": [
+   0.626,
+   0.235
+  ],
+  "img/mumbai-2025/sudhanshu-shome-hero.jpg": [
+   0.642,
+   0.277
+  ],
+  "img/mumbai-2026/apeksha-panchal-lineup.jpg": [
+   0.527,
+   0.287
+  ],
+  "yt:-E7BeS3biTk:1": [
+   0.418,
+   0.286
+  ],
+  "yt:-E7BeS3biTk:2": [
+   0.457,
+   0.271
+  ],
+  "yt:0IJtc5Ji9iM:0": [
+   0.232,
+   0.185
+  ],
+  "yt:0IJtc5Ji9iM:2": [
+   0.487,
+   0.29
+  ],
+  "yt:1Kjr7pRAonA:2": [
+   0.558,
+   0.355
+  ],
+  "yt:1Kjr7pRAonA:3": [
+   0.565,
+   0.325
+  ],
+  "yt:6mXIgY4jVTg:1": [
+   0.49,
+   0.352
+  ],
+  "yt:6mXIgY4jVTg:2": [
+   0.565,
+   0.359
+  ],
+  "yt:8YY47vMI1GQ:2": [
+   0.542,
+   0.404
+  ],
+  "yt:8YY47vMI1GQ:3": [
+   0.538,
+   0.444
+  ],
+  "yt:981RlPuL39U:0": [
+   0.328,
+   0.223
+  ],
+  "yt:981RlPuL39U:2": [
+   0.488,
+   0.255
+  ],
+  "yt:9xBfhGA2F2I:1": [
+   0.644,
+   0.333
+  ],
+  "yt:9xBfhGA2F2I:2": [
+   0.643,
+   0.385
+  ],
+  "yt:Bg0IC9r5qiE:1": [
+   0.668,
+   0.295
+  ],
+  "yt:Bg0IC9r5qiE:2": [
+   0.559,
+   0.297
+  ],
+  "yt:E469HHvNbeM:0": [
+   0.33,
+   0.229
+  ],
+  "yt:EUxpadZYVNI:0": [
+   0.346,
+   0.241
+  ],
+  "yt:Gprj7NRsib0:2": [
+   0.501,
+   0.26
+  ],
+  "yt:IDqxB9fVExY:1": [
+   0.543,
+   0.345
+  ],
+  "yt:J4BMC6lsPdg:1": [
+   0.536,
+   0.292
+  ],
+  "yt:J4BMC6lsPdg:2": [
+   0.538,
+   0.28
+  ],
+  "yt:OgKnGj5L5Fo:0": [
+   0.273,
+   0.253
+  ],
+  "yt:S0VNwOoyYZ0:0": [
+   0.278,
+   0.218
+  ],
+  "yt:T0EbAplp7ow:0": [
+   0.312,
+   0.267
+  ],
+  "yt:U7FDQc14Vgw:0": [
+   0.407,
+   0.195
+  ],
+  "yt:U7FDQc14Vgw:2": [
+   0.539,
+   0.241
+  ],
+  "yt:YDMLSihoY3s:0": [
+   0.224,
+   0.225
+  ],
+  "yt:YDMLSihoY3s:1": [
+   0.488,
+   0.262
+  ],
+  "yt:cHwaOTW3W_s:0": [
+   0.512,
+   0.244
+  ],
+  "yt:cHwaOTW3W_s:2": [
+   0.561,
+   0.294
+  ],
+  "yt:h0yPQL2i3NE:0": [
+   0.307,
+   0.222
+  ],
+  "yt:h0yPQL2i3NE:1": [
+   0.401,
+   0.216
+  ],
+  "yt:mA_tKjFTiiQ:1": [
+   0.444,
+   0.189
+  ],
+  "yt:mA_tKjFTiiQ:2": [
+   0.484,
+   0.2
+  ],
+  "yt:qWxe53KyZzc:1": [
+   0.519,
+   0.235
+  ],
+  "yt:qWxe53KyZzc:2": [
+   0.514,
+   0.241
+  ],
+  "yt:rv0HpfKsSoE:0": [
+   0.517,
+   0.229
+  ],
+  "yt:rv0HpfKsSoE:2": [
+   0.784,
+   0.426
+  ],
+  "yt:vcypATSglXY:0": [
+   0.256,
+   0.188
+  ],
+  "yt:wZyXwiZFTxs:0": [
+   0.285,
+   0.238
+  ],
+  "yt:wZyXwiZFTxs:1": [
+   0.36,
+   0.446
+  ],
+  "yt:zfrRiUW48uY:0": [
+   0.311,
+   0.226
+  ],
+  "img/mumbai-2026/aadya-mohanty-lineup.jpg": [
+   0.545,
+   0.347
+  ]
  }
 });
 /* END LOCAL PHOTOS */
