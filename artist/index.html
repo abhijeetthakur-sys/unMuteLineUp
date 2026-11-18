@@ -135,6 +135,7 @@
   var ph = a.photos || [];
   // wide photo for the top of the page on desktop; on a phone a wide frame crops to a soft sliver, so it gets the portrait
   var narrow = window.matchMedia && window.matchMedia('(max-width: 760px)').matches;
+  var wide = !!(a.heroPhoto && !narrow);   // wide stage photos: heads sit near the top, so keep the top in view
   var heroSrc = a.heroPhoto && !narrow ? U.photo(a.heroPhoto, 2400, 0, true) : ph.length ? U.photo(ph[0], 2400, 0, true) : null;
   var aboutSrc = ph.length ? U.photo(ph[2] || ph[1] || ph[0], 1100, 1100) : null;
   var ext = '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1h8v8M11 1 1 11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>';
@@ -163,7 +164,7 @@
 
   page.innerHTML =
     '<section class="ahero' + (heroSrc ? '' : ' none') + '">' +
-      (heroSrc ? '<img src="' + heroSrc.src + '" style="object-position:' + heroSrc.pos + ' 30%" alt="' + esc(a.name) + ' at unMute ' + esc(e.city) + '" fetchpriority="high">' : '<div class="ghost" aria-hidden="true">' + esc(first) + '</div>') +
+      (heroSrc ? '<img src="' + heroSrc.src + '" style="object-position:' + (heroSrc.op || heroSrc.pos + (wide ? ' 12%' : ' 30%')) + '" alt="' + esc(a.name) + ' at unMute ' + esc(e.city) + '" fetchpriority="high">' : '<div class="ghost" aria-hidden="true">' + esc(first) + '</div>') +
       '<div class="name"><div class="wrap"><h1 class="d">' + esc(a.name) + '</h1><p class="line">' + esc(line) + '</p></div></div></section>' +
 
     '<section class="event"><div class="wrap"><div>' +
@@ -176,7 +177,7 @@
       '<div class="bio clamp" id="bio"><p>' + esc(bio) + '</p>' + (bioMore ? '<p>' + esc(bioMore) + '</p>' : '') + '</div>' +
       '<button class="more" type="button" id="more" hidden>More</button>' +
       (a.ep ? '<br><a class="story" href="https://artium-newsletters.vercel.app/' + a.ep.replace('&', '%26') + '.html" target="_blank" rel="noopener">Read the full story</a>' : '') +
-    '</div>' + (aboutSrc ? '<div class="pic"><img src="' + aboutSrc.src + '" style="object-position:' + aboutSrc.pos + ' 30%" alt="" loading="lazy">' + (a.credit ? '<small class="credit">Photo: ' + U.esc(a.credit) + '</small>' : '') + '</div>' : '') + '</div></section>' +
+    '</div>' + (aboutSrc ? '<div class="pic"><img src="' + aboutSrc.src + '" style="object-position:' + (aboutSrc.op || aboutSrc.pos + ' 30%') + '" alt="" loading="lazy">' + (a.credit ? '<small class="credit">Photo: ' + U.esc(a.credit) + '</small>' : '') + '</div>' : '') + '</div></section>' +
 
     (myPosts.length ? '<section class="apost" id="posts"><div class="wrap"><h2 class="d">More from ' + esc(first) + '</h2><div class="posts">' +
       myPosts.map(function (x) { return U.postCard(x, false); }).join('') + '</div></div></section>' : '') +
