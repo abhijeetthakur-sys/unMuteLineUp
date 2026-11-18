@@ -46,7 +46,7 @@
 }
 </style>
 </head>
-<body data-date="2026-12-16">
+<body data-date="2026-12-16" data-root="/">
 
 <div class="wrap">
 
@@ -72,22 +72,11 @@
   <!-- LINEUP -->
   <div id="lineup" style="padding: 32px 24px 4px;">
     <div style="font-family: 'Anton', sans-serif; font-size: 24px; margin-bottom: 4px;" data-done="Who Took the Stage">Tonight's Lineup</div>
-    <div style="font-size: 13px; color: rgba(28,20,16,0.6);" data-done="Eleven performers took the stage.">The lineup drops soon. Check back here.</div>
+    <div id="lineup-sub" style="font-size: 13px; color: rgba(28,20,16,0.6);" data-done="Eleven performers took the stage.">The lineup drops soon. Check back here.</div>
   </div>
   <div style="padding: 8px 24px 12px;">
 
-    <!--
-      Copy this block once per performer (number in order). Pink/gold tilt alternates automatically.
-
-    <div class="artist">
-      <img src="https://res.cloudinary.com/dd7s6bb58/image/upload/c_fill,g_face,w_440,h_560,q_auto,f_auto/vXXXX/NAME.png" alt="Full Name">
-      <div>
-        <div class="artist-num">01</div>
-        <div class="artist-name">Full Name</div>
-        <div class="artist-note">duet with Someone</div>   ← optional, delete if not needed
-      </div>
-    </div>
-    -->
+    <div id="lineup-list" data-ed="mumbai-2026"></div>
 
   </div>
 
@@ -120,6 +109,38 @@
 
 </div>
 
+<script src="/data.js"></script>
+<script src="/site.js"></script>
+<script>
+/* Lineup: filled from data.js (the same list the rest of the site uses), so a person is added once.
+   If this fails for any reason, the page keeps whatever lineup is already written in the HTML above. */
+(function () {
+  try {
+    var box = document.getElementById('lineup-list'), U = window.UM;
+    if (!box || !U) return;
+    var people = U.artistsOf(box.getAttribute('data-ed'));
+    if (!people.length) return;
+    var WORDS = ['Zero','One','Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten','Eleven','Twelve','Thirteen','Fourteen','Fifteen','Sixteen','Seventeen','Eighteen','Nineteen','Twenty'];
+    box.innerHTML = people.map(function (a, i) {
+      var pic = a.lineupPhoto || (a.photos && a.photos[0]);
+      var tilt = i % 2 ? 'rotate(3deg)' : 'rotate(-3deg)', shadow = i % 2 ? 'var(--gold)' : 'var(--pink)';
+      var base = 'width:88px;height:112px;flex-shrink:0;border:2px solid var(--ink);border-radius:2px;box-shadow:4px 4px 0 ' + shadow + ';transform:' + tilt + ';';
+      var img = pic
+        ? '<img src="' + U.esc(U.photo(pic, 440, 560).src) + '" alt="' + U.esc(a.name) + '" style="' + base + 'object-fit:cover;object-position:' + (U.photo(pic).op || U.photo(pic).pos + ' 25%') + ';">'
+        : '<div role="img" aria-label="' + U.esc(a.name) + ', photo to come" style="' + base + "display:grid;place-items:center;background:rgba(28,20,16,0.08);font-family:'Anton',sans-serif;font-size:30px;color:rgba(28,20,16,0.45);\">" + U.esc(a.name.split(' ').map(function (w) { return w[0]; }).join('').slice(0, 2)) + '</div>';
+      return '<div style="display:flex;align-items:center;gap:16px;padding:20px 0;border-bottom:1px dashed rgba(28,20,16,0.25);">' + img +
+        '<div style="flex-grow:1;"><div style="font-weight:700;font-size:13px;color:var(--pink);margin-bottom:5px;">' + (i < 9 ? '0' : '') + (i + 1) + '</div>' +
+        '<div style="font-family:\'Anton\',sans-serif;font-size:21px;line-height:1.12;text-transform:uppercase;">' + U.esc(a.name) + '</div>' +
+        (a.with ? '<div style="font-size:12px;color:rgba(28,20,16,0.55);margin-top:5px;">' + U.esc(a.with) + '</div>' : '') + '</div></div>';
+    }).join('');
+    var sub = document.getElementById('lineup-sub'), ed = U.ed(box.getAttribute('data-ed'));
+    if (sub && !document.body.classList.contains('is-done')) {
+      var all = ed && ed.count ? Math.max(ed.count, people.length) : people.length;
+      sub.textContent = people.length < all ? 'The first names are in. The rest are coming soon.' : (WORDS[all] || all) + ' performers, one stage.';
+    }
+  } catch (err) { /* keep the written lineup */ }
+})();
+</script>
 <script>
 /* City pages: after the show date (from the next day, India time) reframe the page as
    "who took the stage" and put a Done & Dusted strip over the artwork.
