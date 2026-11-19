@@ -74,6 +74,7 @@
   .about { padding: 0 clamp(0px, 2vw, 32px); }
   .about .panel { max-width: 1440px; margin: 0 auto; display: grid; background: var(--ink); color: var(--white); }
   @media (min-width: 900px) { .about .panel { grid-template-columns: 46% 1fr; min-height: 560px; } }
+  @media (min-width: 900px) { .about .panel.solo { grid-template-columns: 1fr; min-height: 0; } }
   .about .txt { padding: clamp(36px, 6vw, 84px); align-self: center; }
   .about h2 { font-size: clamp(30px, 3.6vw, 48px); }
   .about .sub { margin: 10px 0 30px; font-size: 19px; color: rgba(251,250,248,.85); }
@@ -137,7 +138,8 @@
   var narrow = window.matchMedia && window.matchMedia('(max-width: 760px)').matches;
   var wide = !!(a.heroPhoto && !narrow);   // wide stage photos: heads sit near the top, so keep the top in view
   var heroSrc = a.heroPhoto && !narrow ? U.photo(a.heroPhoto, 2400, 0, true) : ph.length ? U.photo(ph[0], 2400, 0, true) : null;
-  var aboutSrc = ph.length ? U.photo(ph[2] || ph[1] || ph[0], 1100, 1100) : null;
+  // only a photo chosen for this panel (about.jpg in their folder); otherwise the panel is text only
+  var aboutSrc = a.aboutPhoto ? U.photo(a.aboutPhoto, 1600, 1600) : null;
   var ext = '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1h8v8M11 1 1 11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>';
   var yt = a.video ? 'https://www.youtube.com/watch?v=' + a.video : '';
 
@@ -159,7 +161,7 @@
   // their posts, minus the full performance (that's already in the Watch card above)
   var myPosts = U.feed(null, a.slug).filter(function (x) { return x.p.type !== 'performance'; });
 
-  var others = U.artistsOf(a.ed).filter(function (x) { return x.slug !== a.slug; })
+  var others = U.artistsOf(a.ed).filter(function (x) { return x.slug !== a.slug && (!U.isPast(e) || U.released(x)); })
     .sort(function (x, y) { return ((y.photos || []).length) - ((x.photos || []).length); });
 
   page.innerHTML =
@@ -173,7 +175,7 @@
       '<span class="pill label' + (!past || (a.out && !a.pending && U.isLive(e)) ? ' up' : '') + '">' + (a.out && !a.pending && U.isLive(e) ? 'Out now on YouTube' : a.pending ? 'Performance out ' + U.dayLabel(a.out) : past ? 'Edition ' + e.n + ', performed' : 'Edition ' + e.n + ', coming up') + '</span>' +
     '</div>' + watch + '</div></section>' +
 
-    '<section class="about"><div class="panel"><div class="txt"><h2 class="d">' + esc(a.name) + '</h2><p class="sub">' + esc(line) + '</p>' +
+    '<section class="about"><div class="panel' + (aboutSrc ? '' : ' solo') + '"><div class="txt"><h2 class="d">' + esc(a.name) + '</h2><p class="sub">' + esc(line) + '</p>' +
       '<div class="bio clamp" id="bio"><p>' + esc(bio) + '</p>' + (bioMore ? '<p>' + esc(bioMore) + '</p>' : '') + '</div>' +
       '<button class="more" type="button" id="more" hidden>More</button>' +
       (a.ep ? '<br><a class="story" href="https://artium-newsletters.vercel.app/' + a.ep.replace('&', '%26') + '.html" target="_blank" rel="noopener">Read the full story</a>' : '') +
