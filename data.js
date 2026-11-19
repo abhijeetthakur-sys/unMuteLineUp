@@ -176,6 +176,7 @@ window.UNMUTE = {
     { slug: 'sarah-shinde', name: 'Sarah Shinde', ed: 'mumbai-2026' },
     { slug: 'anvita-mohod', name: 'Anvita Mohod', ed: 'mumbai-2026' },
     { slug: 'kaustubh-bagchi', name: 'Kaustubh Bagchi', ed: 'mumbai-2026' },
+    { slug: 'radnyee-marotkar', name: 'Radnyee Marotkar', ed: 'mumbai-2026' },
 
 
     /* ---- Kolkata, 22 Jan 2027 (source: Kolkata lineup page) ---- */
@@ -205,6 +206,7 @@ window.UNMUTE.artists.forEach(function (a) {
     if (L.lineup[a.slug]) a.lineupPhoto = L.lineup[a.slug];
     if (L.hero[a.slug]) a.heroPhoto = L.hero[a.slug];
     if (L.about[a.slug]) a.aboutPhoto = L.about[a.slug];
+    if (L.aboutTall[a.slug]) a.aboutTall = L.aboutTall[a.slug];
   });
 })({
  "artists": {
@@ -271,10 +273,23 @@ window.UNMUTE.artists.forEach(function (a) {
  },
  "groups": {},
  "lineup": {
+  "ian-daniel": "img/mumbai-2026/ian-daniel-lineup.jpg",
+  "anay-pratapwar": "img/mumbai-2026/anay-pratapwar-lineup.jpg",
   "apeksha-panchal": "img/mumbai-2026/apeksha-panchal-lineup.jpg",
-  "aadya-mohanty": "img/mumbai-2026/aadya-mohanty-lineup.jpg"
+  "aadya-mohanty": "img/mumbai-2026/aadya-mohanty-lineup.jpg",
+  "sarah-shinde": "img/mumbai-2026/sarah-shinde-lineup.jpg",
+  "radnyee-marotkar": "img/mumbai-2026/radnyee-marotkar-lineup.jpg"
  },
  "hero": {
+  "bhavya-tumuluru": "img/hyderabad-2026/bhavya-tumuluru-hero.jpg",
+  "pt-gayathri": "img/hyderabad-2026/pt-gayathri-hero.jpg",
+  "chinmayee-madha": "img/hyderabad-2026/chinmayee-madha-hero.jpg",
+  "akshita-pola": "img/hyderabad-2026/akshita-pola-hero.jpg",
+  "inaya-sharma": "img/hyderabad-2026/inaya-sharma-hero.jpg",
+  "anvitha-gantasala": "img/hyderabad-2026/anvitha-gantasala-hero.jpg",
+  "alyna-shaikh": "img/hyderabad-2026/alyna-shaikh-hero.jpg",
+  "abhijeet-thakur": "img/mumbai-2025/abhijeet-thakur-hero.jpg",
+  "shrey-jadav": "img/mumbai-2025/shrey-jadav-hero.jpg",
   "hridaya-dande": "img/mumbai-2025/hridaya-dande-hero.jpg",
   "prissha-cholera": "img/mumbai-2025/prissha-cholera-hero.jpg",
   "neev-kanani": "img/mumbai-2025/neev-kanani-hero.jpg",
@@ -282,10 +297,17 @@ window.UNMUTE.artists.forEach(function (a) {
   "sudhanshu-shome": "img/mumbai-2025/sudhanshu-shome-hero.jpg",
   "shalini-bairagi": "img/mumbai-2025/shalini-bairagi-hero.jpg",
   "lekhashree-rajashekhar": "img/mumbai-2025/lekhashree-rajashekhar-hero.jpg",
+  "aradhya-rao": "img/bangalore-2025/aradhya-rao-hero.jpg",
+  "rohit-sundar": "img/bangalore-2025/rohit-sundar-hero.jpg",
+  "sparsh-singhal": "img/bangalore-2025/sparsh-singhal-hero.jpg",
+  "ananya-s-g": "img/bangalore-2025/ananya-s-g-hero.jpg",
+  "tejashree-kulkarni": "img/bangalore-2025/tejashree-kulkarni-hero.jpg",
   "prashanthine-saravanan": "img/chennai-2026/prashanthine-saravanan-hero.jpg",
   "ahana-balaji": "img/chennai-2026/ahana-balaji-hero.jpg",
   "aairah-singh": "img/chennai-2026/aairah-singh-hero.jpg",
   "ridhudev": "img/chennai-2026/ridhudev-hero.jpg",
+  "vinisha-vinoth": "img/chennai-2026/vinisha-vinoth-hero.jpg",
+  "swarthamikaa": "img/chennai-2026/swarthamikaa-hero.jpg",
   "emilin": "img/chennai-2026/emilin-hero.jpg",
   "thanika-varunkumar": "img/london-2026/thanika-varunkumar-hero.jpg",
   "preksha-mathur": "img/london-2026/preksha-mathur-hero.jpg",
@@ -293,7 +315,14 @@ window.UNMUTE.artists.forEach(function (a) {
   "minnu-elsa-varghese": "img/london-2026/minnu-elsa-varghese-hero.jpg"
  },
  "about": {
-  "thanika-varunkumar": "img/london-2026/thanika-varunkumar-about.jpg"
+  "bhavya-tumuluru": "img/hyderabad-2026/bhavya-tumuluru-about.jpg",
+  "pt-gayathri": "img/hyderabad-2026/pt-gayathri-about.jpg",
+  "alyna-shaikh": "img/hyderabad-2026/alyna-shaikh-about.jpg",
+  "thanika-varunkumar": "img/london-2026/thanika-varunkumar-about.jpg",
+  "preksha-mathur": "img/london-2026/preksha-mathur-about.jpg"
+ },
+ "aboutTall": {
+  "pt-gayathri": "img/hyderabad-2026/pt-gayathri-about-tall.jpg"
  },
  "focus": {
   "clw:v1778843633/AT_SJ_tzpz1n.jpg": [
@@ -408,9 +437,29 @@ window.UNMUTE.artists.forEach(function (a) {
    0.463,
    0.348
   ],
+  "img/hyderabad-2026/alyna-shaikh-about.jpg": [
+   0.578,
+   0.311
+  ],
+  "img/hyderabad-2026/bhavya-tumuluru-about.jpg": [
+   0.465,
+   0.248
+  ],
+  "img/hyderabad-2026/pt-gayathri-about-tall.jpg": [
+   0.528,
+   0.308
+  ],
+  "img/hyderabad-2026/pt-gayathri-about.jpg": [
+   0.511,
+   0.284
+  ],
   "img/london-2026/minnu-elsa-varghese-hero.jpg": [
    0.531,
    0.319
+  ],
+  "img/london-2026/preksha-mathur-about.jpg": [
+   0.706,
+   0.236
   ],
   "img/london-2026/preksha-mathur-hero.jpg": [
    0.544,
@@ -435,6 +484,10 @@ window.UNMUTE.artists.forEach(function (a) {
   "img/london-2026/thanika-varunkumar-2.jpg": [
    0.911,
    0.347
+  ],
+  "img/london-2026/thanika-varunkumar-about.jpg": [
+   0.469,
+   0.369
   ],
   "img/london-2026/thanika-varunkumar-hero.jpg": [
    0.587,
@@ -536,9 +589,25 @@ window.UNMUTE.artists.forEach(function (a) {
    0.545,
    0.347
   ],
+  "img/mumbai-2026/anay-pratapwar-lineup.jpg": [
+   0.475,
+   0.313
+  ],
   "img/mumbai-2026/apeksha-panchal-lineup.jpg": [
    0.527,
    0.287
+  ],
+  "img/mumbai-2026/ian-daniel-lineup.jpg": [
+   0.437,
+   0.428
+  ],
+  "img/mumbai-2026/radnyee-marotkar-lineup.jpg": [
+   0.465,
+   0.251
+  ],
+  "img/mumbai-2026/sarah-shinde-lineup.jpg": [
+   0.475,
+   0.2
   ],
   "yt:-E7BeS3biTk:1": [
    0.418,
@@ -712,9 +781,69 @@ window.UNMUTE.artists.forEach(function (a) {
    0.311,
    0.226
   ],
-  "img/london-2026/thanika-varunkumar-about.jpg": [
-   0.469,
-   0.369
+  "img/hyderabad-2026/bhavya-tumuluru-hero.jpg": [
+   0.47,
+   0.233
+  ],
+  "img/hyderabad-2026/pt-gayathri-hero.jpg": [
+   0.535,
+   0.423
+  ],
+  "img/hyderabad-2026/chinmayee-madha-hero.jpg": [
+   0.481,
+   0.25
+  ],
+  "img/hyderabad-2026/akshita-pola-hero.jpg": [
+   0.56,
+   0.428
+  ],
+  "img/hyderabad-2026/inaya-sharma-hero.jpg": [
+   0.475,
+   0.272
+  ],
+  "img/hyderabad-2026/anvitha-gantasala-hero.jpg": [
+   0.346,
+   0.319
+  ],
+  "img/hyderabad-2026/alyna-shaikh-hero.jpg": [
+   0.532,
+   0.354
+  ],
+  "img/mumbai-2025/abhijeet-thakur-hero.jpg": [
+   0.522,
+   0.268
+  ],
+  "img/mumbai-2025/shrey-jadav-hero.jpg": [
+   0.522,
+   0.268
+  ],
+  "img/bangalore-2025/aradhya-rao-hero.jpg": [
+   0.534,
+   0.345
+  ],
+  "img/bangalore-2025/rohit-sundar-hero.jpg": [
+   0.545,
+   0.398
+  ],
+  "img/bangalore-2025/sparsh-singhal-hero.jpg": [
+   0.484,
+   0.278
+  ],
+  "img/bangalore-2025/ananya-s-g-hero.jpg": [
+   0.623,
+   0.459
+  ],
+  "img/bangalore-2025/tejashree-kulkarni-hero.jpg": [
+   0.559,
+   0.392
+  ],
+  "img/chennai-2026/vinisha-vinoth-hero.jpg": [
+   0.456,
+   0.294
+  ],
+  "img/chennai-2026/swarthamikaa-hero.jpg": [
+   0.478,
+   0.227
   ]
  }
 });

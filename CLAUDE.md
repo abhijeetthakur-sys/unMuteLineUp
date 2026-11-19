@@ -18,7 +18,7 @@ Two kinds, kept apart: the **lineup photo** (before the show, only on the city's
 
 **The face is the subject.** Every crop on the site (cards, hover, hero, About panel, show-page tiles, mosaics) is positioned on the face. `tools/photos.py publish` finds the face in every photo (local and YouTube/Cloudinary) with `tools/faces.swift` (Apple Vision, compiled to tools/.bin/faces), caches results in `tools/focus.json`, and writes them to `window.UNMUTE.focus`; `photo()` in site.js returns `op`, the object-position to use. Always use `op` when adding a new crop.
 
-A `hero.jpg` in a person's folder is a wide photo for the top of their page on desktop (`heroPhoto` in data.js); phones get their portrait `1.jpg` instead, because a wide frame crops to a soft sliver there. Without a `hero.jpg`, the first photo is used. Video frames have the Artium logo burned into both top corners: for heroes the corners are filled in with ffmpeg's `delogo` (rects x=50,y=34,w=330,h=118 and x=1550,y=26,w=340,h=124 on 1080p) and the bottom 13% is cut off (captions).
+A `hero.jpg` in a person's folder is a wide photo for the top of their page on desktop (`heroPhoto` in data.js); phones get their portrait `1.jpg` instead, because a wide frame crops to a soft sliver there. Without a `hero.jpg`, the first photo is used. Video frames have the Artium logo burned into both top corners: for heroes the corners are filled in with ffmpeg's `delogo` (rects x=40,y=24,w=370,h=158 and x=1510,y=20,w=370,h=158 on 1080p, which cover the logo positions in every city's videos) and the bottom 13% is cut off (captions).
 
 Photos cut from the performance videos (done Nov 2026 for 15 artists in Mumbai 2025, Chennai and London, to replace YouTube thumbnails that had text on them): `yt-dlp` and `ffmpeg` are in ~/.local/bin. Download the video at 1080p, make a timestamped contact sheet (`fps=1/4`, tile), pick close-up moments by eye, then cut a 4:5 portrait around the performer (full height minus the bottom 13%, which is where the video's captions sit; keep clear of the corner logos) and drop it in the person's photos folder as 1.jpg, 2.jpg. The other artists still use YouTube auto-frames (`yt:id:n`), which have no text but show the corner logos.
 
@@ -31,6 +31,8 @@ Each artist's `photos` list is in order: 1st is the card and page hero, 2nd is t
 - `yt:<video id>:<n>` a YouTube frame (1 to 3), or `0` for the official thumbnail
 - `img/...` a local photo published by `tools/photos.py`
 - any of these can end in ` @30%` to shift the crop sideways
+
+Every shown artist now has a clean wide `hero.jpg` (Nov 2026). Desktop banners must be landscape with no logos or burned-in text; a raw video frame is never shown whole on desktop.
 
 **No blurred or hazy photos** unless it's a deliberate artistic choice. Never fill a slot with a stand-in. The About panel shows only a photo the owner chose (`about.jpg` in the person's folder → `aboutPhoto`); without one, the panel is text only. YouTube auto-frames (`yt:id:1..3`) are random stills that crop soft, so treat them as temporary.
 
