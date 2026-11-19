@@ -63,10 +63,10 @@ window.UNMUTE = {
 
   artists: [
     /* ---- Hyderabad, 28 May 2026 (source: unMute Hyderabad newsletter + episode pages) ---- */
-    { slug: 'bhavya-tumuluru', name: 'Bhavya Tumuluru', ed: 'hyderabad-2026', role: 'Teacher and mentor', does: 'Carnatic classical',
+    { slug: 'bhavya-tumuluru', name: 'Bhavya Tumuluru', ed: 'hyderabad-2026', role: 'Artium teacher', does: 'Carnatic classical',
       teacher: 'Lalitha ji and Haripriya ji (Hyderabad Sisters)',
       with: 'Kolipaka Veeraswamy on mridangam, Koundinya Pannala on violin',
-      line: 'Carnatic vocalist and Artium mentor',
+      line: 'Carnatic vocalist and Artium teacher',
       photos: ['cl:v1791348626/Screenshot_2026-10-07_at_10.10.38_AM_f5glux.png', 'clw:v1791348629/Screenshot_2026-10-07_at_10.10.00_AM_r21uxz.png'],
       songs: ['Bhavayami Padumente'], video: 'g1H9p6Kkmzc', ep: 'unmute-hyderabad-bt',
       quote: 'Finishing this challenging classical piece at the end of my performance gave me a sense of satisfaction and made me feel like a complete musician.',
@@ -127,8 +127,8 @@ window.UNMUTE = {
       vids: [{ id: 'S0VNwOoyYZ0', song: 'Khel Mandala' }, { id: 'vcypATSglXY', song: 'Chappa Chappa', with: 'Jaydeep' }] },
     { slug: 'jaydeep', name: 'Jaydeep Bagwadkar', ed: 'mumbai-2025', role: 'Head of Performance, Artium Academy', photos: ['yt:vcypATSglXY:0 @0%'],
       vids: [{ id: 'vcypATSglXY', song: 'Chappa Chappa', with: 'Abhishek Marotkar' }] },
-    { slug: 'sudhanshu-shome', name: 'Sudhanshu Shome', ed: 'mumbai-2025', photos: ['yt:981RlPuL39U:2 @54%', 'yt:981RlPuL39U:0 @14%'], vids: [{ id: '981RlPuL39U', song: 'Zamaana Lage' }] },
-    { slug: 'shalini-bairagi', name: 'Shalini Bairagi', ed: 'mumbai-2025', photos: ['yt:E469HHvNbeM:0 @5%'], vids: [{ id: 'E469HHvNbeM', song: 'Salona Sa Sajan' }] },
+    { slug: 'sudhanshu-shome', name: 'Sudhanshu Shome', ed: 'mumbai-2025', role: 'Artium teacher', photos: ['yt:981RlPuL39U:2 @54%', 'yt:981RlPuL39U:0 @14%'], vids: [{ id: '981RlPuL39U', song: 'Zamaana Lage' }] },
+    { slug: 'shalini-bairagi', name: 'Shalini Bairagi', ed: 'mumbai-2025', role: 'Artium teacher', photos: ['yt:E469HHvNbeM:0 @5%'], vids: [{ id: 'E469HHvNbeM', song: 'Salona Sa Sajan' }] },
     { slug: 'lekhashree-rajashekhar', name: 'Lekhashree Rajashekhar', ed: 'mumbai-2025', photos: ['yt:EUxpadZYVNI:0 @10%'], vids: [{ id: 'EUxpadZYVNI', song: 'Skyfall' }] },
 
     /* ---- Bangalore, Oct 2025 (names and videos from Artium's YouTube channel) ---- */
@@ -140,11 +140,11 @@ window.UNMUTE = {
       vids: [{ id: 'Gprj7NRsib0', song: 'O Rangrez' }, { id: 'BrbQJYvKyhQ', song: 'Moh Moh Ke Dhaage x Agar Tum Saath Ho', with: 'Ananya S G' }] },
     { slug: 'ananya-s-g', name: 'Ananya S G', ed: 'bangalore-2025', photos: ['yt:9xBfhGA2F2I:1 @65%', 'yt:9xBfhGA2F2I:2 @50%'],
       vids: [{ id: '9xBfhGA2F2I', song: 'Gilehriyaan' }, { id: 'BrbQJYvKyhQ', song: 'Moh Moh Ke Dhaage x Agar Tum Saath Ho', with: 'Sparsh Singhal' }] },
-    { slug: 'tejashree-kulkarni', name: 'Tejashree Kulkarni', ed: 'bangalore-2025', photos: ['yt:1Kjr7pRAonA:2 @40%', 'yt:1Kjr7pRAonA:3 @72%'],
+    { slug: 'tejashree-kulkarni', name: 'Tejashree Kulkarni', ed: 'bangalore-2025', role: 'Artium teacher', photos: ['yt:1Kjr7pRAonA:2 @40%', 'yt:1Kjr7pRAonA:3 @72%'],
       vids: [{ id: '1Kjr7pRAonA', song: 'Aaj Jaane Ki Zid Na Karo' }] },
 
     /* ---- Chennai, Feb 2026 (names and videos from Artium's YouTube channel) ---- */
-    { slug: 'prashanthine-saravanan', name: 'Prashanthine Saravanan', ed: 'chennai-2026', does: 'Carnatic classical', teacher: 'Sidhi Krishnamoorthy', line: 'Carnatic vocalist',
+    { slug: 'prashanthine-saravanan', name: 'Prashanthine Saravanan', ed: 'chennai-2026', does: 'Carnatic classical', role: 'Artium teacher', line: 'Carnatic vocalist and Artium teacher',
       photos: ['yt:T0EbAplp7ow:0 @0%'], vids: [{ id: 'T0EbAplp7ow', song: 'E Taavunaraa' }] },
     { slug: 'ahana-balaji', name: 'Ahana Balaji', ed: 'chennai-2026', photos: ['yt:h0yPQL2i3NE:1 @28%', 'yt:h0yPQL2i3NE:0 @0%'], vids: [{ id: 'h0yPQL2i3NE', song: 'Snehidhane' }] },
     { slug: 'aairah-singh', name: 'Aairah Singh', ed: 'chennai-2026', photos: ['yt:zfrRiUW48uY:0 @5%'], vids: [{ id: 'zfrRiUW48uY', song: 'The Climb' }] },
@@ -210,6 +210,14 @@ window.UNMUTE.artists.forEach(function (a) {
   });
 })({
  "artists": {
+  "abhijeet-thakur": [
+   "img/mumbai-2025/abhijeet-thakur-1.jpg",
+   "img/mumbai-2025/abhijeet-thakur-2.jpg"
+  ],
+  "shrey-jadav": [
+   "img/mumbai-2025/shrey-jadav-1.jpg",
+   "img/mumbai-2025/shrey-jadav-2.jpg"
+  ],
   "hridaya-dande": [
    "img/mumbai-2025/hridaya-dande-1.jpg",
    "img/mumbai-2025/hridaya-dande-2.jpg"
@@ -377,6 +385,26 @@ window.UNMUTE.artists.forEach(function (a) {
    0.506,
    0.276
   ],
+  "img/bangalore-2025/ananya-s-g-hero.jpg": [
+   0.623,
+   0.459
+  ],
+  "img/bangalore-2025/aradhya-rao-hero.jpg": [
+   0.534,
+   0.345
+  ],
+  "img/bangalore-2025/rohit-sundar-hero.jpg": [
+   0.545,
+   0.398
+  ],
+  "img/bangalore-2025/sparsh-singhal-hero.jpg": [
+   0.484,
+   0.278
+  ],
+  "img/bangalore-2025/tejashree-kulkarni-hero.jpg": [
+   0.559,
+   0.392
+  ],
   "img/chennai-2026/aairah-singh-1.jpg": [
    0.45,
    0.197
@@ -437,13 +465,45 @@ window.UNMUTE.artists.forEach(function (a) {
    0.463,
    0.348
   ],
+  "img/chennai-2026/swarthamikaa-hero.jpg": [
+   0.478,
+   0.227
+  ],
+  "img/chennai-2026/vinisha-vinoth-hero.jpg": [
+   0.456,
+   0.294
+  ],
+  "img/hyderabad-2026/akshita-pola-hero.jpg": [
+   0.56,
+   0.428
+  ],
   "img/hyderabad-2026/alyna-shaikh-about.jpg": [
    0.578,
    0.311
   ],
+  "img/hyderabad-2026/alyna-shaikh-hero.jpg": [
+   0.532,
+   0.354
+  ],
+  "img/hyderabad-2026/anvitha-gantasala-hero.jpg": [
+   0.346,
+   0.319
+  ],
   "img/hyderabad-2026/bhavya-tumuluru-about.jpg": [
    0.465,
    0.248
+  ],
+  "img/hyderabad-2026/bhavya-tumuluru-hero.jpg": [
+   0.47,
+   0.233
+  ],
+  "img/hyderabad-2026/chinmayee-madha-hero.jpg": [
+   0.481,
+   0.25
+  ],
+  "img/hyderabad-2026/inaya-sharma-hero.jpg": [
+   0.475,
+   0.272
   ],
   "img/hyderabad-2026/pt-gayathri-about-tall.jpg": [
    0.528,
@@ -452,6 +512,10 @@ window.UNMUTE.artists.forEach(function (a) {
   "img/hyderabad-2026/pt-gayathri-about.jpg": [
    0.511,
    0.284
+  ],
+  "img/hyderabad-2026/pt-gayathri-hero.jpg": [
+   0.535,
+   0.423
   ],
   "img/london-2026/minnu-elsa-varghese-hero.jpg": [
    0.531,
@@ -492,6 +556,10 @@ window.UNMUTE.artists.forEach(function (a) {
   "img/london-2026/thanika-varunkumar-hero.jpg": [
    0.587,
    0.366
+  ],
+  "img/mumbai-2025/abhijeet-thakur-hero.jpg": [
+   0.522,
+   0.268
   ],
   "img/mumbai-2025/abhishek-marotkar-1.jpg": [
    0.464,
@@ -572,6 +640,10 @@ window.UNMUTE.artists.forEach(function (a) {
   "img/mumbai-2025/shalini-bairagi-hero.jpg": [
    0.579,
    0.326
+  ],
+  "img/mumbai-2025/shrey-jadav-hero.jpg": [
+   0.522,
+   0.268
   ],
   "img/mumbai-2025/sudhanshu-shome-1.jpg": [
    0.649,
@@ -781,69 +853,21 @@ window.UNMUTE.artists.forEach(function (a) {
    0.311,
    0.226
   ],
-  "img/hyderabad-2026/bhavya-tumuluru-hero.jpg": [
-   0.47,
-   0.233
+  "img/mumbai-2025/abhijeet-thakur-1.jpg": [
+   0.437,
+   0.197
   ],
-  "img/hyderabad-2026/pt-gayathri-hero.jpg": [
-   0.535,
-   0.423
+  "img/mumbai-2025/abhijeet-thakur-2.jpg": [
+   0.297,
+   0.247
   ],
-  "img/hyderabad-2026/chinmayee-madha-hero.jpg": [
-   0.481,
-   0.25
+  "img/mumbai-2025/shrey-jadav-1.jpg": [
+   0.562,
+   0.231
   ],
-  "img/hyderabad-2026/akshita-pola-hero.jpg": [
-   0.56,
-   0.428
-  ],
-  "img/hyderabad-2026/inaya-sharma-hero.jpg": [
+  "img/mumbai-2025/shrey-jadav-2.jpg": [
    0.475,
-   0.272
-  ],
-  "img/hyderabad-2026/anvitha-gantasala-hero.jpg": [
-   0.346,
-   0.319
-  ],
-  "img/hyderabad-2026/alyna-shaikh-hero.jpg": [
-   0.532,
-   0.354
-  ],
-  "img/mumbai-2025/abhijeet-thakur-hero.jpg": [
-   0.522,
-   0.268
-  ],
-  "img/mumbai-2025/shrey-jadav-hero.jpg": [
-   0.522,
-   0.268
-  ],
-  "img/bangalore-2025/aradhya-rao-hero.jpg": [
-   0.534,
-   0.345
-  ],
-  "img/bangalore-2025/rohit-sundar-hero.jpg": [
-   0.545,
-   0.398
-  ],
-  "img/bangalore-2025/sparsh-singhal-hero.jpg": [
-   0.484,
-   0.278
-  ],
-  "img/bangalore-2025/ananya-s-g-hero.jpg": [
-   0.623,
-   0.459
-  ],
-  "img/bangalore-2025/tejashree-kulkarni-hero.jpg": [
-   0.559,
-   0.392
-  ],
-  "img/chennai-2026/vinisha-vinoth-hero.jpg": [
-   0.456,
-   0.294
-  ],
-  "img/chennai-2026/swarthamikaa-hero.jpg": [
-   0.478,
-   0.227
+   0.245
   ]
  }
 });
