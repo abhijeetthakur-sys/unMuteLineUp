@@ -25,7 +25,7 @@
    and every page shows a small "New from unMute <city>" card when it opens.
    Check it on any date by adding ?preview=2027-01-02 to a page's address.
 
-   Edition ids are city-year, e.g. 'kolkata-2027'. They make the form links (unmutelineup.vercel.app/form/kolkata-2027).
+   Edition ids are city-year, e.g. 'kolkata-2027'. They make the form links (artiumunmute.vercel.app/form/kolkata-2027).
    If a city has two shows in one year, add the month to the newer one: 'mumbai-2027-oct'.
 
    Photos:
@@ -52,13 +52,13 @@ window.UNMUTE = {
     { id: 'mumbai-2026', n: 6, city: 'Mumbai', date: '2026-12-16', venue: '', count: 11,
       page: 'mumbai/dec-2026/', postcard: 'cl:v1794481164/unMute_Postcard_Mumbai_hl37xm.png',
       postcardCrop: 'c_crop,x_44,y_42,w_1652,h_1150',
-      note: 'Eleven performers. Lineup to be announced.' },
+      note: 'Eleven performers.' },
     { id: 'kolkata-2027', n: 7, city: 'Kolkata', date: '2027-01-22', venue: '', count: 10,
       page: 'kolkata/jan-2027/', postcard: 'cl:v1794481163/unMute_Postcard_Kolkata-2_llrej4.png',
       postcardCrop: 'c_crop,x_40,y_40,w_1666,h_1158',
       note: 'Ten performers, including three Bengali songs produced for the evening.' },
     { id: 'bangalore-2027', n: 8, city: 'Bangalore', date: '2027-02-15', dateLabel: 'February 2027', tba: true, venue: '',
-      note: 'Date and venue to be announced.' }
+      note: '' }
   ],
 
   artists: [
@@ -204,6 +204,7 @@ window.UNMUTE.artists.forEach(function (a) {
     if (L.artists[a.slug]) a.photos = L.artists[a.slug];
     if (L.lineup[a.slug]) a.lineupPhoto = L.lineup[a.slug];
     if (L.hero[a.slug]) a.heroPhoto = L.hero[a.slug];
+    if (L.about[a.slug]) a.aboutPhoto = L.about[a.slug];
   });
 })({
  "artists": {
@@ -290,6 +291,9 @@ window.UNMUTE.artists.forEach(function (a) {
   "preksha-mathur": "img/london-2026/preksha-mathur-hero.jpg",
   "sudheesh-kakkunath": "img/london-2026/sudheesh-kakkunath-hero.jpg",
   "minnu-elsa-varghese": "img/london-2026/minnu-elsa-varghese-hero.jpg"
+ },
+ "about": {
+  "thanika-varunkumar": "img/london-2026/thanika-varunkumar-about.jpg"
  },
  "focus": {
   "clw:v1778843633/AT_SJ_tzpz1n.jpg": [
@@ -528,6 +532,10 @@ window.UNMUTE.artists.forEach(function (a) {
    0.642,
    0.277
   ],
+  "img/mumbai-2026/aadya-mohanty-lineup.jpg": [
+   0.545,
+   0.347
+  ],
   "img/mumbai-2026/apeksha-panchal-lineup.jpg": [
    0.527,
    0.287
@@ -704,9 +712,9 @@ window.UNMUTE.artists.forEach(function (a) {
    0.311,
    0.226
   ],
-  "img/mumbai-2026/aadya-mohanty-lineup.jpg": [
-   0.545,
-   0.347
+  "img/london-2026/thanika-varunkumar-about.jpg": [
+   0.469,
+   0.369
   ]
  }
 });

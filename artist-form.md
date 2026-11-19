@@ -1,8 +1,8 @@
 # unMute performer form
 
-The form lives on the unMute site at **unmutelineup.vercel.app/form/**. It isn't linked from anywhere on the site, and search engines are told to skip it.
+The form lives on the unMute site at **artiumunmute.vercel.app/form/**. It isn't linked from anywhere on the site, and search engines are told to skip it.
 
-Send it **the day after the show**: `unmutelineup.vercel.app/form/kolkata-2027`
+Send it **the day after the show**: `artiumunmute.vercel.app/form/kolkata-2027`
 
 The part after `/form/` is the show's id in data.js: city-year. If a city has two shows in one year, the second gets the month as well, for example `mumbai-2027-oct`.
 

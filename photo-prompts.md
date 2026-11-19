@@ -1,84 +1,42 @@
-# unMute artist photos: prompts for ChatGPT or Gemini
+# unMute artist photos: fix the real photo, don't replace it
 
-Goal: turn whatever photo an artist sends into 2–3 photos that look like they came from one
-real unMute photoshoot. The site shows them in black and white and turns them to colour on
-hover, so always generate in COLOUR.
+Use the photo the performer sends. Edit it lightly; never ask an AI to make a new photo of them.
 
-Why the same prompts for everyone: a grid looks premium when every photo shares one light,
-one backdrop and one lens. Different backgrounds and filters per person is what makes a
-grid look cheap.
+Why: when you ask ChatGPT or Gemini to change the background, light, pose or framing, it redraws the whole picture, face included, and the face drifts. Asking for a studio backdrop also makes everyone look like a corporate headshot. The site already makes a lineup look like one set: the same crop for everyone, black and white on the cards, and the same tilted frame on the show page. So each photo can keep its own place and character.
 
-## How to run it
+## What to do with each photo
 
-1. Start a NEW chat for each artist (old chats leak faces between people).
-2. Attach their clearest photo: face visible, good light, highest resolution they have.
-3. Paste **Block 1 + one of the photo prompts + Block 2**, all in one message.
-4. Make photos A and B for everyone. Make C when you want a stronger artist page.
-5. Before using any result, put it next to the original and check eyes, nose, jaw, skin
-   tone, hairline and glasses. If anything changed, use the fix-up prompt at the bottom.
-   Still wrong after two tries? Use their original photo instead.
-6. Show the result to the artist (or a parent, for under-18s) before it goes up.
-7. Upload to Cloudinary, in a folder such as `unmute/artists/`, and name the files
-   `firstname-lastname-a`, `-b` and `-c`.
+1. **Good as it is?** Use it. Most phone photos taken in daylight are fine.
+2. **People or clutter behind them?** Erase them with a tool that only removes things:
+   - iPhone: Photos app > Edit > Clean Up, then brush over what you want gone
+   - Android: Google Photos > Edit > Tools > Magic Eraser
+   - Canva: Edit photo > Magic Eraser
+   These leave the person untouched. Do not use "change background" or "replace background".
+3. **Too dark or dull?** Use your phone's own edit controls (Auto, Exposure, Brilliance, Warmth). No AI needed.
+4. **Busy background, but not one you can erase?** Leave it. A real place looks better on the site than a fake studio.
+5. **Blurry, tiny, a screenshot, or a group photo where they're hard to see?** Ask them for another photo. No edit fixes this.
 
----
+## If you do use ChatGPT or Gemini
 
-## Block 1: keep the person (paste first, every time)
+Ask for one small change at a time, in its edit mode, with this wording. Never ask it to change the pose, the framing, the background or the person.
 
-> Use the person in the attached photo as the subject. This must remain the same real
-> person. Keep their exact face shape, eyes, eyebrows, nose, lips, jaw, ears, skin tone,
-> skin texture, moles and marks, hairline, hair, glasses, age and body shape. Do not
-> beautify, slim, lighten skin, smooth skin or reshape any feature. Only the lighting,
-> background, pose, framing and camera change.
+**Remove people or clutter behind them**
+> Edit this photo. Remove only the [people on the balcony / car / sign] behind her and fill that area with the background that would be there. Do not change anything else: her face, hair, skin, clothes, pose, the framing and the lighting stay exactly as they are.
 
-## Photo A: the portrait (grid photo, black and white until hover)
+**Gentle light fix**
+> Edit this photo. Brighten it slightly and make the colours natural and warm, like late-afternoon daylight. Do not change the person, the pose, the background or the framing in any way.
 
-> An editorial portrait of this person for a music festival's artist page. Chest-up, body
-> turned slightly to one side, face toward the camera, a calm, natural expression with a
-> slight smile at most. Plain warm-grey seamless paper backdrop. One large soft light from
-> camera left that falls gently into shadow on the right side of the face; no rim light,
-> no hair light. Full-frame camera, 85mm lens at f/2.8, focus sharp on the eyes. Their own
-> clothes, unchanged; if their clothes aren't visible, a plain dark top. Vertical 4:5
-> framing, head in the upper third.
+## Check before you use any edited photo
 
-## Photo B: on stage (the photo the card flips to on hover)
+Put it next to the original:
+- Same face? Eyes, nose, jaw, lips, skin tone, hairline, glasses. Ask someone who knows them.
+- Same body shape. Nothing slimmed or smoothed.
+- Hands and jewellery look normal.
 
-> A candid live photo of this person mid-performance on a small, intimate stage,
-> [singing into a handheld microphone / playing the ______], eyes closed or looking past
-> the camera, caught in a real moment, not posing. Warm tungsten stage light from above
-> and one side, deep shadows, a red exposed-brick wall softly out of focus behind them,
-> a little haze in the light. Shot from the front row by a concert photographer on a
-> full-frame camera, 50mm f/1.8, high ISO grain, a touch of motion in the hands, framing
-> slightly imperfect. Vertical 4:5.
+If anything changed, use the original. A real photo with a messy background is always better than a polished one that doesn't look like them.
 
-## Photo C: the quiet moment (optional, for the artist page)
+For under-18s, a parent sees the final photo before it goes up.
 
-> A quiet documentary portrait of this person before a show, sitting on a wooden stool
-> near a window, [holding their instrument / holding a printed lyric sheet], looking down
-> at it or just off camera. Soft daylight from the window, the rest of the room falling
-> into shadow. 35mm lens at f/2, like a photo from a magazine profile. Vertical 4:5.
+## Getting it onto the site
 
-## Block 2: make it look photographed, not generated (paste last, every time)
-
-> Make it look like an unretouched frame from a professional photographer, lightly edited
-> by a careful photo editor: true-to-life colour, real skin texture with visible pores,
-> natural flyaway hairs, fine film grain like Kodak Portra 400, real blacks, soft
-> contrast. Avoid: airbrushed or plastic skin, glowing edges, HDR, teal-and-orange grading,
-> perfect symmetry, bokeh balls, extra or merged fingers, warped microphones or
-> instruments, text, logos, watermarks.
-
----
-
-## Fix-up prompt (when the face drifts)
-
-> The face has changed. Redo it and keep the face exactly as it is in the original photo:
-> same features, same skin tone, same expression lines. Change only the lighting,
-> background and framing.
-
-## Quick checks before publishing
-
-- Same person? Ask someone who knows them, not just yourself.
-- Skin tone unchanged, not lighter.
-- Hands: count the fingers. Microphones and instruments: shapes make sense.
-- No stray text or logos in the background.
-- Under 18: a parent has seen and approved the photos.
+Save the photo into the person's folder in `photos` as `lineup.jpg` (for the show page before the show) or `1.jpg` (for the website), then double-click `Publish photos.command`. You don't need to crop it: the site crops every photo to the same shape.

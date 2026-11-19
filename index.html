@@ -134,9 +134,6 @@
   .ed .meta { grid-column: 2 / -1; color: var(--soft); font-size: 16px; }
   .ed .tag { font-size: 12px; padding: 5px 9px; border-radius: 5px; background: var(--paper-2); white-space: nowrap; }
   .ed .tag.up { background: var(--yellow); }
-  .live .head h2 { font-size: clamp(36px, 7vw, 92px); max-width: 12ch; }
-  .live .posts { grid-auto-flow: column; grid-template-columns: none; grid-auto-columns: min(62%, 250px); overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding-bottom: 4px; }
-  .live .post { scroll-snap-align: start; }
   .video .new { display: inline-block; margin-top: 16px; font-size: 12px; padding: 4px 8px; border-radius: 5px; background: var(--yellow); color: var(--ink); }
   @media (min-width: 900px) { .ed a { grid-template-columns: 60px 340px 1fr auto; } .ed .meta { grid-column: 3; } }
 
@@ -164,7 +161,6 @@
     </div>
   </section>
 
-  <section class="s live" id="live" hidden></section>
 
   <section class="s" id="shows">
     <div class="wrap">
@@ -269,7 +265,7 @@
 
   /* photo strips behind the logo */
   var pics = [];
-  D.artists.forEach(function (a) { (a.photos || []).forEach(function (p) { pics.push(U.photo(p, 360, 450)); }); });
+  U.shown().forEach(function (a) { (a.photos || []).forEach(function (p) { pics.push(U.photo(p, 360, 450)); }); });
   var seen = {}; pics = pics.filter(function (p) { if (seen[p.src]) return false; seen[p.src] = 1; return true; });
   var strips = document.getElementById('strips');
   for (var c = 0; c < 5; c++) {
@@ -291,26 +287,17 @@
   document.getElementById('show-list').innerHTML = U.upcoming().map(function (e) {
     var inner = '<span class="show-date label">' + U.dateLong(e) + '</span><span class="show-city d">' + esc(e.city) + '</span>' +
       (e.postcard ? '<img class="show-card" src="' + U.postcard(e, 460) + '" alt="" loading="lazy">' : '');
-    if (e.tba) return '<li class="show tba"><div>' + inner + '<span class="soon">Date to be announced</span></div></li>';
-    return '<li class="show"><a href="' + U.editionURL(e) + '">' + inner + '<span class="show-go ulink">' + (U.artistsOf(e.id).length ? 'See the lineup' : 'Details') + '</span></a></li>';
+    if (e.tba) return '<li class="show tba"><div>' + inner + '<span class="soon">Lineup coming soon</span></div></li>';
+    return '<li class="show"><a href="' + U.editionURL(e) + '">' + inner + '<span class="show-go ulink">' + (U.artistsOf(e.id).length && U.revealed(e) ? 'See the lineup' : 'Details') + '</span></a></li>';
   }).join('');
 
-  /* artists: eight, people with two photos first */
-  var withPh = D.artists.filter(function (a) { return a.photos && a.photos.length; }).sort(function (a, b) { return (b.photos.length > 1) - (a.photos.length > 1); });
+  /* artists: eight, the most recent show first (new people replace older ones here as their content comes out) */
+  var who = U.shown(), withPh = who.filter(function (a) { return a.photos && a.photos.length; })
+    .sort(function (a, b) { return (Date.parse(U.ed(b.ed).date) - Date.parse(U.ed(a.ed).date)) || ((b.photos.length > 1) - (a.photos.length > 1)); });
   document.getElementById('artist-teaser').innerHTML = withPh.slice(0, 8).map(function (a) { return U.card(a); }).join('');
-  var cities = {}; D.editions.forEach(function (e) { if (U.artistsOf(e.id).length) cities[e.city] = 1; });
-  document.getElementById('artists-lede').textContent = D.artists.length + ' learners and teachers from ' + Object.keys(cities).length + ' cities, including the lineups still to come.';
-  document.getElementById('all-artists').textContent = 'All ' + D.artists.length + ' artists';
-
-  /* a city whose posts are going out right now leads the page */
-  var live = U.liveCities().sort(function (x, y) { return Date.parse(U.feed(y.id)[0].p.date) - Date.parse(U.feed(x.id)[0].p.date); })[0];
-  if (live) {
-    var lv = document.getElementById('live');
-    lv.innerHTML = '<div class="wrap"><div class="head"><h2 class="d">unMute ' + esc(live.city) + ' is out</h2>' +
-      '<p>New videos from the ' + esc(live.city) + ' lineup go up on Instagram and YouTube every few days. <a class="ulink" href="' + U.editionURL(live) + '#posts">See everything from ' + esc(live.city) + '</a></p></div>' +
-      '<div class="posts">' + U.feed(live.id).slice(0, 8).map(function (x) { return U.postCard(x, true); }).join('') + '</div></div>';
-    lv.hidden = false;
-  }
+  var cities = {}; who.forEach(function (a) { cities[U.ed(a.ed).city] = 1; });
+  document.getElementById('artists-lede').textContent = who.length + ' learners and teachers from ' + Object.keys(cities).length + ' cities.';
+  document.getElementById('all-artists').textContent = 'All ' + who.length + ' artists';
 
   /* watch */
   var order = ['bhavya-tumuluru', 'chinmayee-madha', 'akshita-pola', 'inaya-sharma', 'pt-gayathri'];
@@ -325,7 +312,7 @@
   }).join('');
 
   /* roll call */
-  var all = D.artists.slice(), half = Math.ceil(all.length / 2);
+  var all = who.slice(), half = Math.ceil(all.length / 2);
   document.getElementById('names').innerHTML = [all.slice(0, half), all.slice(half)].map(function (list, r) {
     var set = list.map(function (a) { return '<a href="' + U.artistURL(a.slug) + '">' + esc(a.name) + '</a>'; }).join('');
     return '<div class="row ' + (r ? 'b' : 'a') + '"><div class="set">' + set + '</div><div class="set" aria-hidden="true">' + set.replace(/<a /g, '<a tabindex="-1" ') + '</div></div>';

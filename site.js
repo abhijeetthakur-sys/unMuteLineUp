@@ -65,6 +65,13 @@
     return list.filter(function (x) { return x.p.date && reached(x.p.date) && (!edId || x.e.id === edId) && (!slug || (x.a && x.a.slug === slug)); })
       .sort(function (x, y) { return dayMs(y.p.date) - dayMs(x.p.date); });
   }
+  // who appears on the Artists page and the home page: people whose show is over and whose content has started
+  // going out (their performance is up, or one of their posts has reached its date). Until then they're only on their edition's lineup.
+  function released(a) { return isPast(ed(a.ed)) && (!!(a.video || (a.vids && a.vids.length)) || feed(null, a.slug).length > 0); }
+  // an upcoming lineup stays hidden on the site until the day of the show (or `reveal: 'YYYY-MM-DD'` on the edition).
+  // The QR postcard pages always show it.
+  function revealed(e) { return isPast(e) || reached(e.reveal || e.date); }
+  function shown() { return D.artists.filter(released); }
   function ageDays(x) { return (now() - dayMs(x.p.date)) / 864e5; }
   // a city is "live" while its posts are going out: something new in the last 14 days
   function isLive(e) { var f = feed(e.id); return isPast(e) && f.length > 0 && ageDays(f[0]) < 14; }
@@ -111,8 +118,8 @@
     document.body.appendChild(el);
     setTimeout(function () { el.classList.add('on'); document.body.classList.add('announcing'); }, document.querySelector('.top.home') ? 2200 : 900);
   }
-  function dateLong(e) { if (e.dateLabel) return e.dateLabel; var p = parts(e); return DAYS[new Date(Date.UTC(p.y, p.m - 1, p.d)).getUTCDay()] + ' ' + p.d + ' ' + MONTHS[p.m - 1] + ' ' + p.y; }
-  function dateMed(e) { if (e.dateLabel) return e.dateLabel; var p = parts(e); return p.d + ' ' + MONTHS[p.m - 1] + ' ' + p.y; }
+  function dateLong(e) { if (e.tba) return 'Date to be announced'; if (e.dateLabel) return e.dateLabel; var p = parts(e); return DAYS[new Date(Date.UTC(p.y, p.m - 1, p.d)).getUTCDay()] + ' ' + p.d + ' ' + MONTHS[p.m - 1] + ' ' + p.y; }
+  function dateMed(e) { if (e.tba) return 'Date to be announced'; if (e.dateLabel) return e.dateLabel; var p = parts(e); return p.d + ' ' + MONTHS[p.m - 1] + ' ' + p.y; }
   function year(e) { return parts(e).y; }
 
   function ed(id) { for (var i = 0; i < D.editions.length; i++) if (D.editions[i].id === id) return D.editions[i]; }
@@ -124,7 +131,8 @@
 
   /* ---- links ---- */
   function artistURL(slug) { return ROOT + 'artist/index.html?a=' + slug; }
-  function editionURL(e) { return e.page && !isPast(e) ? ROOT + e.page : ROOT + 'edition/index.html?e=' + e.id; }
+  // the site always opens its own edition page; the postcard pages (e.page) are only for the QR codes
+  function editionURL(e) { return ROOT + 'edition/index.html?e=' + e.id; }
   // The Stage: Artium's home for performance stories (newsletters)
   var STAGE = 'https://artium-stage.vercel.app';
   function trial(campaign, content) { return 'https://register.artiumacademy.com/?utm_source=UNMUTE&utm_medium=SITE&utm_campaign=' + campaign + (content ? '&utm_content=' + content : ''); }
@@ -159,7 +167,7 @@
   /* ---- artist card ---- */
   function card(a, opts) {
     opts = opts || {};
-    var e = ed(a.ed), ph = a.photos || [], inner;
+    var e = ed(a.ed), ph = a.photos || (opts.lineup && a.lineupPhoto ? [a.lineupPhoto] : []), inner;
     if (ph.length) {
       var A = photo(ph[0]), B = ph[1] ? photo(ph[1]) : null;
       inner = '<img class="a" src="' + A.src + '" style="object-position:' + (A.op || A.pos + ' 30%') + '" alt="" loading="lazy">' +
@@ -259,7 +267,7 @@
     }
   }
 
-  window.UM = { D: D, ROOT: ROOT, esc: esc, logo: logo, ed: ed, artist: artist, artistsOf: artistsOf, upcoming: upcoming, past: past, nextShow: nextShow,
+  window.UM = { D: D, ROOT: ROOT, esc: esc, logo: logo, ed: ed, artist: artist, artistsOf: artistsOf, released: released, shown: shown, revealed: revealed, upcoming: upcoming, past: past, nextShow: nextShow,
     isPast: isPast, daysTo: daysTo, now: now, reached: reached, dayLabel: dayLabel, ytId: ytId, videoURL: videoURL, feed: feed, isLive: isLive, liveCities: liveCities, postCard: postCard, announce: announce, KIND: KIND, desig: desig, postTitle: postTitle, shortDay: shortDay, dateLong: dateLong, dateMed: dateMed, year: year, parts: parts, MONTHS: MONTHS,
     meter: meter, artistURL: artistURL, editionURL: editionURL, trial: trial, photo: photo, postcard: postcard, card: card, mount: mount, nextbar: nextbar, wire: wire };
 })();
