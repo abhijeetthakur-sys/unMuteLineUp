@@ -1,7 +1,7 @@
 /**
  * unMute performer form: where answers go.
  *
- * Every time a performer sends the form at unmutelineup.vercel.app/form/, this script:
+ * Every time a performer sends the form at artiumunmute.vercel.app/form/, this script:
  *   1. adds a row to the "unMute performers" Google Sheet (one column per question),
  *   2. makes a folder for them in Drive:  unMute performer forms / <edition> / <name>,
  *   3. saves their photos there, a Google Doc and a PDF of their answers, and a .json copy,
