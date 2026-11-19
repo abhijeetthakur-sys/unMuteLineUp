@@ -62,14 +62,15 @@
   document.getElementById('cta').href = U.trial('ARTISTS');
 
   // newest edition first; within an edition, people with photos first
-  var eds = D.editions.filter(function (e) { return U.artistsOf(e.id).length; })
+  var who = U.shown(), inEd = function (id) { return who.filter(function (a) { return a.ed === id; }); };
+  var eds = D.editions.filter(function (e) { return inEd(e.id).length; })
     .sort(function (a, b) { return Date.parse(b.date) - Date.parse(a.date); });
   var cities = {}; eds.forEach(function (e) { cities[e.city] = 1; });
-  document.getElementById('lede').textContent = D.artists.length + ' learners and teachers from ' + Object.keys(cities).length + ' cities, including the lineups still to come.';
+  document.getElementById('lede').textContent = who.length + ' learners and teachers from ' + Object.keys(cities).length + ' cities.';
 
   function render(filter) {
     document.getElementById('groups').innerHTML = eds.filter(function (e) { return !filter || e.id === filter; }).map(function (e) {
-      var people = U.artistsOf(e.id).sort(function (a, b) { return ((b.photos || []).length) - ((a.photos || []).length); });
+      var people = inEd(e.id).sort(function (a, b) { return ((b.photos || []).length) - ((a.photos || []).length); });
       var label = U.isPast(e) ? 'performed ' + U.dateMed(e) : 'performing ' + U.dateMed(e);
       return '<section class="group"><h2 class="d"><a href="' + U.editionURL(e) + '">' + U.esc(e.city) + ' ' + U.year(e) + '</a><small>' + label + '</small></h2>' +
         '<div class="agrid">' + people.map(function (a) { return U.card(a); }).join('') + '</div></section>';
