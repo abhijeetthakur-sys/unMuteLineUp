@@ -12,6 +12,7 @@ In a person's folder:
   lineup.jpg    their photo for the city's lineup page (the QR page). Any file type, the name must start with "lineup"
   hero.jpg      a wide (landscape) photo for the top of their page. Optional. Name must start with "hero"
   about.jpg     the photo beside their story in the About panel. Optional; you choose it.
+  about-tall.jpg  optional upright version of it for phones (e.g. just the singer from a group shot)
                 Without one the panel is text only (no stand-in photo). Name must start with "about"
   1.jpg, 2.jpg, 3.jpg   their photos for the main website, in this order:
                 1st = artist card + top of their page, 2nd = card hover
@@ -62,13 +63,14 @@ def split(d):
     fs = images(d)
     lu = [f for f in fs if os.path.splitext(f)[0].lower().startswith('lineup')]
     hero = [f for f in fs if os.path.splitext(f)[0].lower().startswith('hero')]
-    about = [f for f in fs if os.path.splitext(f)[0].lower().startswith('about')]
+    about = [f for f in fs if os.path.splitext(f)[0].lower().startswith('about')]   # about.jpg and about-tall.jpg
     return (lu[0] if lu else None), (hero[0] if hero else None), [f for f in fs if f not in lu and f not in hero and f not in about]
 
 def about_of(d):
     fs = sorted(f for f in os.listdir(d) if not f.startswith('.')) if os.path.isdir(d) else []
-    a = [f for f in fs if os.path.splitext(f)[0].lower().startswith('about')]
-    return a[0] if a else None
+    a = [f for f in fs if os.path.splitext(f)[0].lower().startswith('about') and 'tall' not in f.lower()]
+    t = [f for f in fs if os.path.splitext(f)[0].lower().startswith('about') and 'tall' in f.lower()]
+    return (a[0] if a else None), (t[0] if t else None)
 
 def report(eds, arts, names):
     """print what is there and what is missing; returns the number of warnings"""
@@ -160,7 +162,7 @@ def focus(local_refs):
 
 def publish():
     eds, arts, _ = lineup()
-    found = {'artists': {}, 'groups': {}, 'lineup': {}, 'hero': {}, 'about': {}}
+    found = {'artists': {}, 'groups': {}, 'lineup': {}, 'hero': {}, 'about': {}, 'aboutTall': {}}
     def kept(e, pat):   # photos already in img/ from an earlier publish (maybe on another laptop)
         d = os.path.join(OUT, e)
         return sorted('img/%s/%s' % (e, f) for f in os.listdir(d) if re.match(pat, f)) if os.path.isdir(d) else []
@@ -186,9 +188,12 @@ def publish():
         if hero: resize(os.path.join(d, hero), os.path.join(ROOT, hero_out), 2400)
         if os.path.exists(os.path.join(ROOT, hero_out)): found['hero'][slug] = hero_out
         # the About-panel photo, only when one is chosen
-        ab, ab_out = about_of(d), 'img/%s/%s-about.jpg' % (e, slug)
+        (ab, abt), ab_out, abt_out = about_of(d), 'img/%s/%s-about.jpg' % (e, slug), 'img/%s/%s-about-tall.jpg' % (e, slug)
         if ab: resize(os.path.join(d, ab), os.path.join(ROOT, ab_out), 2000)
         if os.path.exists(os.path.join(ROOT, ab_out)): found['about'][slug] = ab_out
+        # optional upright version for phones (about-tall.jpg), when the wide one has other people at the sides
+        if abt: resize(os.path.join(d, abt), os.path.join(ROOT, abt_out), 1400)
+        if os.path.exists(os.path.join(ROOT, abt_out)): found['aboutTall'][slug] = abt_out
         # the website photos
         if site:
             for f in kept(e, re.escape(slug) + r'-\d+\.jpg$'): os.remove(os.path.join(ROOT, f))
@@ -201,7 +206,7 @@ def publish():
         elif kept(e, re.escape(slug) + r'-\d+\.jpg$'):
             found['artists'][slug] = sorted(kept(e, re.escape(slug) + r'-\d+\.jpg$'), key=lambda f: int(re.search(r'-(\d+)\.jpg$', f).group(1)))
         if os.path.isdir(os.path.join(OUT, e)) and not os.listdir(os.path.join(OUT, e)): os.rmdir(os.path.join(OUT, e))
-    local = [p for l in found['artists'].values() for p in l] + list(found['lineup'].values()) + list(found['hero'].values()) + list(found['about'].values()) + list(found['groups'].values())
+    local = [p for l in found['artists'].values() for p in l] + list(found['lineup'].values()) + list(found['hero'].values()) + list(found['about'].values()) + list(found['aboutTall'].values()) + list(found['groups'].values())
     found['focus'] = focus(local)
     js = open(DATA).read()
     js = re.sub(re.escape(START) + r'.*?' + re.escape(END) + r'\n?', '', js, flags=re.S).rstrip() + '\n'
@@ -213,6 +218,7 @@ def publish():
           '    if (L.lineup[a.slug]) a.lineupPhoto = L.lineup[a.slug];\n' \
           '    if (L.hero[a.slug]) a.heroPhoto = L.hero[a.slug];\n' \
           '    if (L.about[a.slug]) a.aboutPhoto = L.about[a.slug];\n' \
+          '    if (L.aboutTall[a.slug]) a.aboutTall = L.aboutTall[a.slug];\n' \
           '  });\n' \
           '})(' + json.dumps(found, indent=1) + ');\n' + END + '\n'
     open(DATA, 'w').write(js)
