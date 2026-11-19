@@ -95,8 +95,10 @@
      : people.length ? '<div class="agrid">' + people.map(function (a) { return U.card(a, { lineup: !past }); }).join('') + '</div>'
                    : '<p class="empty">' + (e.count ? e.count + ' performers, names coming soon.' : 'Lineup coming soon.') + '</p>') +
     '</div></section>' + postsHTML +
-    (vids.length ? '<section class="s" style="padding-top:0"><div class="wrap"><h2 class="d">Watch</h2><div class="vids">' + vids.map(function (a) {
-      return '<a class="ytlink" href="https://www.youtube.com/watch?v=' + a.video + '" target="_blank" rel="noopener"><span class="th"><img src="https://i.ytimg.com/vi/' + a.video + '/mqdefault.jpg" alt=""></span><span><b>' + esc(a.songs[0]) + '</b><span>' + esc(a.name) + '. Opens YouTube.</span></span></a>';
+    // one card per video: a duet is one performance, so its singers share a card
+    (vids.length ? '<section class="s" style="padding-top:0"><div class="wrap"><h2 class="d">Watch</h2><div class="vids">' + vids.filter(function (a, i) { return vids.findIndex(function (b) { return b.video === a.video; }) === i; }).map(function (a) {
+      var who = vids.filter(function (b) { return b.video === a.video; }).map(function (b) { return b.name; }).join(' & ');
+      return '<a class="ytlink" href="https://www.youtube.com/watch?v=' + a.video + '" target="_blank" rel="noopener"><span class="th"><img src="https://i.ytimg.com/vi/' + a.video + '/mqdefault.jpg" alt=""></span><span><b>' + esc(a.songs[0]) + '</b><span>' + esc(who) + '</span></span></a>';
     }).join('') + '</div></div></section>' : '') +
     '<section class="s" style="padding-top:0"><div class="wrap"><nav class="pager" aria-label="Other editions">' +
     (prev ? '<a href="' + U.editionURL(prev) + '"><small>Edition ' + prev.n + '</small><b>' + esc(prev.city) + ' ' + U.year(prev) + '</b></a>' : '') +
