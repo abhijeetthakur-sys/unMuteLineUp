@@ -137,9 +137,14 @@
   // wide photo for the top of the page on desktop; on a phone a wide frame crops to a soft sliver, so it gets the portrait
   var narrow = window.matchMedia && window.matchMedia('(max-width: 760px)').matches;
   var wide = !!(a.heroPhoto && !narrow);   // wide stage photos: heads sit near the top, so keep the top in view
-  var heroSrc = a.heroPhoto && !narrow ? U.photo(a.heroPhoto, 2400, 0, true) : ph.length ? U.photo(ph[0], 2400, 0, true) : null;
+  // a raw video frame (Cloudinary screenshot or YouTube frame) has the Artium and unMute logos in its corners, so on desktop
+  // it is never shown whole: it gets the portrait hero (face-cropped) until a clean wide hero.jpg is added
+  var rawFrame = !a.heroPhoto && ph.length && /^(cl|clw|yt):/.test(ph[0]);
+  var heroSrc = a.heroPhoto && !narrow ? U.photo(a.heroPhoto, 2400, 0, true)
+    : rawFrame && !narrow ? U.photo(ph[0], 960, 1200)
+    : ph.length ? U.photo(ph[0], 2400, 0, true) : null;
   // only a photo chosen for this panel (about.jpg in their folder); otherwise the panel is text only
-  var aboutSrc = a.aboutPhoto ? U.photo(a.aboutPhoto, 1600, 1600) : null;
+  var aboutSrc = a.aboutPhoto ? U.photo(narrow && a.aboutTall ? a.aboutTall : a.aboutPhoto, 1600, 1600) : null;
   var ext = '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1h8v8M11 1 1 11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>';
   var yt = a.video ? 'https://www.youtube.com/watch?v=' + a.video : '';
 
@@ -206,7 +211,7 @@
     var amb = hi.cloneNode(); amb.className = 'amb'; amb.alt = ''; amb.setAttribute('aria-hidden', 'true'); amb.removeAttribute('fetchpriority');
     hero.insertBefore(amb, hi);
   }
-  if (hi && ph.length && /^yt:[^:]+:0/.test(ph[0])) makeTall();
+  if (hi && ph.length && (/^yt:[^:]+:0/.test(ph[0]) || (rawFrame && !narrow))) makeTall();
   if (hi) { var chk = function () { if (hi.naturalHeight > hi.naturalWidth) makeTall(); }; hi.complete ? chk() : hi.addEventListener('load', chk); }
 
   /* "More" only when the bio is actually cut off */
