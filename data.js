@@ -286,6 +286,8 @@ window.UNMUTE.artists.forEach(function (a) {
   "apeksha-panchal": "img/mumbai-2026/apeksha-panchal-lineup.jpg",
   "aadya-mohanty": "img/mumbai-2026/aadya-mohanty-lineup.jpg",
   "sarah-shinde": "img/mumbai-2026/sarah-shinde-lineup.jpg",
+  "anvita-mohod": "img/mumbai-2026/anvita-mohod-lineup.jpg",
+  "kaustubh-bagchi": "img/mumbai-2026/kaustubh-bagchi-lineup.jpg",
   "radnyee-marotkar": "img/mumbai-2026/radnyee-marotkar-lineup.jpg"
  },
  "hero": {
@@ -297,7 +299,6 @@ window.UNMUTE.artists.forEach(function (a) {
   "anvitha-gantasala": "img/hyderabad-2026/anvitha-gantasala-hero.jpg",
   "alyna-shaikh": "img/hyderabad-2026/alyna-shaikh-hero.jpg",
   "abhijeet-thakur": "img/mumbai-2025/abhijeet-thakur-hero.jpg",
-  "shrey-jadav": "img/mumbai-2025/shrey-jadav-hero.jpg",
   "hridaya-dande": "img/mumbai-2025/hridaya-dande-hero.jpg",
   "prissha-cholera": "img/mumbai-2025/prissha-cholera-hero.jpg",
   "neev-kanani": "img/mumbai-2025/neev-kanani-hero.jpg",
@@ -557,9 +558,17 @@ window.UNMUTE.artists.forEach(function (a) {
    0.587,
    0.366
   ],
+  "img/mumbai-2025/abhijeet-thakur-1.jpg": [
+   0.437,
+   0.197
+  ],
+  "img/mumbai-2025/abhijeet-thakur-2.jpg": [
+   0.297,
+   0.247
+  ],
   "img/mumbai-2025/abhijeet-thakur-hero.jpg": [
-   0.522,
-   0.268
+   0.397,
+   0.185
   ],
   "img/mumbai-2025/abhishek-marotkar-1.jpg": [
    0.464,
@@ -640,6 +649,14 @@ window.UNMUTE.artists.forEach(function (a) {
   "img/mumbai-2025/shalini-bairagi-hero.jpg": [
    0.579,
    0.326
+  ],
+  "img/mumbai-2025/shrey-jadav-1.jpg": [
+   0.562,
+   0.231
+  ],
+  "img/mumbai-2025/shrey-jadav-2.jpg": [
+   0.475,
+   0.245
   ],
   "img/mumbai-2025/shrey-jadav-hero.jpg": [
    0.522,
@@ -853,21 +870,13 @@ window.UNMUTE.artists.forEach(function (a) {
    0.311,
    0.226
   ],
-  "img/mumbai-2025/abhijeet-thakur-1.jpg": [
-   0.437,
-   0.197
+  "img/mumbai-2026/anvita-mohod-lineup.jpg": [
+   0.499,
+   0.302
   ],
-  "img/mumbai-2025/abhijeet-thakur-2.jpg": [
-   0.297,
-   0.247
-  ],
-  "img/mumbai-2025/shrey-jadav-1.jpg": [
-   0.562,
-   0.231
-  ],
-  "img/mumbai-2025/shrey-jadav-2.jpg": [
-   0.475,
-   0.245
+  "img/mumbai-2026/kaustubh-bagchi-lineup.jpg": [
+   0.453,
+   0.304
   ]
  }
 });
