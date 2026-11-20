@@ -682,13 +682,21 @@ window.UNMUTE.artists.forEach(function (a) {
    0.475,
    0.313
   ],
+  "img/mumbai-2026/anvita-mohod-lineup.jpg": [
+   0.499,
+   0.302
+  ],
   "img/mumbai-2026/apeksha-panchal-lineup.jpg": [
    0.527,
    0.287
   ],
   "img/mumbai-2026/ian-daniel-lineup.jpg": [
-   0.437,
-   0.428
+   0.5,
+   0.352
+  ],
+  "img/mumbai-2026/kaustubh-bagchi-lineup.jpg": [
+   0.453,
+   0.304
   ],
   "img/mumbai-2026/radnyee-marotkar-lineup.jpg": [
    0.465,
@@ -869,14 +877,6 @@ window.UNMUTE.artists.forEach(function (a) {
   "yt:zfrRiUW48uY:0": [
    0.311,
    0.226
-  ],
-  "img/mumbai-2026/anvita-mohod-lineup.jpg": [
-   0.499,
-   0.302
-  ],
-  "img/mumbai-2026/kaustubh-bagchi-lineup.jpg": [
-   0.453,
-   0.304
   ]
  }
 });
