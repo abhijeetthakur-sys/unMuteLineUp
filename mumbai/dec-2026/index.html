@@ -134,6 +134,8 @@
         (a.with ? '<div style="font-size:12px;color:rgba(28,20,16,0.55);margin-top:5px;">' + U.esc(a.with) + '</div>' : '') + '</div></div>';
     }).join('');
     var sub = document.getElementById('lineup-sub'), ed = U.ed(box.getAttribute('data-ed'));
+    // after the show it says how many took the stage, counted from the lineup itself
+    if (sub) sub.setAttribute('data-done', (WORDS[people.length] || people.length) + ' performers took the stage.');
     if (sub && !document.body.classList.contains('is-done')) {
       var all = ed && ed.count ? Math.max(ed.count, people.length) : people.length;
       sub.textContent = people.length < all ? 'The first names are in. The rest are coming soon.' : (WORDS[all] || all) + ' performers, one stage.';
